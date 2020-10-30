@@ -1,0 +1,157 @@
+{
+  "modules": [
+    {
+      "id": "ff15cc41-856b-4f89-9fec-20d34a4f056b",
+      "type": "Transfer",
+      "branches": [],
+      "parameters": [],
+      "metadata": {
+        "position": {
+          "x": 791,
+          "y": 230
+        },
+        "useDynamic": false
+      },
+      "target": "Agent"
+    },
+    {
+      "id": "5e641eb0-0e27-4f78-9e3e-5d8cd35a4ac5",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "fb47cb81-7c12-4ad9-b12f-89f91b840750"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Transferring now to an Available Agent",
+          "namespace": null
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 517,
+          "y": 42
+        },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "a84eafe1-3bf5-4d37-bf24-4d17623bebf5",
+      "type": "SetAttributes",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "5e641eb0-0e27-4f78-9e3e-5d8cd35a4ac5"
+        },
+        {
+          "condition": "Error",
+          "transition": "5e641eb0-0e27-4f78-9e3e-5d8cd35a4ac5"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "voiceCallId",
+          "key": "voiceCallId",
+          "namespace": "External"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 444,
+          "y": 343
+        }
+      }
+    },
+    {
+      "id": "b43becd2-b08d-4320-8b7f-a0eadfd42c63",
+      "type": "InvokeExternalResource",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "a84eafe1-3bf5-4d37-bf24-4d17623bebf5"
+        },
+        {
+          "condition": "Error",
+          "transition": "5e641eb0-0e27-4f78-9e3e-5d8cd35a4ac5"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "FunctionArn",
+          "value": "arn:aws:lambda:ap-southeast-2:812113044155:function:hvccstagingstack-InvokeTelephonyIntegrationApiFunc-6P1GT7427IPE",
+          "namespace": null
+        },
+        {
+          "name": "TimeLimit",
+          "value": "8"
+        },
+        {
+          "name": "Parameter",
+          "key": "methodName",
+          "value": "createTransferVC",
+          "namespace": null
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 113,
+          "y": 270
+        },
+        "dynamicMetadata": {
+          "methodName": false
+        },
+        "useDynamic": false
+      },
+      "target": "Lambda"
+    },
+    {
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "ff15cc41-856b-4f89-9fec-20d34a4f056b"
+        }
+      ],
+      "id": "fb47cb81-7c12-4ad9-b12f-89f91b840750",
+      "metadata": {
+        "position": {
+          "x": 745,
+          "y": 18
+        }
+      },
+      "parameters": [
+        {
+          "name": "RecordingBehaviorOption",
+          "value": "Enable"
+        },
+        {
+          "name": "RecordingParticipantOption",
+          "value": "Both"
+        }
+      ],
+      "type": "SetRecordingBehavior"
+    }
+  ],
+  "version": "1",
+  "type": "agentTransfer",
+  "start": "b43becd2-b08d-4320-8b7f-a0eadfd42c63",
+  "metadata": {
+    "entryPointPosition": {
+      "x": 13,
+      "y": 69
+    },
+    "snapToGrid": false,
+    "name": "Sample SCV Agent Transfer",
+    "description": "Sample SCV Agent Transfer",
+    "type": "agentTransfer",
+    "status": "published",
+    "hash": "d62fcc9c6bba4fece0a65c1d8d6eb163c43f4ea6b84cfb0950067b4711d31d6d"
+  }
+}

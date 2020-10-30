@@ -1,0 +1,233 @@
+{
+  "modules": [
+    {
+      "id": "e54af739-9aec-4259-a54c-b1b45bf29599",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "fe0cff31-99e2-4b4a-b1ec-ff7baa711d7b"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Started Streaming for Outbound Calls on Amazon Connect",
+          "namespace": null
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 971,
+          "y": 186
+        },
+        "useDynamic": false
+      }
+    },
+    {
+       "id":"52e05d05-39db-4dc2-a37c-0678b693b466",
+       "type":"SetRecordingBehavior",
+       "branches":[
+          {
+             "condition":"Success",
+             "transition":"b8c6d167-dfd1-4ee2-b160-408e1690249a"
+          }
+       ],
+       "parameters":[
+          {
+             "name":"RecordingBehaviorOption",
+             "value":"Enable"
+          },
+          {
+             "name":"RecordingParticipantOption",
+             "value":"Both"
+          }
+       ],
+       "metadata":{
+             "position":{
+             "x":29,
+             "y":378.5
+          }
+       }
+    },
+    {
+      "id": "b5918c25-c699-47a0-a348-9fd7cd756dae",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "fe0cff31-99e2-4b4a-b1ec-ff7baa711d7b"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Problem Starting streaming",
+          "namespace": null
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 973,
+          "y": 405
+        },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "fa9116ea-7f2d-4a3a-a4e1-1b13f56c92c5",
+      "type": "InvokeExternalResource",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "e54af739-9aec-4259-a54c-b1b45bf29599"
+        },
+        {
+          "condition": "Error",
+          "transition": "b5918c25-c699-47a0-a348-9fd7cd756dae"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "FunctionArn",
+          "value": "arn:aws:lambda:us-west-2:812113044155:function:yr-na44-bucket-3-kvsConsumerTrigger-1VYGKK7LQ3O86",
+          "namespace": null
+        },
+        {
+          "name": "TimeLimit",
+          "value": "8"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 729,
+          "y": 170
+        },
+        "dynamicMetadata": {},
+        "useDynamic": false
+      },
+      "target": "Lambda"
+    },
+    {
+      "id": "fe0cff31-99e2-4b4a-b1ec-ff7baa711d7b",
+      "type": "Resume",
+      "branches": [],
+      "parameters": [],
+      "metadata": {
+        "position": {
+          "x": 1353.6166687011719,
+          "y": 621.5
+        }
+      }
+    },
+    {
+      "id": "06696b27-35cc-47c3-b775-838c0b326f81",
+      "type": "StartMediaStreaming",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "fa9116ea-7f2d-4a3a-a4e1-1b13f56c92c5"
+        },
+        {
+          "condition": "Error",
+          "transition": "fe0cff31-99e2-4b4a-b1ec-ff7baa711d7b"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Track",
+          "value": "FromCustomer"
+        },
+        {
+          "name": "Track",
+          "value": "ToCustomer"
+        },
+        {
+          "name": "MediaStreamTypes",
+          "value": "Audio"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 477,
+          "y": 168
+        },
+        "fromCustomer": true,
+        "toCustomer": true
+      }
+    },
+    {
+      "id": "93a996a0-d7a8-492e-a2e8-a68cb20f18d9",
+      "type": "SetLoggingBehavior",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "52e05d05-39db-4dc2-a37c-0678b693b466"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "LoggingBehavior",
+          "value": "Enable"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 48.616668701171875,
+          "y": 180.5
+        }
+      }
+    },
+    {
+      "id": "b8c6d167-dfd1-4ee2-b160-408e1690249a",
+      "type": "SetAttributes",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "06696b27-35cc-47c3-b775-838c0b326f81"
+        },
+        {
+          "condition": "Error",
+          "transition": "fe0cff31-99e2-4b4a-b1ec-ff7baa711d7b"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "en-US",
+          "key": "languageCode",
+          "namespace": null
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 245,
+          "y": 378
+        }
+      }
+    }
+  ],
+  "version": "1",
+  "type": "outboundWhisper",
+  "start": "93a996a0-d7a8-492e-a2e8-a68cb20f18d9",
+  "metadata": {
+    "entryPointPosition": {
+      "x": 50.616668701171875,
+      "y": 15.5
+    },
+    "snapToGrid": false,
+    "name": "Sample SCV Outbound Flow with Transcription",
+    "description": "Default flow for outbound calls.",
+    "type": "outboundWhisper",
+    "status": "published",
+    "hash": "4274f8b5ec75abe7a70d9766a5e0155818ef277a87794198bddf9313246a54d9"
+  }
+}

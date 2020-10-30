@@ -1,0 +1,40 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global">
+    <!-- subscribe to service cloud voice toolkit api -->
+    <force:serviceCloudVoiceToolkitApi aura:id="voiceToolkitApi"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <aura:handler name="destroy" value="{!this}" action="{!c.onDestroy}"/>
+    
+    <!-- attributes -->
+    <aura:attribute name="message" type="String" default="No events received yet."/>
+    <aura:attribute name="transcript" type="String" default="No transcripts received yet."/>
+    <aura:attribute name="payload" type="String" default=""/>
+    <aura:attribute name="record" type="Object"/>
+    
+    <!-- get record data -->
+    <force:recordData recordId="{!v.recordId}" layoutType="FULL" targetFields="{!v.record}"/>
+    
+    <!-- ui -->
+    <lightning:card title="Voice Toolkit API Tester">
+        <p class="slds-text-title_caps slds-p-horizontal_medium">LATEST EVENT</p>
+        <p class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <lightning:formattedText value="{!v.message}"/>
+        </p>
+        
+        <p class="slds-text-title_caps slds-p-horizontal_medium">LATEST TRANSCRIPT</p>
+        <p class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <lightning:formattedText value="{!v.transcript}"/>
+        </p>
+        
+        <div class="slds-grid slds-p-bottom_medium">
+            <lightning:input label="INVOKE NEXT BEST ACTION" class="slds-p-horizontal_medium flex-input" value="{!v.payload}" placeholder='{"key": "value"}'/>
+            <lightning:button variant="brand" label="Invoke" onclick="{!c.onInvokeNBA}"/>
+        </div>
+        
+        <p class="slds-text-title_caps slds-p-horizontal_medium">VOICECALL DETAILS</p>
+        <p class="slds-p-horizontal_medium">
+            <lightning:formattedText value="{!'Call Type: ' + v.record.CallType}" class="slds-show"/>
+            <lightning:formattedText value="{!'Caller Number: ' + v.record.FromPhoneNumber}" class="slds-show"/>
+            <lightning:formattedText value="{!'Recipient Number: ' + v.record.ToPhoneNumber}" class="slds-show"/>
+        </p>
+    </lightning:card>
+</aura:component>
