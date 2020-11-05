@@ -369,12 +369,6 @@
                 },
                 {
                     "name": "Parameter",
-                    "key": "amazonconnect__AC_Contact_Id__c",
-                    "value": "ContactId",
-                    "namespace": "System"
-                },
-                {
-                    "name": "Parameter",
                     "key": "Description",
                     "value": "This case was created automatically by Amazon Connect",
                     "namespace": null
@@ -394,7 +388,6 @@
                 "dynamicMetadata": {
                     "methodName": false,
                     "objectApiName": false,
-                    "amazonconnect__AC_Contact_Id__c": true,
                     "Description": false,
                     "ContactId": true
                 },
