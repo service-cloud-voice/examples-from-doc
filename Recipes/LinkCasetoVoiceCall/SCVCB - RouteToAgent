@@ -1,1 +1,322 @@
-{"modules":[{"id":"6e346866-f534-41dd-a7f8-1185143f6471","type":"PlayPrompt","branches":[{"condition":"Success","transition":"795393d0-8152-448f-b97f-5be4369dad84"}],"parameters":[{"name":"Text","value":"No Customer Support agent is available, please call back again. Thank you!","namespace":null},{"name":"TextToSpeechType","value":"text"}],"metadata":{"position":{"x":2311,"y":231},"useDynamic":false}},{"id":"795393d0-8152-448f-b97f-5be4369dad84","type":"Disconnect","branches":[],"parameters":[],"metadata":{"position":{"x":2595,"y":344}}},{"id":"7b05d5eb-140c-4abc-aefc-3f01dc220e71","type":"InvokeExternalResource","branches":[{"condition":"Success","transition":"55df5666-2c71-4266-8f49-d6b9c022384a"},{"condition":"Error","transition":"3e3e97a0-8a3f-4d1c-87cc-2958a345fe4f"}],"parameters":[{"name":"FunctionArn","value":"arn:aws:lambda:us-west-2:662322144989:function:ServiceCloudVoice-kvsConsumerTrigger","namespace":null},{"name":"TimeLimit","value":"8"}],"metadata":{"position":{"x":966,"y":25},"dynamicMetadata":{},"useDynamic":false},"target":"Lambda"},{"id":"3e3e97a0-8a3f-4d1c-87cc-2958a345fe4f","type":"PlayPrompt","branches":[{"condition":"Success","transition":"9ba98509-10dd-4cf3-a28a-3724cc8e81e5"}],"parameters":[{"name":"Text","value":"Some error occurred in Starting Realtime Transcription","namespace":null},{"name":"TextToSpeechType","value":"text"}],"metadata":{"position":{"x":1240,"y":235},"useDynamic":false}},{"id":"cb648498-0b69-4bb7-b804-1f796c3d5b90","type":"SetAttributes","branches":[{"condition":"Success","transition":"7b05d5eb-140c-4abc-aefc-3f01dc220e71"},{"condition":"Error","transition":"b973fef0-5529-4dcc-b606-3688502a1736"}],"parameters":[{"name":"Attribute","value":"voiceCallId","key":"voiceCallId","namespace":"External"}],"metadata":{"position":{"x":707,"y":25}}},{"id":"b973fef0-5529-4dcc-b606-3688502a1736","type":"PlayPrompt","branches":[{"condition":"Success","transition":"9ba98509-10dd-4cf3-a28a-3724cc8e81e5"}],"parameters":[{"name":"Text","value":"Error Setting Voice Call Record ID Attribute","namespace":null},{"name":"TextToSpeechType","value":"text"}],"metadata":{"position":{"x":1005,"y":313},"useDynamic":false}},{"id":"af89b7be-14c3-40e7-a9ab-643748abe7ec","type":"InvokeExternalResource","branches":[{"condition":"Success","transition":"cb648498-0b69-4bb7-b804-1f796c3d5b90"},{"condition":"Error","transition":"1a4108e2-9b91-4d7b-a48e-58640425889d"}],"parameters":[{"name":"FunctionArn","value":"arn:aws:lambda:us-west-2:662322144989:function:ServiceCloudVoice-InvokeTelephonyIntegrationApiFunction","namespace":null},{"name":"TimeLimit","value":"8"},{"name":"Parameter","key":"methodName","value":"createVoiceCall","namespace":null}],"metadata":{"position":{"x":441,"y":25},"dynamicMetadata":{"methodName":false},"useDynamic":false},"target":"Lambda"},{"id":"1a4108e2-9b91-4d7b-a48e-58640425889d","type":"PlayPrompt","branches":[{"condition":"Success","transition":"9ba98509-10dd-4cf3-a28a-3724cc8e81e5"}],"parameters":[{"name":"Text","value":"Error Creating Voice Call","namespace":null},{"name":"TextToSpeechType","value":"text"}],"metadata":{"position":{"x":724,"y":374},"useDynamic":false}},{"id":"9ba98509-10dd-4cf3-a28a-3724cc8e81e5","type":"Disconnect","branches":[],"parameters":[],"metadata":{"position":{"x":1486,"y":560}}},{"id":"86ec3a71-fa97-4cb0-b03f-18249ad189cb","type":"StartMediaStreaming","branches":[{"condition":"Success","transition":"af89b7be-14c3-40e7-a9ab-643748abe7ec"},{"condition":"Error","transition":"089a722a-0950-4e7a-9d2d-29c0d8ba9214"}],"parameters":[{"name":"Track","value":"FromCustomer"},{"name":"Track","value":"ToCustomer"},{"name":"MediaStreamTypes","value":"Audio"}],"metadata":{"position":{"x":177,"y":23},"fromCustomer":true,"toCustomer":true}},{"id":"089a722a-0950-4e7a-9d2d-29c0d8ba9214","type":"PlayPrompt","branches":[{"condition":"Success","transition":"9ba98509-10dd-4cf3-a28a-3724cc8e81e5"}],"parameters":[{"name":"Text","value":"Error Starting Media Stream.","namespace":null},{"name":"TextToSpeechType","value":"text"}],"metadata":{"position":{"x":476,"y":439},"useDynamic":false}},{"id":"d35a0203-2f77-49fc-9de8-61c92ce24c62","type":"PlayPrompt","branches":[{"condition":"Success","transition":"795393d0-8152-448f-b97f-5be4369dad84"}],"parameters":[{"name":"Text","value":"Error in Queue Transfer. The Queue is $.External.VoiceAgentName__c","namespace":null},{"name":"TextToSpeechType","value":"text"}],"metadata":{"position":{"x":1757,"y":313},"useDynamic":false}},{"id":"55df5666-2c71-4266-8f49-d6b9c022384a","type":"SetRecordingBehavior","branches":[{"condition":"Success","transition":"a36f4066-a2a9-4c0e-8047-9cdb428ea4e9"}],"parameters":[{"name":"RecordingBehaviorOption","value":"Enable"},{"name":"RecordingParticipantOption","value":"Both"}],"metadata":{"position":{"x":1250,"y":27}}},{"id":"a355c649-31f7-4080-b6e1-69b0f8f38163","type":"Transfer","branches":[{"condition":"AtCapacity","transition":"6e346866-f534-41dd-a7f8-1185143f6471"},{"condition":"Error","transition":"6e346866-f534-41dd-a7f8-1185143f6471"}],"parameters":[],"metadata":{"position":{"x":2072,"y":32},"useDynamic":false,"queue":null},"target":"Queue"},{"id":"a36f4066-a2a9-4c0e-8047-9cdb428ea4e9","type":"SetQueue","branches":[{"condition":"Success","transition":"a355c649-31f7-4080-b6e1-69b0f8f38163"},{"condition":"Error","transition":"d35a0203-2f77-49fc-9de8-61c92ce24c62"}],"parameters":[{"name":"Queue","value":"arn:aws:connect:us-west-2:662322144989:instance/93ce1761-23ea-4804-b939-7adbcbaf95f7/queue/bf76b2cf-a302-46de-8f39-3f7e2b69ad59","namespace":null,"resourceName":"GeneralQueue"}],"metadata":{"position":{"x":1497,"y":26},"useDynamic":false,"queue":{"id":"arn:aws:connect:us-west-2:662322144989:instance/93ce1761-23ea-4804-b939-7adbcbaf95f7/queue/bf76b2cf-a302-46de-8f39-3f7e2b69ad59","text":"GeneralQueue","arn":null,"metricDetail":null,"resourceId":null}}}],"version":"1","type":"contactFlow","start":"86ec3a71-fa97-4cb0-b03f-18249ad189cb","metadata":{"entryPointPosition":{"x":15,"y":15},"snapToGrid":false,"name":"SCVCB - RouteToAgent","description":"Based off the Sample SCV Inbound included with Voice Setup - adds LEX bot to capture customer call reason and offer SMS","type":"contactFlow","status":"saved","hash":"538d4870446f6189349de3515334512658aa753670890baead5927b1cb4c55bb"}}
+{
+  "modules": [
+    {
+      "id": "6e346866-f534-41dd-a7f8-1185143f6471",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "795393d0-8152-448f-b97f-5be4369dad84"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "No Customer Support agent is available, please call back again. Thank you!",
+          "namespace": null
+        },
+        { "name": "TextToSpeechType", "value": "text" }
+      ],
+      "metadata": { "position": { "x": 2311, "y": 231 }, "useDynamic": false }
+    },
+    {
+      "id": "795393d0-8152-448f-b97f-5be4369dad84",
+      "type": "Disconnect",
+      "branches": [],
+      "parameters": [],
+      "metadata": { "position": { "x": 2595, "y": 344 } }
+    },
+    {
+      "id": "7b05d5eb-140c-4abc-aefc-3f01dc220e71",
+      "type": "InvokeExternalResource",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "55df5666-2c71-4266-8f49-d6b9c022384a"
+        },
+        {
+          "condition": "Error",
+          "transition": "3e3e97a0-8a3f-4d1c-87cc-2958a345fe4f"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "FunctionArn",
+          "value": "arn:aws:lambda:us-west-2:662322144989:function:ServiceCloudVoice-kvsConsumerTrigger",
+          "namespace": null
+        },
+        { "name": "TimeLimit", "value": "8" }
+      ],
+      "metadata": {
+        "position": { "x": 966, "y": 25 },
+        "dynamicMetadata": {},
+        "useDynamic": false
+      },
+      "target": "Lambda"
+    },
+    {
+      "id": "3e3e97a0-8a3f-4d1c-87cc-2958a345fe4f",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "9ba98509-10dd-4cf3-a28a-3724cc8e81e5"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Some error occurred in Starting Realtime Transcription",
+          "namespace": null
+        },
+        { "name": "TextToSpeechType", "value": "text" }
+      ],
+      "metadata": { "position": { "x": 1240, "y": 235 }, "useDynamic": false }
+    },
+    {
+      "id": "cb648498-0b69-4bb7-b804-1f796c3d5b90",
+      "type": "SetAttributes",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "7b05d5eb-140c-4abc-aefc-3f01dc220e71"
+        },
+        {
+          "condition": "Error",
+          "transition": "b973fef0-5529-4dcc-b606-3688502a1736"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "voiceCallId",
+          "key": "voiceCallId",
+          "namespace": "External"
+        }
+      ],
+      "metadata": { "position": { "x": 707, "y": 25 } }
+    },
+    {
+      "id": "b973fef0-5529-4dcc-b606-3688502a1736",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "9ba98509-10dd-4cf3-a28a-3724cc8e81e5"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Error Setting Voice Call Record ID Attribute",
+          "namespace": null
+        },
+        { "name": "TextToSpeechType", "value": "text" }
+      ],
+      "metadata": { "position": { "x": 1005, "y": 313 }, "useDynamic": false }
+    },
+    {
+      "id": "af89b7be-14c3-40e7-a9ab-643748abe7ec",
+      "type": "InvokeExternalResource",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "cb648498-0b69-4bb7-b804-1f796c3d5b90"
+        },
+        {
+          "condition": "Error",
+          "transition": "1a4108e2-9b91-4d7b-a48e-58640425889d"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "FunctionArn",
+          "value": "arn:aws:lambda:us-west-2:662322144989:function:ServiceCloudVoice-InvokeTelephonyIntegrationApiFunction",
+          "namespace": null
+        },
+        { "name": "TimeLimit", "value": "8" },
+        {
+          "name": "Parameter",
+          "key": "methodName",
+          "value": "createVoiceCall",
+          "namespace": null
+        }
+      ],
+      "metadata": {
+        "position": { "x": 441, "y": 25 },
+        "dynamicMetadata": { "methodName": false },
+        "useDynamic": false
+      },
+      "target": "Lambda"
+    },
+    {
+      "id": "1a4108e2-9b91-4d7b-a48e-58640425889d",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "9ba98509-10dd-4cf3-a28a-3724cc8e81e5"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Error Creating Voice Call",
+          "namespace": null
+        },
+        { "name": "TextToSpeechType", "value": "text" }
+      ],
+      "metadata": { "position": { "x": 724, "y": 374 }, "useDynamic": false }
+    },
+    {
+      "id": "9ba98509-10dd-4cf3-a28a-3724cc8e81e5",
+      "type": "Disconnect",
+      "branches": [],
+      "parameters": [],
+      "metadata": { "position": { "x": 1486, "y": 560 } }
+    },
+    {
+      "id": "86ec3a71-fa97-4cb0-b03f-18249ad189cb",
+      "type": "StartMediaStreaming",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "af89b7be-14c3-40e7-a9ab-643748abe7ec"
+        },
+        {
+          "condition": "Error",
+          "transition": "089a722a-0950-4e7a-9d2d-29c0d8ba9214"
+        }
+      ],
+      "parameters": [
+        { "name": "Track", "value": "FromCustomer" },
+        { "name": "Track", "value": "ToCustomer" },
+        { "name": "MediaStreamTypes", "value": "Audio" }
+      ],
+      "metadata": {
+        "position": { "x": 177, "y": 23 },
+        "fromCustomer": true,
+        "toCustomer": true
+      }
+    },
+    {
+      "id": "089a722a-0950-4e7a-9d2d-29c0d8ba9214",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "9ba98509-10dd-4cf3-a28a-3724cc8e81e5"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Error Starting Media Stream.",
+          "namespace": null
+        },
+        { "name": "TextToSpeechType", "value": "text" }
+      ],
+      "metadata": { "position": { "x": 476, "y": 439 }, "useDynamic": false }
+    },
+    {
+      "id": "d35a0203-2f77-49fc-9de8-61c92ce24c62",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "795393d0-8152-448f-b97f-5be4369dad84"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Error in Queue Transfer. The Queue is $.External.VoiceAgentName__c",
+          "namespace": null
+        },
+        { "name": "TextToSpeechType", "value": "text" }
+      ],
+      "metadata": { "position": { "x": 1757, "y": 313 }, "useDynamic": false }
+    },
+    {
+      "id": "55df5666-2c71-4266-8f49-d6b9c022384a",
+      "type": "SetRecordingBehavior",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "a36f4066-a2a9-4c0e-8047-9cdb428ea4e9"
+        }
+      ],
+      "parameters": [
+        { "name": "RecordingBehaviorOption", "value": "Enable" },
+        { "name": "RecordingParticipantOption", "value": "Both" }
+      ],
+      "metadata": { "position": { "x": 1250, "y": 27 } }
+    },
+    {
+      "id": "a355c649-31f7-4080-b6e1-69b0f8f38163",
+      "type": "Transfer",
+      "branches": [
+        {
+          "condition": "AtCapacity",
+          "transition": "6e346866-f534-41dd-a7f8-1185143f6471"
+        },
+        {
+          "condition": "Error",
+          "transition": "6e346866-f534-41dd-a7f8-1185143f6471"
+        }
+      ],
+      "parameters": [],
+      "metadata": {
+        "position": { "x": 2072, "y": 32 },
+        "useDynamic": false,
+        "queue": null
+      },
+      "target": "Queue"
+    },
+    {
+      "id": "a36f4066-a2a9-4c0e-8047-9cdb428ea4e9",
+      "type": "SetQueue",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "a355c649-31f7-4080-b6e1-69b0f8f38163"
+        },
+        {
+          "condition": "Error",
+          "transition": "d35a0203-2f77-49fc-9de8-61c92ce24c62"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Queue",
+          "value": "arn:aws:connect:us-west-2:662322144989:instance/93ce1761-23ea-4804-b939-7adbcbaf95f7/queue/bf76b2cf-a302-46de-8f39-3f7e2b69ad59",
+          "namespace": null,
+          "resourceName": "GeneralQueue"
+        }
+      ],
+      "metadata": {
+        "position": { "x": 1497, "y": 26 },
+        "useDynamic": false,
+        "queue": {
+          "id": "arn:aws:connect:us-west-2:662322144989:instance/93ce1761-23ea-4804-b939-7adbcbaf95f7/queue/bf76b2cf-a302-46de-8f39-3f7e2b69ad59",
+          "text": "GeneralQueue",
+          "arn": null,
+          "metricDetail": null,
+          "resourceId": null
+        }
+      }
+    }
+  ],
+  "version": "1",
+  "type": "contactFlow",
+  "start": "86ec3a71-fa97-4cb0-b03f-18249ad189cb",
+  "metadata": {
+    "entryPointPosition": { "x": 15, "y": 15 },
+    "snapToGrid": false,
+    "name": "SCVCB - RouteToAgent",
+    "description": "Based off the Sample SCV Inbound included with Voice Setup - adds LEX bot to capture customer call reason and offer SMS",
+    "type": "contactFlow",
+    "status": "saved",
+    "hash": "538d4870446f6189349de3515334512658aa753670890baead5927b1cb4c55bb"
+  }
+}
