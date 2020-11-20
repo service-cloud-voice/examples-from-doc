@@ -1,0 +1,146 @@
+{
+  "modules": [
+    {
+      "id": "6238ff10-48a2-4255-a5fe-f3d9e7ee208c",
+      "type": "Disconnect",
+      "branches": [],
+      "parameters": [],
+      "metadata": { "position": { "x": 1278, "y": 139.70009199632014 } }
+    },
+    {
+      "id": "e110a5f9-251e-4c82-874c-a42a62286297",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "6238ff10-48a2-4255-a5fe-f3d9e7ee208c"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Thank You. You will receive an SMS inviting you to message with our support team. You may hang up now.",
+          "namespace": null
+        },
+        { "name": "TextToSpeechType", "value": "text" }
+      ],
+      "metadata": {
+        "position": { "x": 854, "y": 42.70009199632015 },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "2757b8ef-bdaa-4586-940f-9f54208b9d33",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "6238ff10-48a2-4255-a5fe-f3d9e7ee208c"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Error Creating Voice Record for Callback",
+          "namespace": null
+        },
+        { "name": "TextToSpeechType", "value": "text" }
+      ],
+      "metadata": {
+        "position": { "x": 919, "y": 252.70009199632014 },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "ffc71b5b-8a78-415e-8f37-8e5130d6edf0",
+      "type": "InvokeExternalResource",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "e110a5f9-251e-4c82-874c-a42a62286297"
+        },
+        {
+          "condition": "Error",
+          "transition": "2757b8ef-bdaa-4586-940f-9f54208b9d33"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "FunctionArn",
+          "value": "arn:aws:lambda:us-west-2:662322144989:function:ServiceCloudVoice-InvokeTelephonyIntegrationApiFunction",
+          "namespace": null
+        },
+        { "name": "TimeLimit", "value": "8" },
+        {
+          "name": "Parameter",
+          "key": "methodName",
+          "value": "createVoiceCall",
+          "namespace": null
+        }
+      ],
+      "metadata": {
+        "position": { "x": 469, "y": 21.700091996320147 },
+        "dynamicMetadata": { "methodName": false },
+        "useDynamic": false
+      },
+      "target": "Lambda"
+    },
+    {
+      "id": "7e95aee7-f949-43d1-879f-e77c8b5b550a",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "6238ff10-48a2-4255-a5fe-f3d9e7ee208c"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Error setting SMS IVR Selection Attribute.",
+          "namespace": null
+        },
+        { "name": "TextToSpeechType", "value": "text" }
+      ],
+      "metadata": {
+        "position": { "x": 560, "y": 333.70009199632017 },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "f4431947-c22c-4f4e-9115-16a1debfb139",
+      "type": "SetAttributes",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "ffc71b5b-8a78-415e-8f37-8e5130d6edf0"
+        },
+        {
+          "condition": "Error",
+          "transition": "7e95aee7-f949-43d1-879f-e77c8b5b550a"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "SMSTransfer",
+          "key": "sfdc-IVRType__c",
+          "namespace": null
+        }
+      ],
+      "metadata": { "position": { "x": 218, "y": 24.700091996320147 } }
+    }
+  ],
+  "version": "1",
+  "type": "contactFlow",
+  "start": "f4431947-c22c-4f4e-9115-16a1debfb139",
+  "metadata": {
+    "entryPointPosition": { "x": 15, "y": 15.700091996320147 },
+    "snapToGrid": false,
+    "name": "SCVCB - SMS Transfer",
+    "description": "Creates a Voice Call record with the SMSTransfer call reason.",
+    "type": "contactFlow",
+    "status": "published",
+    "hash": "934c46b163bd7be6de1c45ed419d01c5a7e958ac8ee2f1ea053b0c6960585d0f"
+  }
+}
