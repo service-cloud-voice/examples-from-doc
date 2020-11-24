@@ -1,12 +1,12 @@
 # Service Cloud Voice Toolkit API
 
-This Lightning component illustrates how to use the Service Cloud Voice Toolkit API.
-
-To learn about Voice, see [Service Cloud Voice in Salesforce Help](https://help.salesforce.com/articleView?id=voice_about.htm&type=5). Also refer to the [Voice Implementation Guide](https://developer.salesforce.com/docs/atlas.en-us.voice_developer_guide.meta/voice_developer_guide/voice_intro.htm).
+This Lightning component illustrates how to use the Service Cloud Voice Toolkit API. To learn about Service Cloud Voice, see [Service Cloud Voice in Salesforce Help](https://help.salesforce.com/articleView?id=voice_about.htm&type=5). Also refer to the [Voice Implementation Guide](https://developer.salesforce.com/docs/atlas.en-us.voice_developer_guide.meta/voice_developer_guide/voice_intro.htm).
 
 * [Sample Component](SampleComponent/): This Aura Lightning component demonstrates the functionality of the Toolkit API.
 
-This example illustrates some of the basic features of the Service Cloud Voice Toolkit API. To use this Lightning component in your production environment, you may have to make some changes to support your use case.
+## Handling Events with This Component
+
+The [sample component](SampleComponent/) illustrates some of the basic features of the Service Cloud Voice Toolkit API. To use this Lightning component in your production environment, you may have to make some changes to support your use case.
 
 For example, if you place this component in a page layout for a VoiceCall record and you have multiple tabs showing VoiceCall records, then your component event listener will receive the same event multiple times. To avoid this situation, change how the component is implemented.
 
