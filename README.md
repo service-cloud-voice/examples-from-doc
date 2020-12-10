@@ -11,3 +11,4 @@ Service Cloud Voice examples that are referenced from Salesforce documentation.
 
 * [Contact Flows](ContactFlows/)
 * [Toolkit API](ToolkitAPI/)
+* [Examples of Common Use Cases](Recipes/)
