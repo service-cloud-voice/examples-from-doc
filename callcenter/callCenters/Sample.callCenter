@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <CallCenter xmlns="http://soap.sforce.com/2006/04/metadata">
     <adapterUrl>https://org3-stmfb.my.stmfb.stm.salesforce.com/hvcc/amz/index.html</adapterUrl>
-    <customSettings>{&quot;reqTimeout&quot;:&quot;5000&quot;,&quot;reqCallCenterType&quot;:&quot;SCVOOTBTelephony&quot;,&quot;reqStandbyUrl&quot;:&quot;https://domain:port/softphone&quot;,&quot;reqSoftphoneHeight&quot;:&quot;300&quot;,&quot;reqUseApi&quot;:&quot;true&quot;,&quot;reqSoftphoneWidth&quot;:&quot;500&quot;,&quot;reqSalesforceCompatibilityMode&quot;:&quot;Lightning&quot;}</customSettings>
-    <displayName>Sample CallCenter</displayName>
+    <customSettings>{&quot;reqSoftphoneHeight&quot;:&quot;1&quot;,&quot;reqUseApi&quot;:&quot;true&quot;,&quot;reqSoftphoneWidth&quot;:&quot;1&quot;,&quot;reqSalesforceCompatibilityMode&quot;:&quot;Lightning&quot;}</customSettings>
+    <displayName>Sample</displayName>
     <displayNameLabel>Display Name</displayNameLabel>
-    <internalNameLabel>Sample</internalNameLabel>
+    <internalNameLabel>InternalName</internalNameLabel>
     <sections>
         <items>
             <label>CTI Adapter URL</label>
