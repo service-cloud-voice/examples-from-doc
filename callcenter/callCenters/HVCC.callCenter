@@ -1,7 +1,7 @@
 <CallCenter xmlns="http://soap.sforce.com/2006/04/metadata">
     <adapterUrl>https://org3-stmfb.my.stmfb.stm.salesforce.com/hvcc/amz/index.html</adapterUrl>
     <customSettings>{&quot;reqSoftphoneHeight&quot;:&quot;1&quot;,&quot;reqUseApi&quot;:&quot;true&quot;,&quot;reqSoftphoneWidth&quot;:&quot;1&quot;,&quot;reqSalesforceCompatibilityMode&quot;:&quot;Lightning&quot;}</customSettings>
-    <displayName>Sample</displayName>
+    <displayName>HVCC</displayName>
     <displayNameLabel>Display Name</displayNameLabel>
     <internalNameLabel>InternalName</internalNameLabel>
     <sections>
