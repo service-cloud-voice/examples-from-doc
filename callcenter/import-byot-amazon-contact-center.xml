@@ -1,17 +1,17 @@
 <callCenter>
     <section sortOrder="0" name="reqGeneralInfo" label="General Info">
-        <item sortOrder="0" name="reqInternalName" label="Internal Name">{replace this desired internal name} </item>
-        <item sortOrder="1" name="reqDisplayName" label="Display Name">{replace this desired display name }</item>
+        <item sortOrder="0" name="reqInternalName" label="Internal Name">{replace this desired internal name}</item>
+        <item sortOrder="1" name="reqDisplayName" label="Display Name">{replace this desired display name}</item>
         <item sortOrder="2" name="reqVendorInfoApiName" label="Conversation Vendor Info Developer Name">c__AMAZON_CONNECT</item>
     </section>
     <section sortOrder="1" name="reqHvcc" label="HVCC Settings">
-        <item sortOrder="0" name="reqRelayState" label="Relay State"> {replace this URL with your federated role ARN} https://ap-southeast-2.console.aws.amazon.com/connect/federate/123456abcd-0367-42bd-962d-50b329761d61</item>
+        <item sortOrder="0" name="reqRelayState" label="Relay State">{replace this URL with your federated role ARN} https://ap-southeast-2.console.aws.amazon.com/connect/federate/123456abcd-0367-42bd-962d-50b329761d61</item>
         <item sortOrder="1" name="reqIdentityUrl" label="Identity URL">{replace this URL with your IdP-Initiated Login URL} https://example.my.salesforce.com/idp/login?app=0spRM0000004CgQ</item>
         <item sortOrder="2" name="reqTelephonyIntegrationCertificate" label="Telephony Integration Certificate">-----BEGIN CERTIFICATE-----
 ...
 -----END CERTIFICATE-----</item>
         <item sortOrder="3" name="reqInstanceName" label="Instance Name">{replace this value with your Amazon Connect instance name} AmazonConnectInstanceName</item>
         <item sortOrder="4" name="reqInstanceRecordingRole" label="Instance Recording Role">arn:aws:iam::{Customer Account Id}:role/{Call Center Internal Name}-ConnectCallRole</item>
-         <item sortOrder="5" name="reqLongDistPrefix" label="Long Distance Prefix">+1</item>
+        <item sortOrder="5" name="reqLongDistPrefix" label="Long Distance Prefix">+1</item>
     </section>
 </callCenter>
