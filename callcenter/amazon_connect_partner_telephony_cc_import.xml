@@ -34,15 +34,15 @@ wJnKaUgZQwphWGOMQ+YrLpuBIHcswr20OCil+0DwggQGsRz0WkDg/+Z0G553rWVR
 DZg=
 -----END CERTIFICATE-----</item>
         <item sortOrder="3" name="reqLongDistPrefix" label="Long Distance Prefix">+1</item>
+        <item sortOrder="4" name="reqInstanceName" label="Instance Name">AmazonConnectInstanceName</item>
+        <item sortOrder="5" name="reqInstanceRecordingRole" label="Instance Recording Role">arn:aws:iam::{Customer Account Id}:role/byotAmazonConnect-ConnectCallRole</item>
     </section>
 
 
     <!-- All below sections below contain vendor settings-->
     <section sortOrder="2" name="AmazonConnectSettings" label="Amazon Connect Settings">
-        <item sortOrder="0" name="reqInstanceName" label="Instance Name">AmazonConnectInstanceName</item>
-        <item sortOrder="1" name="reqInstanceRecordingRole" label="Instance Recording Role">arn:aws:iam::{Customer Account Id}:role/byotAmazonConnect-ConnectCallRole</item>
-        <item sortOrder="2" name="reqRegion" label="Region">us-west-2</item>
-        <item sortOrder="3" name="reqSettingsRelayState" label="Settings Relay State">https://us-west-2.console.aws.amazon.com/connect/federate/4438c192-4536-4b14-8b4c-7b1267458a33</item>
+        <item sortOrder="0" name="reqRegion" label="Region">us-west-2</item>
+        <item sortOrder="1" name="reqSettingsRelayState" label="Settings Relay State">https://us-west-2.console.aws.amazon.com/connect/federate/4438c192-4536-4b14-8b4c-7b1267458a33</item>
     </section>
 </callCenter>
 
