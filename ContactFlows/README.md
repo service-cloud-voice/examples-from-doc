@@ -7,13 +7,13 @@ To learn about Voice, see [Service Cloud Voice in Salesforce Help](https://help.
 
 ## Basic Flows
 
-* [Sample_SCV_Agent_Transfer](Sample_SCV_Agent_Transfer): This contact flow defines the customer experience when a call is transferred from one agent to another agent.
+* [Sample_SCV_Inbound_Flow_With_Transcription](Sample_SCV_Inbound_Flow_With_Transcription): This contact flow defines a basic interactive voice response (IVR) flow that includes creating a VoiceCall record in Salesforce and turning on transcription.
+* [Sample_SCV_Outbound_Flow_With_Transcription](Sample_SCV_Outbound_Flow_With_Transcription): This contact flow defines the customer experience for an outbound call (the agent calling the customer) where transcription is enabled.
+* [Sample_SCV_Agent_Transfer](Sample_SCV_Agent_Transfer): This contact flow illustrates the customer experience when a call is transferred from one agent to another agent.
+* [Sample_SCV_Queue_Transfer](Sample_SCV_Queue_Transfer): This contact flow illustrates the customer experience when a call is transferred to a queue.
 * [Sample_SCV_Inbound](Sample_SCV_Inbound): This contact flow defines the customer experience for an inbound call (that is, when a customer calls your contact center).
-* [Sample_SCV_Inbound_Flow_With_Transcription](Sample_SCV_Inbound_Flow_With_Transcription): This contact flow defines the customer experience for an inbound call where transcription is enabled.
-* [Sample_SCV_Outbound_Flow_With_Transcription](Sample_SCV_Outbound_Flow_With_Transcription): This contact flow defines the customer experience for an outbound call (that is, the agent calls the customer) where transcription is enabled.
-* [Sample_SCV_Queue_Transfer](Sample_SCV_Queue_Transfer): This contact flow defines the customer experience when a call is transferred to a queue.
 
 ## Salesforce REST API Flows
 
-* [Sample_SCV_REST_Check_For_Open_Cases](Sample_SCV_REST_Check_For_Open_Cases): This sample contact flow demonstrates the `InvokeSalesforceRestApiFunction` Lambda function by checking for open cases.
-* [Sample_SCV_REST_Link_Call_To_Case](Sample_SCV_REST_Link_Call_To_Case): This sample contact flow demonstrates the `InvokeSalesforceRestApiFunction` Lambda function by linking a call to an open case. This flow adds on to the simpler [Sample_SCV_REST_Check_For_Open_Cases](Sample_SCV_REST_Check_For_Open_Cases) contact flow.
+* [Sample_SCV_REST_Check_For_Open_Cases](Sample_SCV_REST_Check_For_Open_Cases): This sample contact flow demonstrates how to check for open cases using the `InvokeSalesforceRestApiFunction` Lambda function.
+* [Sample_SCV_REST_Link_Call_To_Case](Sample_SCV_REST_Link_Call_To_Case): This sample contact flow demonstrates how to link a call to an open case using the `InvokeSalesforceRestApiFunction` Lambda function. This flow adds on to the simpler [Sample_SCV_REST_Check_For_Open_Cases](Sample_SCV_REST_Check_For_Open_Cases) contact flow.
