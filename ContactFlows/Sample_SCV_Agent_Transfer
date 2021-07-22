@@ -1,33 +1,135 @@
 {
+  "start": "28d63d08-ddcb-48f8-99e7-e7883ad7f30b",
+  "version": "1",
   "modules": [
     {
-      "id": "ff15cc41-856b-4f89-9fec-20d34a4f056b",
-      "type": "Transfer",
+      "id": "23a1264b-7708-48ad-84a7-e0d9ba772a56",
       "branches": [],
       "parameters": [],
       "metadata": {
         "position": {
-          "x": 791,
-          "y": 230
+          "x": 1658,
+          "y": 178
         },
         "useDynamic": false
       },
+      "type": "Transfer",
       "target": "Agent"
     },
     {
-      "id": "5e641eb0-0e27-4f78-9e3e-5d8cd35a4ac5",
-      "type": "PlayPrompt",
+      "id": "8a686eac-6f29-49bd-89d0-c3d6264f5c25",
       "branches": [
         {
           "condition": "Success",
-          "transition": "fb47cb81-7c12-4ad9-b12f-89f91b840750"
+          "transition": "23a1264b-7708-48ad-84a7-e0d9ba772a56"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "RecordingBehaviorOption",
+          "value": "Enable"
+        },
+        {
+          "name": "RecordingParticipantOption",
+          "value": "Both"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1412,
+          "y": 164
+        }
+      },
+      "type": "SetRecordingBehavior"
+    },
+    {
+      "id": "28d63d08-ddcb-48f8-99e7-e7883ad7f30b",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "a200ee53-94d2-4e85-853b-7d3100e5fdd7"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "LoggingBehavior",
+          "value": "Enable"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 176,
+          "y": 39
+        }
+      },
+      "type": "SetLoggingBehavior"
+    },
+    {
+      "id": "a200ee53-94d2-4e85-853b-7d3100e5fdd7",
+      "branches": [
+        {
+          "condition": "Looping",
+          "transition": "10ddcd29-fc62-4ba7-9259-1e15cc03b549"
+        },
+        {
+          "condition": "Complete",
+          "transition": "658f91a9-981b-4f5c-8c62-8e6c8263905c"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "LoopCount",
+          "value": "2"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 417,
+          "y": 38
+        },
+        "useDynamic": false
+      },
+      "type": "Loop"
+    },
+    {
+      "id": "658f91a9-981b-4f5c-8c62-8e6c8263905c",
+      "branches": [
+        {
+          "condition": "Error",
+          "transition": "d7185b3f-5eca-4bc4-92f7-8861ab8c8d7f"
+        },
+        {
+          "condition": "Success",
+          "transition": "d7185b3f-5eca-4bc4-92f7-8861ab8c8d7f"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "VoiceCall record creation failed.",
+          "key": "error"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 799,
+          "y": 263
+        }
+      },
+      "type": "SetAttributes"
+    },
+    {
+      "id": "d7185b3f-5eca-4bc4-92f7-8861ab8c8d7f",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "8a686eac-6f29-49bd-89d0-c3d6264f5c25"
         }
       ],
       "parameters": [
         {
           "name": "Text",
-          "value": "Transferring now to an Available Agent",
-          "namespace": null
+          "value": "Transferring now to an available agent."
         },
         {
           "name": "TextToSpeechType",
@@ -36,23 +138,63 @@
       ],
       "metadata": {
         "position": {
-          "x": 517,
-          "y": 42
+          "x": 1162,
+          "y": 164
         },
         "useDynamic": false
-      }
+      },
+      "type": "PlayPrompt"
     },
     {
-      "id": "a84eafe1-3bf5-4d37-bf24-4d17623bebf5",
-      "type": "SetAttributes",
+      "id": "10ddcd29-fc62-4ba7-9259-1e15cc03b549",
       "branches": [
         {
-          "condition": "Success",
-          "transition": "5e641eb0-0e27-4f78-9e3e-5d8cd35a4ac5"
+          "condition": "Error",
+          "transition": "a200ee53-94d2-4e85-853b-7d3100e5fdd7"
         },
         {
+          "condition": "Success",
+          "transition": "7cae6c44-6911-4e40-bbf7-f0855d10c69e"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "FunctionArn",
+          "value": "arn:aws:lambda:us-west-2:589596482256:function:SCV2-InvokeTelephonyIntegrationApiFunction:active"
+        },
+        {
+          "name": "TimeLimit",
+          "value": "8"
+        },
+        {
+          "name": "Parameter",
+          "value": "createTransferVC",
+          "key": "methodName"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 675,
+          "y": 31
+        },
+        "dynamicMetadata": {
+          "methodName": false
+        },
+        "useDynamic": false
+      },
+      "type": "InvokeExternalResource",
+      "target": "Lambda"
+    },
+    {
+      "id": "7cae6c44-6911-4e40-bbf7-f0855d10c69e",
+      "branches": [
+        {
           "condition": "Error",
-          "transition": "5e641eb0-0e27-4f78-9e3e-5d8cd35a4ac5"
+          "transition": "d7185b3f-5eca-4bc4-92f7-8861ab8c8d7f"
+        },
+        {
+          "condition": "Success",
+          "transition": "d7185b3f-5eca-4bc4-92f7-8861ab8c8d7f"
         }
       ],
       "parameters": [
@@ -65,93 +207,23 @@
       ],
       "metadata": {
         "position": {
-          "x": 444,
-          "y": 343
-        }
-      }
-    },
-    {
-      "id": "b43becd2-b08d-4320-8b7f-a0eadfd42c63",
-      "type": "InvokeExternalResource",
-      "branches": [
-        {
-          "condition": "Success",
-          "transition": "a84eafe1-3bf5-4d37-bf24-4d17623bebf5"
-        },
-        {
-          "condition": "Error",
-          "transition": "5e641eb0-0e27-4f78-9e3e-5d8cd35a4ac5"
-        }
-      ],
-      "parameters": [
-        {
-          "name": "FunctionArn",
-          "value": "arn:aws:lambda:ap-southeast-2:812113044155:function:hvccstagingstack-InvokeTelephonyIntegrationApiFunc-6P1GT7427IPE",
-          "namespace": null
-        },
-        {
-          "name": "TimeLimit",
-          "value": "8"
-        },
-        {
-          "name": "Parameter",
-          "key": "methodName",
-          "value": "createTransferVC",
-          "namespace": null
-        }
-      ],
-      "metadata": {
-        "position": {
-          "x": 113,
-          "y": 270
-        },
-        "dynamicMetadata": {
-          "methodName": false
-        },
-        "useDynamic": false
-      },
-      "target": "Lambda"
-    },
-    {
-      "branches": [
-        {
-          "condition": "Success",
-          "transition": "ff15cc41-856b-4f89-9fec-20d34a4f056b"
-        }
-      ],
-      "id": "fb47cb81-7c12-4ad9-b12f-89f91b840750",
-      "metadata": {
-        "position": {
-          "x": 745,
-          "y": 18
+          "x": 908,
+          "y": 32
         }
       },
-      "parameters": [
-        {
-          "name": "RecordingBehaviorOption",
-          "value": "Enable"
-        },
-        {
-          "name": "RecordingParticipantOption",
-          "value": "Both"
-        }
-      ],
-      "type": "SetRecordingBehavior"
+      "type": "SetAttributes"
     }
   ],
-  "version": "1",
-  "type": "agentTransfer",
-  "start": "b43becd2-b08d-4320-8b7f-a0eadfd42c63",
   "metadata": {
     "entryPointPosition": {
-      "x": 13,
-      "y": 69
+      "x": 17,
+      "y": 37
     },
     "snapToGrid": false,
     "name": "Sample SCV Agent Transfer",
-    "description": "Sample SCV Agent Transfer",
+    "description": "Creates a Voice Call record and transfers the call to the specified agent.",
     "type": "agentTransfer",
     "status": "published",
-    "hash": "d62fcc9c6bba4fece0a65c1d8d6eb163c43f4ea6b84cfb0950067b4711d31d6d"
+    "hash": "0a7a4e45613c57e7972fa638da620c36cf0a148190202a78b82792d4d6cac701"
   }
 }
