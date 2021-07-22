@@ -1,736 +1,878 @@
 {
-    "modules": [
+  "modules": [
+    {
+      "id": "5197ed08-9111-4336-9681-ad41f218c5f0",
+      "type": "SetCallBackNumber",
+      "branches": [
         {
-            "id": "6e346866-f534-41dd-a7f8-1185143f6471",
-            "type": "PlayPrompt",
-            "branches": [
-                {
-                    "condition": "Success",
-                    "transition": "297861e7-f675-4a81-8f49-8873b469f5a1"
-                }
-            ],
-            "parameters": [
-                {
-                    "name": "Text",
-                    "value": "No Customer Support agent is available, please call back again. Thank you",
-                    "namespace": null
-                },
-                {
-                    "name": "TextToSpeechType",
-                    "value": "text"
-                }
-            ],
-            "metadata": {
-                "position": {
-                    "x": 3086,
-                    "y": 275
-                },
-                "useDynamic": false
-            }
+          "condition": "Success",
+          "transition": "754960f8-b7e8-488c-9d54-f01bd60083c4"
         },
         {
-            "id": "35e4005e-ed2a-49eb-8960-c1ce7cbe611c",
-            "type": "PlayPrompt",
-            "branches": [
-                {
-                    "condition": "Success",
-                    "transition": "297861e7-f675-4a81-8f49-8873b469f5a1"
-                }
-            ],
-            "parameters": [
-                {
-                    "name": "Text",
-                    "value": "Error Occurred setting Contact Attribute",
-                    "namespace": null
-                },
-                {
-                    "name": "TextToSpeechType",
-                    "value": "text"
-                }
-            ],
-            "metadata": {
-                "position": {
-                    "x": 622,
-                    "y": 248
-                },
-                "useDynamic": false
-            }
+          "condition": "InvalidPhoneNumber",
+          "transition": "6222f537-3eb7-461b-9def-6be4f01ed693"
         },
         {
-            "id": "463162a5-566d-48a4-b603-9ef23b04ed4b",
-            "type": "PlayPrompt",
-            "branches": [
-                {
-                    "condition": "Success",
-                    "transition": "297861e7-f675-4a81-8f49-8873b469f5a1"
-                }
-            ],
-            "parameters": [
-                {
-                    "name": "Text",
-                    "value": "Error occurred when starting streaming",
-                    "namespace": null
-                },
-                {
-                    "name": "TextToSpeechType",
-                    "value": "text"
-                }
-            ],
-            "metadata": {
-                "position": {
-                    "x": 2109,
-                    "y": 257
-                },
-                "useDynamic": false
-            }
-        },
-        {
-            "id": "a355c649-31f7-4080-b6e1-69b0f8f38163",
-            "type": "Transfer",
-            "branches": [
-                {
-                    "condition": "AtCapacity",
-                    "transition": "6e346866-f534-41dd-a7f8-1185143f6471"
-                },
-                {
-                    "condition": "Error",
-                    "transition": "6e346866-f534-41dd-a7f8-1185143f6471"
-                }
-            ],
-            "parameters": [],
-            "metadata": {
-                "position": {
-                    "x": 3085,
-                    "y": 28
-                },
-                "useDynamic": false,
-                "queue": null
-            },
-            "target": "Queue"
-        },
-        {
-            "id": "55df5666-2c71-4266-8f49-d6b9c022384a",
-            "type": "SetRecordingBehavior",
-            "branches": [
-                {
-                    "condition": "Success",
-                    "transition": "a355c649-31f7-4080-b6e1-69b0f8f38163"
-                }
-            ],
-            "parameters": [
-                {
-                    "name": "RecordingBehaviorOption",
-                    "value": "Enable"
-                },
-                {
-                    "name": "RecordingParticipantOption",
-                    "value": "Both"
-                }
-            ],
-            "metadata": {
-                "position": {
-                    "x": 2862,
-                    "y": 21
-                }
-            }
-        },
-        {
-            "id": "caf8c744-4ea8-448d-ae1b-c5b502a5cb81",
-            "type": "PlayPrompt",
-            "branches": [
-                {
-                    "condition": "Success",
-                    "transition": "978267ce-0dec-4d3a-80aa-fa033e93c6a8"
-                }
-            ],
-            "parameters": [
-                {
-                    "name": "Text",
-                    "value": "There is a problem with the phone number you entered. Please try again.",
-                    "namespace": null
-                },
-                {
-                    "name": "TextToSpeechType",
-                    "value": "text"
-                }
-            ],
-            "metadata": {
-                "position": {
-                    "x": 1637,
-                    "y": 792
-                },
-                "useDynamic": false
-            }
-        },
-        {
-            "id": "978267ce-0dec-4d3a-80aa-fa033e93c6a8",
-            "type": "StoreUserInput",
-            "branches": [
-                {
-                    "condition": "Success",
-                    "transition": "6144e3d6-b965-43e1-b620-f84a7c89a0c7"
-                },
-                {
-                    "condition": "InvalidNumber",
-                    "transition": "caf8c744-4ea8-448d-ae1b-c5b502a5cb81"
-                },
-                {
-                    "condition": "Error",
-                    "transition": "caf8c744-4ea8-448d-ae1b-c5b502a5cb81"
-                }
-            ],
-            "parameters": [
-                {
-                    "name": "Text",
-                    "value": "Please enter the phone number you would like to be called back at."
-                },
-                {
-                    "name": "TextToSpeechType",
-                    "value": "text"
-                },
-                {
-                    "name": "CustomerInputType",
-                    "value": "PhoneNumber"
-                },
-                {
-                    "name": "Timeout",
-                    "value": "5"
-                },
-                {
-                    "name": "PhoneNumberFormat",
-                    "value": "Local"
-                },
-                {
-                    "name": "CountryCode",
-                    "value": "US"
-                }
-            ],
-            "metadata": {
-                "position": {
-                    "x": 1633,
-                    "y": 520
-                },
-                "useDynamic": false,
-                "useDynamicForEncryptionKeys": true,
-                "useDynamicForTerminatorDigits": false,
-                "countryCodePrefix": "+1"
-            }
-        },
-        {
-            "id": "a2e856a6-b552-40be-a599-9f77fd6eb79a",
-            "type": "SetLoggingBehavior",
-            "branches": [
-                {
-                    "condition": "Success",
-                    "transition": "1c8f470a-17f9-4fb0-8922-931d8e57bfd6"
-                }
-            ],
-            "parameters": [
-                {
-                    "name": "LoggingBehavior",
-                    "value": "Enable"
-                }
-            ],
-            "metadata": {
-                "position": {
-                    "x": 398,
-                    "y": 20
-                }
-            }
-        },
-        {
-            "id": "297861e7-f675-4a81-8f49-8873b469f5a1",
-            "type": "Disconnect",
-            "branches": [],
-            "parameters": [],
-            "metadata": {
-                "position": {
-                    "x": 2392,
-                    "y": 475
-                }
-            }
-        },
-        {
-            "id": "cb648498-0b69-4bb7-b804-1f796c3d5b90",
-            "type": "SetAttributes",
-            "branches": [
-                {
-                    "condition": "Success",
-                    "transition": "a36f4066-a2a9-4c0e-8047-9cdb428ea4e9"
-                },
-                {
-                    "condition": "Error",
-                    "transition": "a36f4066-a2a9-4c0e-8047-9cdb428ea4e9"
-                }
-            ],
-            "parameters": [
-                {
-                    "name": "Attribute",
-                    "value": "voiceCallId",
-                    "key": "voiceCallId",
-                    "namespace": "External"
-                }
-            ],
-            "metadata": {
-                "position": {
-                    "x": 1100,
-                    "y": 22
-                }
-            }
-        },
-        {
-            "id": "1c8f470a-17f9-4fb0-8922-931d8e57bfd6",
-            "type": "SetAttributes",
-            "branches": [
-                {
-                    "condition": "Success",
-                    "transition": "af89b7be-14c3-40e7-a9ab-643748abe7ec"
-                },
-                {
-                    "condition": "Error",
-                    "transition": "35e4005e-ed2a-49eb-8960-c1ce7cbe611c"
-                }
-            ],
-            "parameters": [
-                {
-                    "name": "Attribute",
-                    "value": "en-US",
-                    "key": "languageCode",
-                    "namespace": null
-                }
-            ],
-            "metadata": {
-                "position": {
-                    "x": 622,
-                    "y": 20
-                }
-            }
-        },
-        {
-            "id": "af89b7be-14c3-40e7-a9ab-643748abe7ec",
-            "type": "InvokeExternalResource",
-            "branches": [
-                {
-                    "condition": "Success",
-                    "transition": "cb648498-0b69-4bb7-b804-1f796c3d5b90"
-                },
-                {
-                    "condition": "Error",
-                    "transition": "a36f4066-a2a9-4c0e-8047-9cdb428ea4e9"
-                }
-            ],
-            "parameters": [
-                {
-                    "name": "FunctionArn",
-                    "value": "arn:aws:lambda:eu-central-1:554955467611:function:scv230-InvokeTelephonyIntegrationApiFunction",
-                    "namespace": null
-                },
-                {
-                    "name": "TimeLimit",
-                    "value": "8"
-                },
-                {
-                    "name": "Parameter",
-                    "key": "methodName",
-                    "value": "createVoiceCall",
-                    "namespace": null
-                }
-            ],
-            "metadata": {
-                "position": {
-                    "x": 856,
-                    "y": 23
-                },
-                "dynamicMetadata": {
-                    "methodName": false
-                },
-                "useDynamic": false
-            },
-            "target": "Lambda"
-        },
-        {
-            "id": "ba162630-7c3e-4179-8350-00eb5ab8313e",
-            "type": "PlayPrompt",
-            "branches": [
-                {
-                    "condition": "Success",
-                    "transition": "297861e7-f675-4a81-8f49-8873b469f5a1"
-                }
-            ],
-            "parameters": [
-                {
-                    "name": "Text",
-                    "value": "An agent will call you back at your requested phone number. Good bye.",
-                    "namespace": null
-                },
-                {
-                    "name": "TextToSpeechType",
-                    "value": "text"
-                }
-            ],
-            "metadata": {
-                "position": {
-                    "x": 2344,
-                    "y": 613
-                },
-                "useDynamic": false
-            }
-        },
-        {
-            "id": "6144e3d6-b965-43e1-b620-f84a7c89a0c7",
-            "type": "SetCallBackNumber",
-            "branches": [
-                {
-                    "condition": "Success",
-                    "transition": "2bd1358f-13b3-40c4-bcd7-4829c12baf1f"
-                },
-                {
-                    "condition": "InvalidPhoneNumber",
-                    "transition": "caf8c744-4ea8-448d-ae1b-c5b502a5cb81"
-                },
-                {
-                    "condition": "NonDialableNumber",
-                    "transition": "caf8c744-4ea8-448d-ae1b-c5b502a5cb81"
-                }
-            ],
-            "parameters": [
-                {
-                    "name": "CallBackNumber",
-                    "value": "Stored customer input",
-                    "namespace": "System"
-                }
-            ],
-            "metadata": {
-                "position": {
-                    "x": 1874,
-                    "y": 561
-                }
-            }
-        },
-        {
-            "id": "2bd1358f-13b3-40c4-bcd7-4829c12baf1f",
-            "type": "CreateCallback",
-            "branches": [
-                {
-                    "condition": "Success",
-                    "transition": "ba162630-7c3e-4179-8350-00eb5ab8313e"
-                },
-                {
-                    "condition": "Error",
-                    "transition": "d35a0203-2f77-49fc-9de8-61c92ce24c62"
-                }
-            ],
-            "parameters": [
-                {
-                    "name": "InitialDelaySeconds",
-                    "value": 60
-                },
-                {
-                    "name": "RetryDelaySeconds",
-                    "value": 600
-                },
-                {
-                    "name": "MaxRetryAttempts",
-                    "value": 2
-                }
-            ],
-            "metadata": {
-                "position": {
-                    "x": 2104,
-                    "y": 575
-                },
-                "useDynamic": false,
-                "queue": null
-            }
-        },
-        {
-            "id": "5b5ac39e-50db-4126-b28c-3a6ad9d929c0",
-            "type": "GetUserInput",
-            "branches": [
-                {
-                    "condition": "Evaluate",
-                    "conditionType": "Equals",
-                    "conditionValue": "1",
-                    "transition": "86ec3a71-fa97-4cb0-b03f-18249ad189cb"
-                },
-                {
-                    "condition": "Evaluate",
-                    "conditionType": "Equals",
-                    "conditionValue": "2",
-                    "transition": "978267ce-0dec-4d3a-80aa-fa033e93c6a8"
-                },
-                {
-                    "condition": "Timeout",
-                    "transition": "86ec3a71-fa97-4cb0-b03f-18249ad189cb"
-                },
-                {
-                    "condition": "NoMatch",
-                    "transition": "86ec3a71-fa97-4cb0-b03f-18249ad189cb"
-                },
-                {
-                    "condition": "Error",
-                    "transition": "d35a0203-2f77-49fc-9de8-61c92ce24c62"
-                }
-            ],
-            "parameters": [
-                {
-                    "name": "Text",
-                    "value": "Your wait time to speak with an agent is greater than 5 minutes. Press 1 or stay on the phone to wait. Press 2 to receive a callback when it is your turn.",
-                    "namespace": null
-                },
-                {
-                    "name": "TextToSpeechType",
-                    "value": "text"
-                },
-                {
-                    "name": "Timeout",
-                    "value": "5"
-                },
-                {
-                    "name": "MaxDigits",
-                    "value": "1"
-                }
-            ],
-            "metadata": {
-                "position": {
-                    "x": 1847,
-                    "y": 34
-                },
-                "conditionMetadata": [
-                    {
-                        "id": "9225b9dd-7aa7-43f3-82b4-bdd6570f8864",
-                        "value": "1"
-                    },
-                    {
-                        "id": "e5f8e245-4a1c-4989-93fa-6d8971ccf0ba",
-                        "value": "2"
-                    }
-                ],
-                "useDynamic": false
-            },
-            "target": "Digits"
-        },
-        {
-            "id": "d35a0203-2f77-49fc-9de8-61c92ce24c62",
-            "type": "PlayPrompt",
-            "branches": [
-                {
-                    "condition": "Success",
-                    "transition": "297861e7-f675-4a81-8f49-8873b469f5a1"
-                }
-            ],
-            "parameters": [
-                {
-                    "name": "Text",
-                    "value": "Error in Queue Transfer.",
-                    "namespace": null
-                },
-                {
-                    "name": "TextToSpeechType",
-                    "value": "text"
-                }
-            ],
-            "metadata": {
-                "position": {
-                    "x": 1374,
-                    "y": 247
-                },
-                "useDynamic": false
-            }
-        },
-        {
-            "id": "a36f4066-a2a9-4c0e-8047-9cdb428ea4e9",
-            "type": "SetQueue",
-            "branches": [
-                {
-                    "condition": "Success",
-                    "transition": "cb61451d-cbf6-42f0-b1d6-746a993be640"
-                },
-                {
-                    "condition": "Error",
-                    "transition": "d35a0203-2f77-49fc-9de8-61c92ce24c62"
-                }
-            ],
-            "parameters": [
-                {
-                    "name": "Queue",
-                    "value": "arn:aws:connect:ap-northeast-1:795510504382:instance/a402d4aa-52e6-4d97-b431-31353ebdac12/queue/6b5ec7aa-d860-4f70-ab6d-8dc38550093d",
-                    "namespace": null,
-                    "resourceName": "BasicQueue"
-                }
-            ],
-            "metadata": {
-                "position": {
-                    "x": 1359,
-                    "y": 26
-                },
-                "useDynamic": false,
-                "queue": {
-                    "id": "arn:aws:connect:ap-northeast-1:795510504382:instance/a402d4aa-52e6-4d97-b431-31353ebdac12/queue/6b5ec7aa-d860-4f70-ab6d-8dc38550093d",
-                    "text": "BasicQueue",
-                    "arn": null,
-                    "metricDetail": null,
-                    "resourceId": null
-                }
-            }
-        },
-        {
-            "id": "cb61451d-cbf6-42f0-b1d6-746a993be640",
-            "type": "CheckQueueStatus",
-            "branches": [
-                {
-                    "condition": "CheckQueueTime",
-                    "conditionType": "GreaterThan",
-                    "conditionValue": "300000",
-                    "transition": "5b5ac39e-50db-4126-b28c-3a6ad9d929c0"
-                },
-                {
-                    "condition": "NoMatch",
-                    "transition": "86ec3a71-fa97-4cb0-b03f-18249ad189cb"
-                },
-                {
-                    "condition": "Error",
-                    "transition": "d35a0203-2f77-49fc-9de8-61c92ce24c62"
-                }
-            ],
-            "parameters": [],
-            "metadata": {
-                "position": {
-                    "x": 1606,
-                    "y": 15
-                },
-                "conditionMetadata": [
-                    {
-                        "id": "e12feaa3-c67a-4140-8c6e-3cf843c85dfa",
-                        "attribute": {
-                            "name": "Time in Queue",
-                            "value": "Time in Queue"
-                        },
-                        "operator": {
-                            "name": "Is greater than",
-                            "value": "GreaterThan",
-                            "shortDisplay": ">"
-                        },
-                        "value": "5",
-                        "time": "min."
-                    }
-                ],
-                "queue": null,
-                "useDynamic": false
-            }
-        },
-        {
-            "id": "8cc61213-dbb6-4ed4-b86e-00d043a4ecd6",
-            "type": "PlayPrompt",
-            "branches": [
-                {
-                    "condition": "Success",
-                    "transition": "55df5666-2c71-4266-8f49-d6b9c022384a"
-                }
-            ],
-            "parameters": [
-                {
-                    "name": "Text",
-                    "value": "Transferring to Customer Support....",
-                    "namespace": null
-                },
-                {
-                    "name": "TextToSpeechType",
-                    "value": "text"
-                }
-            ],
-            "metadata": {
-                "position": {
-                    "x": 2635,
-                    "y": 24
-                },
-                "useDynamic": false
-            }
-        },
-        {
-            "id": "86ec3a71-fa97-4cb0-b03f-18249ad189cb",
-            "type": "StartMediaStreaming",
-            "branches": [
-                {
-                    "condition": "Success",
-                    "transition": "7b05d5eb-140c-4abc-aefc-3f01dc220e71"
-                },
-                {
-                    "condition": "Error",
-                    "transition": "463162a5-566d-48a4-b603-9ef23b04ed4b"
-                }
-            ],
-            "parameters": [
-                {
-                    "name": "Track",
-                    "value": "FromCustomer"
-                },
-                {
-                    "name": "Track",
-                    "value": "ToCustomer"
-                },
-                {
-                    "name": "MediaStreamTypes",
-                    "value": "Audio"
-                }
-            ],
-            "metadata": {
-                "position": {
-                    "x": 2110,
-                    "y": 23
-                },
-                "fromCustomer": true,
-                "toCustomer": true
-            }
-        },
-        {
-            "id": "7b05d5eb-140c-4abc-aefc-3f01dc220e71",
-            "type": "InvokeExternalResource",
-            "branches": [
-                {
-                    "condition": "Success",
-                    "transition": "8cc61213-dbb6-4ed4-b86e-00d043a4ecd6"
-                },
-                {
-                    "condition": "Error",
-                    "transition": "8cc61213-dbb6-4ed4-b86e-00d043a4ecd6"
-                }
-            ],
-            "parameters": [
-                {
-                    "name": "FunctionArn",
-                    "value": "arn:aws:lambda:eu-central-1:554955467611:function:scv230-kvsConsumerTrigger",
-                    "namespace": null
-                },
-                {
-                    "name": "TimeLimit",
-                    "value": "3"
-                }
-            ],
-            "metadata": {
-                "position": {
-                    "x": 2369,
-                    "y": 42
-                },
-                "dynamicMetadata": {},
-                "useDynamic": false
-            },
-            "target": "Lambda"
+          "condition": "NonDialableNumber",
+          "transition": "6222f537-3eb7-461b-9def-6be4f01ed693"
         }
-    ],
-    "version": "1",
-    "type": "contactFlow",
-    "start": "a2e856a6-b552-40be-a599-9f77fd6eb79a",
-    "metadata": {
-        "entryPointPosition": {
-            "x": 15,
-            "y": 51.5
+      ],
+      "parameters": [
+        {
+          "name": "CallBackNumber",
+          "value": "Stored customer input",
+          "namespace": "System"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 2319,
+          "y": 419
+        }
+      }
+    },
+    {
+      "id": "6222f537-3eb7-461b-9def-6be4f01ed693",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "92074f0b-1d5c-4c9c-91e3-123fbacd4286"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "There is a problem with the phone number you entered. Please try again.",
+          "namespace": null
         },
-        "snapToGrid": false,
-        "name": "Sample SCV Inbound Flow With Transcription",
-        "description": "Sample SCV Inbound Flow With Transcription",
-        "type": "contactFlow",
-        "status": "saved",
-        "hash": "757ec4b52eb4babe31301c31b5fdadebdc128beaa9895ce0fb4ac271434a0968"
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 2047,
+          "y": 730
+        },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "458aaf9d-62a8-40b2-b68c-4b38a8ce9fe9",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "41bfd902-b5e2-48db-9f0e-a2445665407d"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "An agent will call you back at your requested phone number. Goodbye.",
+          "namespace": null
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 2859,
+          "y": 413
+        },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "41bfd902-b5e2-48db-9f0e-a2445665407d",
+      "type": "Disconnect",
+      "branches": [],
+      "parameters": [],
+      "metadata": {
+        "position": {
+          "x": 3907,
+          "y": 244
+        }
+      }
+    },
+    {
+      "id": "2143f91e-d2fb-4d86-a00a-a678028a8113",
+      "type": "SetRecordingBehavior",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "1ed06f98-cc32-40c1-ae0c-b6301ab6e543"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "RecordingBehaviorOption",
+          "value": "Enable"
+        },
+        {
+          "name": "RecordingParticipantOption",
+          "value": "Both"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 2824,
+          "y": 14
+        }
+      }
+    },
+    {
+      "id": "92074f0b-1d5c-4c9c-91e3-123fbacd4286",
+      "type": "StoreUserInput",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "5197ed08-9111-4336-9681-ad41f218c5f0"
+        },
+        {
+          "condition": "InvalidNumber",
+          "transition": "6222f537-3eb7-461b-9def-6be4f01ed693"
+        },
+        {
+          "condition": "Error",
+          "transition": "6222f537-3eb7-461b-9def-6be4f01ed693"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Please enter the phone number you would like to be called back at."
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        },
+        {
+          "name": "CustomerInputType",
+          "value": "PhoneNumber"
+        },
+        {
+          "name": "Timeout",
+          "value": "5"
+        },
+        {
+          "name": "PhoneNumberFormat",
+          "value": "Local"
+        },
+        {
+          "name": "CountryCode",
+          "value": "US"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 2058,
+          "y": 422
+        },
+        "useDynamic": false,
+        "useDynamicForEncryptionKeys": true,
+        "useDynamicForTerminatorDigits": false,
+        "countryCodePrefix": "+1"
+      }
+    },
+    {
+      "id": "2d4ba17d-a65c-4195-88c2-13922cb8e370",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "2143f91e-d2fb-4d86-a00a-a678028a8113"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Transferring to customer support.",
+          "namespace": null
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 2563,
+          "y": 17
+        },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "1e829348-68f1-4d5d-a29d-571ff5a92b6b",
+      "type": "Loop",
+      "branches": [
+        {
+          "condition": "Looping",
+          "transition": "031339a0-bdd4-46a0-9c22-188c86fe9b00"
+        },
+        {
+          "condition": "Complete",
+          "transition": "43e43416-c441-4293-8f34-870c9caaf759"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "LoopCount",
+          "value": "2"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 962,
+          "y": 17
+        },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "031339a0-bdd4-46a0-9c22-188c86fe9b00",
+      "type": "InvokeExternalResource",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "895d32b4-cc3b-4454-88d3-edd237d8856e"
+        },
+        {
+          "condition": "Error",
+          "transition": "1e829348-68f1-4d5d-a29d-571ff5a92b6b"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "FunctionArn",
+          "value": "arn:aws:lambda:us-west-2:589596482256:function:SCV2-InvokeTelephonyIntegrationApiFunction:active",
+          "namespace": null
+        },
+        {
+          "name": "TimeLimit",
+          "value": "8"
+        },
+        {
+          "name": "Parameter",
+          "key": "methodName",
+          "value": "createVoiceCall",
+          "namespace": null
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1235,
+          "y": 17
+        },
+        "dynamicMetadata": {
+          "methodName": false
+        },
+        "useDynamic": false
+      },
+      "target": "Lambda"
+    },
+    {
+      "id": "46b57ed3-fc96-49ff-b54c-840db344a958",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "41bfd902-b5e2-48db-9f0e-a2445665407d"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "We are experiencing a higher than normal volume of calls and cannot currently assist you. Please try again later. We apologize for any inconvenience. Goodbye.",
+          "namespace": null
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 3900,
+          "y": 16
+        },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "754960f8-b7e8-488c-9d54-f01bd60083c4",
+      "type": "CreateCallback",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "458aaf9d-62a8-40b2-b68c-4b38a8ce9fe9"
+        },
+        {
+          "condition": "Error",
+          "transition": "8872e909-b493-43ba-b592-7cc9e2cfa1b3"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "InitialDelaySeconds",
+          "value": 60
+        },
+        {
+          "name": "RetryDelaySeconds",
+          "value": 600
+        },
+        {
+          "name": "MaxRetryAttempts",
+          "value": 2
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 2586,
+          "y": 416
+        },
+        "useDynamic": false,
+        "queue": null
+      }
+    },
+    {
+      "id": "44e68e33-9d16-4f64-82ed-40e5de5cf56d",
+      "type": "GetUserInput",
+      "branches": [
+        {
+          "condition": "Evaluate",
+          "conditionType": "Equals",
+          "conditionValue": "1",
+          "transition": "2d4ba17d-a65c-4195-88c2-13922cb8e370"
+        },
+        {
+          "condition": "Evaluate",
+          "conditionType": "Equals",
+          "conditionValue": "2",
+          "transition": "92074f0b-1d5c-4c9c-91e3-123fbacd4286"
+        },
+        {
+          "condition": "Timeout",
+          "transition": "2d4ba17d-a65c-4195-88c2-13922cb8e370"
+        },
+        {
+          "condition": "NoMatch",
+          "transition": "2d4ba17d-a65c-4195-88c2-13922cb8e370"
+        },
+        {
+          "condition": "Error",
+          "transition": "34bfe065-d198-4068-8fb6-49e17034441f"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Your wait time to speak with an agent is greater than 5 minutes. Press 1 or stay on the phone to wait. Press 2 to receive a callback when it is your turn.",
+          "namespace": null
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        },
+        {
+          "name": "Timeout",
+          "value": "5"
+        },
+        {
+          "name": "MaxDigits",
+          "value": "1"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 2311,
+          "y": 16
+        },
+        "conditionMetadata": [
+          {
+            "id": "a88fa6b6-e027-4c21-917e-540b2dd907e8",
+            "value": "1"
+          },
+          {
+            "id": "add8de6f-ec63-42a2-bc0c-2c65080d899c",
+            "value": "2"
+          }
+        ],
+        "useDynamic": false,
+        "useDynamicLexBotArn": false
+      },
+      "target": "Digits"
+    },
+    {
+      "id": "34bfe065-d198-4068-8fb6-49e17034441f",
+      "type": "SetAttributes",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "5e054726-0d22-4212-b6f2-d1297973f7ec"
+        },
+        {
+          "condition": "Error",
+          "transition": "5e054726-0d22-4212-b6f2-d1297973f7ec"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "Failed to get customer callback input.",
+          "key": "error",
+          "namespace": null
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 2602,
+          "y": 970
+        }
+      }
+    },
+    {
+      "id": "45edb1bf-8b4d-40e3-a9f1-85c75f106419",
+      "type": "SetAttributes",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "5e054726-0d22-4212-b6f2-d1297973f7ec"
+        },
+        {
+          "condition": "Error",
+          "transition": "5e054726-0d22-4212-b6f2-d1297973f7ec"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "Failed to check queue status.",
+          "key": "error",
+          "namespace": null
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 2289,
+          "y": 969
+        }
+      }
+    },
+    {
+      "id": "5e054726-0d22-4212-b6f2-d1297973f7ec",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "41bfd902-b5e2-48db-9f0e-a2445665407d"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "I'm sorry. We have encountered an error and cannot currently handle your call. Please try again later. We apologize for any inconvenience. Goodbye.",
+          "namespace": null
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 3361,
+          "y": 671
+        },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "44b07d2d-7661-4b29-b53d-8733b0175840",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "1e829348-68f1-4d5d-a29d-571ff5a92b6b"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Thank you for calling. Calls may be monitored for quality assurance.",
+          "namespace": null
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 699,
+          "y": 17
+        },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "368636e5-8e1d-46cb-a342-8a27bf9cd1d6",
+      "type": "SetLoggingBehavior",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "44b07d2d-7661-4b29-b53d-8733b0175840"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "LoggingBehavior",
+          "value": "Enable"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 447,
+          "y": 19
+        }
+      }
+    },
+    {
+      "id": "7910d7ee-d150-40d0-9f90-b4ab56b1e4ec",
+      "type": "CheckQueueStatus",
+      "branches": [
+        {
+          "condition": "CheckQueueTime",
+          "conditionType": "GreaterThan",
+          "conditionValue": "300000",
+          "transition": "44e68e33-9d16-4f64-82ed-40e5de5cf56d"
+        },
+        {
+          "condition": "NoMatch",
+          "transition": "2d4ba17d-a65c-4195-88c2-13922cb8e370"
+        },
+        {
+          "condition": "Error",
+          "transition": "45edb1bf-8b4d-40e3-a9f1-85c75f106419"
+        }
+      ],
+      "parameters": [],
+      "metadata": {
+        "position": {
+          "x": 2058,
+          "y": 15
+        },
+        "conditionMetadata": [
+          {
+            "attribute": {
+              "name": "Time in Queue",
+              "value": "Time in Queue",
+              "internalValue": "CheckQueueTime"
+            },
+            "time": "min.",
+            "value": "5",
+            "operator": {
+              "name": "Is greater than",
+              "value": "GreaterThan",
+              "shortDisplay": ">"
+            },
+            "id": "b0f76269-8a86-4a26-8069-e68b3ea060f9"
+          }
+        ],
+        "queue": null,
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "13f49ac1-935b-439a-9f2e-cb6d0d2e3985",
+      "type": "SetAttributes",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "5e054726-0d22-4212-b6f2-d1297973f7ec"
+        },
+        {
+          "condition": "Error",
+          "transition": "5e054726-0d22-4212-b6f2-d1297973f7ec"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "Failed to set working queue.",
+          "key": "error",
+          "namespace": null
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1844,
+          "y": 979
+        }
+      }
+    },
+    {
+      "id": "43e43416-c441-4293-8f34-870c9caaf759",
+      "type": "SetAttributes",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "f9aecd5b-639d-44ad-8099-7db1e7bbd8f2"
+        },
+        {
+          "condition": "Error",
+          "transition": "f9aecd5b-639d-44ad-8099-7db1e7bbd8f2"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "VoiceCall record creation failed.",
+          "key": "error",
+          "namespace": null
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 962,
+          "y": 269
+        }
+      }
+    },
+    {
+      "id": "895d32b4-cc3b-4454-88d3-edd237d8856e",
+      "type": "SetAttributes",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "f9aecd5b-639d-44ad-8099-7db1e7bbd8f2"
+        },
+        {
+          "condition": "Error",
+          "transition": "f9aecd5b-639d-44ad-8099-7db1e7bbd8f2"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "voiceCallId",
+          "key": "voiceCallId",
+          "namespace": "External"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1508,
+          "y": 17
+        }
+      }
+    },
+    {
+      "id": "f9aecd5b-639d-44ad-8099-7db1e7bbd8f2",
+      "type": "SetQueue",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "7910d7ee-d150-40d0-9f90-b4ab56b1e4ec"
+        },
+        {
+          "condition": "Error",
+          "transition": "13f49ac1-935b-439a-9f2e-cb6d0d2e3985"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Queue",
+          "value": "arn:aws:connect:us-west-2:589596482256:instance/e3d910ed-491f-44ca-a0ae-01230c0bc23e/queue/dab92a12-d423-4d75-9a2a-a00a9e4552ae",
+          "namespace": null,
+          "resourceName": "BasicQueue"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1792,
+          "y": 14
+        },
+        "useDynamic": false,
+        "queue": {
+          "id": "arn:aws:connect:us-west-2:589596482256:instance/e3d910ed-491f-44ca-a0ae-01230c0bc23e/queue/dab92a12-d423-4d75-9a2a-a00a9e4552ae",
+          "text": "BasicQueue",
+          "arn": null,
+          "metricDetail": null,
+          "resourceId": null
+        }
+      }
+    },
+    {
+      "id": "0967364c-0fff-403a-812f-106d60881048",
+      "type": "SetAttributes",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "46b57ed3-fc96-49ff-b54c-840db344a958"
+        },
+        {
+          "condition": "Error",
+          "transition": "46b57ed3-fc96-49ff-b54c-840db344a958"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "Queue capacity limit exceeded.",
+          "key": "error",
+          "namespace": null
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 3635,
+          "y": 17
+        }
+      }
+    },
+    {
+      "id": "8872e909-b493-43ba-b592-7cc9e2cfa1b3",
+      "type": "SetAttributes",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "5e054726-0d22-4212-b6f2-d1297973f7ec"
+        },
+        {
+          "condition": "Error",
+          "transition": "5e054726-0d22-4212-b6f2-d1297973f7ec"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "Failed to transfer to queue.",
+          "key": "error",
+          "namespace": null
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 3645,
+          "y": 348
+        }
+      }
+    },
+    {
+      "id": "1ed06f98-cc32-40c1-ae0c-b6301ab6e543",
+      "type": "SetEventHook",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "d209b58e-4646-4b4e-b1ed-46aba7803c8e"
+        },
+        {
+          "condition": "Error",
+          "transition": "743de69e-1f2a-46ed-81e5-0641e648547a"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Type",
+          "value": "AgentWhisper"
+        },
+        {
+          "name": "ContactFlowId",
+          "value": "06dd7bb1-d3d3-47dd-8451-3a5794477b91",
+          "resourceName": "Sample SCV Agent Whisper With Transcription"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 3097,
+          "y": 16
+        },
+        "contactFlow": {
+          "id": "06dd7bb1-d3d3-47dd-8451-3a5794477b91",
+          "text": "Sample SCV Agent Whisper With Transcription"
+        },
+        "customerOrAgent": false,
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "743de69e-1f2a-46ed-81e5-0641e648547a",
+      "type": "SetAttributes",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "d209b58e-4646-4b4e-b1ed-46aba7803c8e"
+        },
+        {
+          "condition": "Error",
+          "transition": "d209b58e-4646-4b4e-b1ed-46aba7803c8e"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "false",
+          "key": "isTranscribed",
+          "namespace": null
+        },
+        {
+          "name": "Attribute",
+          "value": "Failed to set agent whisper flow.",
+          "key": "error",
+          "namespace": null
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 3099,
+          "y": 258
+        }
+      }
+    },
+    {
+      "id": "d209b58e-4646-4b4e-b1ed-46aba7803c8e",
+      "type": "Transfer",
+      "branches": [
+        {
+          "condition": "AtCapacity",
+          "transition": "0967364c-0fff-403a-812f-106d60881048"
+        },
+        {
+          "condition": "Error",
+          "transition": "8872e909-b493-43ba-b592-7cc9e2cfa1b3"
+        }
+      ],
+      "parameters": [],
+      "metadata": {
+        "position": {
+          "x": 3366,
+          "y": 18
+        },
+        "useDynamic": false,
+        "queue": null
+      },
+      "target": "Queue"
     }
+  ],
+  "version": "1",
+  "start": "368636e5-8e1d-46cb-a342-8a27bf9cd1d6",
+  "metadata": {
+    "entryPointPosition": {
+      "x": 15,
+      "y": 51.5
+    },
+    "snapToGrid": false,
+    "name": "Sample SCV Inbound Flow With Transcription",
+    "description": "Greets the caller and creates a Voice Call record. Provides a callback option when wait time exceeds five minutes. Sets Sample SCV Agent Whisper With Transcription flow to start transcription.",
+    "type": "contactFlow",
+    "status": "published",
+    "hash": "4f88673389b43ab2b1a5447d10707c2816e26677089f6b5069a41d16b34ebd07"
+  },
+  "type": "contactFlow"
 }
