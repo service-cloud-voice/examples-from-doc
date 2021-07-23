@@ -8,10 +8,11 @@ To learn about Voice, see [Service Cloud Voice in Salesforce Help](https://help.
 ## Basic Flows
 
 * [Sample_SCV_Inbound_Flow_With_Transcription](Sample_SCV_Inbound_Flow_With_Transcription): This contact flow defines a basic interactive voice response (IVR) flow that includes creating a VoiceCall record in Salesforce and turning on transcription.
+* [Sample SCV Agent Whisper With Transcription](Sample_SCV_Agent_Whisper_With_Transcription): This contact flow prepares for the inbound call by starting media streaming and turning on transcription. This contact flow is assigned as the “whisper flow” during the [Inbound_Flow_With_Transcription](Sample_SCV_Inbound_Flow_With_Transcription) contact flow.
 * [Sample_SCV_Outbound_Flow_With_Transcription](Sample_SCV_Outbound_Flow_With_Transcription): This contact flow defines the customer experience for an outbound call (the agent calling the customer) where transcription is enabled.
 * [Sample_SCV_Agent_Transfer](Sample_SCV_Agent_Transfer): This contact flow illustrates the customer experience when a call is transferred from one agent to another agent.
 * [Sample_SCV_Queue_Transfer](Sample_SCV_Queue_Transfer): This contact flow illustrates the customer experience when a call is transferred to a queue.
-* [Sample_SCV_Inbound](Sample_SCV_Inbound): This contact flow defines the customer experience for an inbound call (that is, when a customer calls your contact center).
+* [Sample_SCV_Inbound](Sample_SCV_Inbound): This contact flow defines the customer experience for a simple inbound call. For a similar flow that also includes transcript, see [Sample_SCV_Inbound_Flow_With_Transcription](Sample_SCV_Inbound_Flow_With_Transcription).
 
 ## Salesforce REST API Flows
 
