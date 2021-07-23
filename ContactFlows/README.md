@@ -12,7 +12,7 @@ To learn about Voice, see [Service Cloud Voice in Salesforce Help](https://help.
 * [Sample_SCV_Outbound_Flow_With_Transcription](Sample_SCV_Outbound_Flow_With_Transcription): This contact flow defines the customer experience for an outbound call (the agent calling the customer) where transcription is enabled.
 * [Sample_SCV_Agent_Transfer](Sample_SCV_Agent_Transfer): This contact flow illustrates the customer experience when a call is transferred from one agent to another agent.
 * [Sample_SCV_Queue_Transfer](Sample_SCV_Queue_Transfer): This contact flow illustrates the customer experience when a call is transferred to a queue.
-* [Sample_SCV_Inbound](Sample_SCV_Inbound): This contact flow defines the customer experience for a simple inbound call. For a similar flow that also includes transcript, see [Sample_SCV_Inbound_Flow_With_Transcription](Sample_SCV_Inbound_Flow_With_Transcription).
+* [Sample_SCV_Inbound](Sample_SCV_Inbound): This contact flow defines the customer experience for a simple inbound call. For a similar flow that also includes transcription, see [Sample_SCV_Inbound_Flow_With_Transcription](Sample_SCV_Inbound_Flow_With_Transcription).
 
 ## Salesforce REST API Flows
 
