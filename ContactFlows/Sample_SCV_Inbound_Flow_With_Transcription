@@ -208,33 +208,6 @@
       }
     },
     {
-      "id": "1e829348-68f1-4d5d-a29d-571ff5a92b6b",
-      "type": "Loop",
-      "branches": [
-        {
-          "condition": "Looping",
-          "transition": "031339a0-bdd4-46a0-9c22-188c86fe9b00"
-        },
-        {
-          "condition": "Complete",
-          "transition": "43e43416-c441-4293-8f34-870c9caaf759"
-        }
-      ],
-      "parameters": [
-        {
-          "name": "LoopCount",
-          "value": "2"
-        }
-      ],
-      "metadata": {
-        "position": {
-          "x": 962,
-          "y": 17
-        },
-        "useDynamic": false
-      }
-    },
-    {
       "id": "031339a0-bdd4-46a0-9c22-188c86fe9b00",
       "type": "InvokeExternalResource",
       "branches": [
@@ -395,11 +368,11 @@
         },
         "conditionMetadata": [
           {
-            "id": "a88fa6b6-e027-4c21-917e-540b2dd907e8",
+            "id": "68e41115-b4c0-4330-8417-809910e873e3",
             "value": "1"
           },
           {
-            "id": "add8de6f-ec63-42a2-bc0c-2c65080d899c",
+            "id": "2442d781-20a3-433e-a269-2b5d9d3e5bee",
             "value": "2"
           }
         ],
@@ -581,7 +554,7 @@
               "value": "GreaterThan",
               "shortDisplay": ">"
             },
-            "id": "b0f76269-8a86-4a26-8069-e68b3ea060f9"
+            "id": "c6d37a86-846f-4508-8349-3cc9516f9749"
           }
         ],
         "queue": null,
@@ -617,34 +590,6 @@
       }
     },
     {
-      "id": "43e43416-c441-4293-8f34-870c9caaf759",
-      "type": "SetAttributes",
-      "branches": [
-        {
-          "condition": "Success",
-          "transition": "f9aecd5b-639d-44ad-8099-7db1e7bbd8f2"
-        },
-        {
-          "condition": "Error",
-          "transition": "f9aecd5b-639d-44ad-8099-7db1e7bbd8f2"
-        }
-      ],
-      "parameters": [
-        {
-          "name": "Attribute",
-          "value": "VoiceCall record creation failed.",
-          "key": "error",
-          "namespace": null
-        }
-      ],
-      "metadata": {
-        "position": {
-          "x": 962,
-          "y": 269
-        }
-      }
-    },
-    {
       "id": "895d32b4-cc3b-4454-88d3-edd237d8856e",
       "type": "SetAttributes",
       "branches": [
@@ -669,42 +614,6 @@
         "position": {
           "x": 1508,
           "y": 17
-        }
-      }
-    },
-    {
-      "id": "f9aecd5b-639d-44ad-8099-7db1e7bbd8f2",
-      "type": "SetQueue",
-      "branches": [
-        {
-          "condition": "Success",
-          "transition": "7910d7ee-d150-40d0-9f90-b4ab56b1e4ec"
-        },
-        {
-          "condition": "Error",
-          "transition": "13f49ac1-935b-439a-9f2e-cb6d0d2e3985"
-        }
-      ],
-      "parameters": [
-        {
-          "name": "Queue",
-          "value": "arn:aws:connect:us-west-2:589596482256:instance/e3d910ed-491f-44ca-a0ae-01230c0bc23e/queue/dab92a12-d423-4d75-9a2a-a00a9e4552ae",
-          "namespace": null,
-          "resourceName": "BasicQueue"
-        }
-      ],
-      "metadata": {
-        "position": {
-          "x": 1792,
-          "y": 14
-        },
-        "useDynamic": false,
-        "queue": {
-          "id": "arn:aws:connect:us-west-2:589596482256:instance/e3d910ed-491f-44ca-a0ae-01230c0bc23e/queue/dab92a12-d423-4d75-9a2a-a00a9e4552ae",
-          "text": "BasicQueue",
-          "arn": null,
-          "metricDetail": null,
-          "resourceId": null
         }
       }
     },
@@ -784,7 +693,7 @@
         },
         {
           "name": "ContactFlowId",
-          "value": "06dd7bb1-d3d3-47dd-8451-3a5794477b91",
+          "value": "arn:aws:connect:us-west-2:065467648574:instance/2550cede-019b-4de8-8c3c-976660515072/contact-flow/10a40289-4617-4719-af1a-05efa6d3d988",
           "resourceName": "Sample SCV Agent Whisper With Transcription"
         }
       ],
@@ -794,7 +703,7 @@
           "y": 16
         },
         "contactFlow": {
-          "id": "06dd7bb1-d3d3-47dd-8451-3a5794477b91",
+          "id": "arn:aws:connect:us-west-2:065467648574:instance/2550cede-019b-4de8-8c3c-976660515072/contact-flow/10a40289-4617-4719-af1a-05efa6d3d988",
           "text": "Sample SCV Agent Whisper With Transcription"
         },
         "customerOrAgent": false,
@@ -858,9 +767,104 @@
         "queue": null
       },
       "target": "Queue"
+    },
+    {
+      "id": "f9aecd5b-639d-44ad-8099-7db1e7bbd8f2",
+      "type": "SetQueue",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "7910d7ee-d150-40d0-9f90-b4ab56b1e4ec"
+        },
+        {
+          "condition": "Error",
+          "transition": "13f49ac1-935b-439a-9f2e-cb6d0d2e3985"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Queue",
+          "value": "arn:aws:connect:us-west-2:065467648574:instance/2550cede-019b-4de8-8c3c-976660515072/queue/92aebb27-f58f-444a-bd87-6649e31a216d",
+          "namespace": null,
+          "resourceName": "BasicQueue"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1792,
+          "y": 14
+        },
+        "useDynamic": false,
+        "queue": {
+          "id": "arn:aws:connect:us-west-2:065467648574:instance/2550cede-019b-4de8-8c3c-976660515072/queue/92aebb27-f58f-444a-bd87-6649e31a216d",
+          "text": "BasicQueue"
+        }
+      }
+    },
+    {
+      "id": "1e829348-68f1-4d5d-a29d-571ff5a92b6b",
+      "type": "Loop",
+      "branches": [
+        {
+          "condition": "Looping",
+          "transition": "031339a0-bdd4-46a0-9c22-188c86fe9b00"
+        },
+        {
+          "condition": "Complete",
+          "transition": "43e43416-c441-4293-8f34-870c9caaf759"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "LoopCount",
+          "value": "2"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 962,
+          "y": 17
+        },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "43e43416-c441-4293-8f34-870c9caaf759",
+      "type": "SetAttributes",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "f9aecd5b-639d-44ad-8099-7db1e7bbd8f2"
+        },
+        {
+          "condition": "Error",
+          "transition": "f9aecd5b-639d-44ad-8099-7db1e7bbd8f2"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "VoiceCall record creation failed.",
+          "key": "error",
+          "namespace": null
+        },
+        {
+          "name": "Attribute",
+          "value": "Dialed Number",
+          "key": "sfdc-ToPhoneNumber",
+          "namespace": "System"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 962,
+          "y": 269
+        }
+      }
     }
   ],
   "version": "1",
+  "type": "contactFlow",
   "start": "368636e5-8e1d-46cb-a342-8a27bf9cd1d6",
   "metadata": {
     "entryPointPosition": {
@@ -872,7 +876,6 @@
     "description": "Greets the caller and creates a Voice Call record. Provides a callback option when wait time exceeds five minutes. Sets Sample SCV Agent Whisper With Transcription flow to start transcription.",
     "type": "contactFlow",
     "status": "published",
-    "hash": "4f88673389b43ab2b1a5447d10707c2816e26677089f6b5069a41d16b34ebd07"
-  },
-  "type": "contactFlow"
+    "hash": "e9aa6de8bab8ff081d865ca31f37c72db4aa0fe9074461ec46d9919e3ec71670"
+  }
 }
