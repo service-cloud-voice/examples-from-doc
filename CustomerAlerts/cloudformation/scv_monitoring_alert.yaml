@@ -445,6 +445,64 @@ Resources:
       ComparisonOperator: GreaterThanOrEqualToThreshold
       TreatMissingData: "notBreaching"
 
+  InvokeSalesforceRestApiFunctionFunctionErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "Lambda ${CallCenterApiName}-InvokeSalesforceRestApiFunction errors"
+      AlarmDescription: !Sub "The number of invocations of ${CallCenterApiName}-InvokeSalesforceRestApiFunction that resulted in a function error. Function errors include exceptions thrown by your code and exceptions thrown by the Lambda runtime."
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Statistic: Sum
+      Unit: Count
+      AlarmActions:
+        - !Ref SCVAlarmSnsTopic
+      Period: 60
+      Threshold: 2
+      EvaluationPeriods: 1
+      Dimensions:
+        - Name: FunctionName
+          Value: !Sub ${CallCenterApiName}-InvokeSalesforceRestApiFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: "notBreaching"
+  InvokeSalesforceRestApiFunctionThrottlesAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "Lambda ${CallCenterApiName}-InvokeSalesforceRestApiFunction throttles."
+      AlarmDescription: !Sub "The number of invocation requests of ${CallCenterApiName}-InvokeSalesforceRestApiFunction that are throttled. Review concurrent executions quota for the region, or the reserved concurrency limit that you configured on the function."
+      Namespace: AWS/Lambda
+      MetricName: Throttles
+      Statistic: Sum
+      Unit: Count
+      AlarmActions:
+        - !Ref SCVAlarmSnsTopic
+      Period: 60
+      Threshold: 5
+      EvaluationPeriods: 1
+      Dimensions:
+        - Name: FunctionName
+          Value: !Sub ${CallCenterApiName}-InvokeSalesforceRestApiFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: "notBreaching"
+  InvokeSalesforceRestApiFunctionDurationsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "Lambda ${CallCenterApiName}-InvokeSalesforceRestApiFunction duration"
+      AlarmDescription: !Sub "The amount of time that your function code spends processing an event."
+      Namespace: AWS/Lambda
+      MetricName: Duration
+      Statistic: Average
+      Unit: Count
+      AlarmActions:
+        - !Ref SCVAlarmSnsTopic
+      Period: 60
+      Threshold: 10
+      EvaluationPeriods: 1
+      Dimensions:
+        - Name: FunctionName
+          Value: !Sub ${CallCenterApiName}-InvokeSalesforceRestApiFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: "notBreaching"
+
   SCVLambdaDashboards:
     Type: "AWS::CloudWatch::Dashboard"
     Properties:
