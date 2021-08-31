@@ -428,7 +428,7 @@
     },
     "snapToGrid": false,
     "name": "Sample_SCV_Inbound_Subflow",
-    "description": "Sample SCV Inbound Subflow",
+    "description": "Sample SCV Inbound Subflow that can be called by your inbound contact flow to run an Omni-Channel flow to route calls.",
     "type": "contactFlow",
     "status": "published",
     "hash": "fdf08ee97f4d21c9d396f26276aee4a96d9a8fdd61101d21a9d7bdc46fb71ddf"
