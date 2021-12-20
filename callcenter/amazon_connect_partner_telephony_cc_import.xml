@@ -37,6 +37,7 @@ DZg=
         <item sortOrder="4" name="reqInstanceName" label="Instance Name">AmazonConnectInstanceName</item>
         <item sortOrder="5" name="reqInstanceRecordingRole" label="Instance Recording Role">arn:aws:iam::{Customer Account Id}:role/byotAmazonConnect-ConnectCallRole</item>
         <item sortOrder="6" name="reqSettingsRelayState" label="Settings Relay State">https://us-west-2.console.aws.amazon.com/connect/federate/4438c192-4536-4b14-8b4c-7b1267458a33</item>
+        <item sortOrder="7" name="reqUniversalCallRecordingAccess" label="Universal Call Recording Access">false</item>
     </section>
 
 

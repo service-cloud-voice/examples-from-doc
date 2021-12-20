@@ -17,6 +17,7 @@
 ...
 -----END CERTIFICATE-----</item>
         <item sortOrder="3" name="reqLongDistPrefix" label="Long Distance Prefix">+1</item>
+        <item sortOrder="4" name="reqUniversalCallRecordingAccess" label="Universal Call Recording Access">false</item>
     </section>
 
 
