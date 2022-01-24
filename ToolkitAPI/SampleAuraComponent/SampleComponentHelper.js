@@ -40,5 +40,25 @@
         // https://help.salesforce.com/articleView?id=nba_strategy_expressions.htm&type=5
         var params = JSON.parse(cmp.get('v.payload'));
         cmp.find('voiceToolkitApi').updateNextBestActions(cmp.get('v.recordId'), params);
+    },
+    
+    mute: function(cmp) {
+        cmp.find('voiceToolkitApi').toggleMute(true)
+    },
+    
+    unmute: function(cmp) {
+        cmp.find('voiceToolkitApi').toggleMute(false)
+    },
+    
+    acceptCall: function(cmp) {
+        cmp.find('voiceToolkitApi').acceptCall()
+    },
+
+    declineCall: function(cmp) {
+        cmp.find('voiceToolkitApi').declineCall()
+    },   
+
+    endCall: function(cmp) {
+        cmp.find('voiceToolkitApi').endCall()
     }
 })

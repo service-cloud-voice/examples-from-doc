@@ -97,4 +97,24 @@ export default class ScvToolkitApiTester extends LightningElement {
 	getToolkitApi() {
 	  return this.template.querySelector('lightning-service-cloud-voice-toolkit-api');
 	}
+
+    mute() {
+        this.getToolkitApi().toggleMute(true);
+    }
+    
+    unmute() {
+        this.getToolkitApi().toggleMute(false);
+    }
+    
+    acceptCall() {
+        this.getToolkitApi().acceptCall();
+    }
+
+    declineCall() {
+        this.getToolkitApi().declineCall();
+    }  
+
+    endCall() {
+        this.getToolkitApi().endCall();
+    }
 }
