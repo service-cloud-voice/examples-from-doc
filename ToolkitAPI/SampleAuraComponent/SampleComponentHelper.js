@@ -4,6 +4,7 @@
         // Subscribing to a subset of the telephony events
         // For a list of all events, see the Voice Developer Guide:
         // https://developer.salesforce.com/docs/atlas.en-us.voice_developer_guide.meta/voice_developer_guide/voice_intro.htm
+        cmp.find('voiceToolkitApi').addTelephonyEventListener('CALL_STARTED', cmp._telephonyEventListener);
         cmp.find('voiceToolkitApi').addTelephonyEventListener('CALL_CONNECTED', cmp._telephonyEventListener);
         cmp.find('voiceToolkitApi').addTelephonyEventListener('CALL_ENDED', cmp._telephonyEventListener);
         cmp.find('voiceToolkitApi').addTelephonyEventListener('MUTE', cmp._telephonyEventListener);
@@ -16,6 +17,7 @@
     },
 
     unsubscribeFromVoiceToolkit: function(cmp) {
+        cmp.find('voiceToolkitApi').removeTelephonyEventListener('CALL_STARTED', cmp._telephonyEventListener);
         cmp.find('voiceToolkitApi').removeTelephonyEventListener('CALL_CONNECTED', cmp._telephonyEventListener);
         cmp.find('voiceToolkitApi').removeTelephonyEventListener('CALL_ENDED', cmp._telephonyEventListener);
         cmp.find('voiceToolkitApi').removeTelephonyEventListener('MUTE', cmp._telephonyEventListener);
@@ -27,6 +29,12 @@
     },
     
     telephonyEventListener: function(cmp, event) {
+        if (event.type === 'CALL_STARTED') {
+            cmp.set('v.headSetControlsDisabled', "false");
+        }
+        if (event.type === 'CALL_ENDED') {
+            cmp.set('v.headSetControlsDisabled', "true");
+        }
         cmp.set('v.message', JSON.stringify(event));
     },
     
@@ -43,11 +51,11 @@
     },
     
     mute: function(cmp) {
-        cmp.find('voiceToolkitApi').toggleMute(true)
+        cmp.find('voiceToolkitApi').mute()
     },
     
     unmute: function(cmp) {
-        cmp.find('voiceToolkitApi').toggleMute(false)
+        cmp.find('voiceToolkitApi').unmute()
     },
     
     acceptCall: function(cmp) {

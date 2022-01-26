@@ -1,6 +1,7 @@
 import { LightningElement, api, track } from 'lwc';
 
 export default class ScvToolkitApiTester extends LightningElement {
+    @track headSetControlsDisabled = true;
 
 	@api recordId;  
 
@@ -87,7 +88,13 @@ export default class ScvToolkitApiTester extends LightningElement {
 	}
 
 	onTelephonyEvent(event) {
-	  // Handle a telephony-related event
+        if (event.type === 'callstarted') {
+            this.headSetControlsDisabled = false;
+        }
+        if (event.type === 'callended') {
+            this.headSetControlsDisabled = true;
+        }
+        this.teleEvent = this.stringifyEvent(event);
 	}
 
 	onConversationEvent(event) {
@@ -98,12 +105,12 @@ export default class ScvToolkitApiTester extends LightningElement {
 	  return this.template.querySelector('lightning-service-cloud-voice-toolkit-api');
 	}
 
-    mute() {
-        this.getToolkitApi().toggleMute(true);
+    onMute() {
+        this.getToolkitApi().mute();
     }
     
-    unmute() {
-        this.getToolkitApi().toggleMute(false);
+    onUnmute() {
+        this.getToolkitApi().unmute();
     }
     
     acceptCall() {
