@@ -1,4 +1,6 @@
 import { LightningElement, api, track } from 'lwc';
+// @ts-ignore - no type declarations
+import orgHasSCVConversationIntelligencePilot from '@salesforce/accessCheck/Voice.orgHasSCVConversationIntelligencePilot';
 
 export default class ScvToolkitApiTester extends LightningElement {
     @track headSetControlsDisabled = true;
