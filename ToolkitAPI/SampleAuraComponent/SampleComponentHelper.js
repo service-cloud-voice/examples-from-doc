@@ -29,12 +29,6 @@
     },
     
     telephonyEventListener: function(cmp, event) {
-        if (event.type === 'CALL_STARTED') {
-            cmp.set('v.headSetControlsDisabled', false);
-        }
-        if (event.type === 'CALL_ENDED') {
-            cmp.set('v.headSetControlsDisabled', true);
-        }
         cmp.set('v.message', JSON.stringify(event));
     },
     
