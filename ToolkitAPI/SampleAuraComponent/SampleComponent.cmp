@@ -9,7 +9,6 @@
     <aura:attribute name="transcript" type="String" default="No transcripts received yet."/>
     <aura:attribute name="payload" type="String" default=""/>
     <aura:attribute name="record" type="Object"/>
-    <aura:attribute name="headSetControlsDisabled" type="Boolean" default="true"/>
     
     <!-- get record data -->
     <force:recordData recordId="{!v.recordId}" layoutType="FULL" targetFields="{!v.record}"/>
@@ -42,17 +41,17 @@
 
         <div class="slds-p-horizontal_medium">
             <div class="slds-grid slds-p-bottom_medium">
-                <lightning:button variant="brand" label="Mute Call" title="Mute Call" onclick="{! c.onMute }" disabled="{!v.headSetControlsDisabled}"/>
-                <lightning:button variant="brand" label="Unmute Call" title="Unmute Call" onclick="{! c.onUnmute }" disabled="{!v.headSetControlsDisabled}"/>
+                <lightning:button variant="brand" label="Mute Call" title="Mute Call" onclick="{! c.onMute }"/>
+                <lightning:button variant="brand" label="Unmute Call" title="Unmute Call" onclick="{! c.onUnmute }"/>
             </div>
             
             <div class="slds-grid slds-p-bottom_medium">
-                <lightning:button variant="brand" label="Accept Call" title="Accept Call" onclick="{! c.onAcceptCall }" disabled="{!v.headSetControlsDisabled}"/>
-                <lightning:button variant="brand" label="Decline Call" title="Decline Call" onclick="{! c.onDeclineCall }" disabled="{!v.headSetControlsDisabled}" />
+                <lightning:button variant="brand" label="Accept Call" title="Accept Call" onclick="{! c.onAcceptCall }"/>
+                <lightning:button variant="brand" label="Decline Call" title="Decline Call" onclick="{! c.onDeclineCall }"/>
             </div>
             
             <div class="slds-grid slds-p-bottom_medium">
-                <lightning:button variant="brand" label="End Call" title="End Call" onclick="{! c.onEndCall }" disabled="{!v.headSetControlsDisabled}"  />
+                <lightning:button variant="brand" label="End Call" title="End Call" onclick="{! c.onEndCall }"/>
             </div>
         </div>
     </lightning:card>
