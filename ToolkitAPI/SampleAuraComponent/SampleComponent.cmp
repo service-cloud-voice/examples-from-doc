@@ -32,7 +32,7 @@
         </div>
 
         <div class="slds-grid slds-p-bottom_medium">
-            <lightning:input label="PREVIEW DIALER" class="slds-p-horizontal_medium flex-input" value="{!v.phoneNumber}" placeholder='xxx-xx-xxxx'/>
+            <lightning:input label="PREVIEW DIALER" class="slds-p-horizontal_medium flex-input" value="{!v.phoneNumber}" placeholder='xxx-xxx-xxxx'/>
             <lightning:button variant="brand" label="Preview Dial" onclick="{!c.onStartPreviewCall}"/>
         </div>
         
