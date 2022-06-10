@@ -8,6 +8,7 @@
     <aura:attribute name="message" type="String" default="No events received yet."/>
     <aura:attribute name="transcript" type="String" default="No transcripts received yet."/>
     <aura:attribute name="payload" type="String" default=""/>
+    <aura:attribute name="phoneNumber" type="String" default=""/>
     <aura:attribute name="record" type="Object"/>
     
     <!-- get record data -->
@@ -28,6 +29,11 @@
         <div class="slds-grid slds-p-bottom_medium">
             <lightning:input label="INVOKE NEXT BEST ACTION" class="slds-p-horizontal_medium flex-input" value="{!v.payload}" placeholder='{"key": "value"}'/>
             <lightning:button variant="brand" label="Invoke" onclick="{!c.onInvokeNBA}"/>
+        </div>
+
+        <div class="slds-grid slds-p-bottom_medium">
+            <lightning:input label="PREVIEW DIALER" class="slds-p-horizontal_medium flex-input" value="{!v.phoneNumber}" placeholder='xxx-xxx-xxxx'/>
+            <lightning:button variant="brand" label="Preview Dial" onclick="{!c.onStartPreviewCall}"/>
         </div>
         
         <p class="slds-text-title_caps slds-p-horizontal_medium">VOICECALL DETAILS</p>
