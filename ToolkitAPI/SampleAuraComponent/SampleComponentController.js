@@ -29,5 +29,9 @@
     
     onEndCall: function(cmp, event, helper) {
         helper.endCall(cmp);
+    },
+
+    onStartPreviewCall: function(cmp, event, helper) {
+        helper.startPreviewCall(cmp);
     }
 })

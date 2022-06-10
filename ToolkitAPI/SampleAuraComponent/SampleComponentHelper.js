@@ -62,5 +62,10 @@
 
     endCall: function(cmp) {
         cmp.find('voiceToolkitApi').endCall()
+    },
+
+    startPreviewCall: function(cmp) {
+        var params = cmp.get('v.phoneNumber');
+        cmp.find('voiceToolkitApi').startPreviewCall(params);
     }
 })
