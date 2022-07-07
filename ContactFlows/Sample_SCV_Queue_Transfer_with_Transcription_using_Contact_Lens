@@ -1,1 +1,471 @@
-{"start":"6a5e5d4a-96c1-4590-9af4-98f2fed75ecc","version":"1","modules":[{"id":"6a5e5d4a-96c1-4590-9af4-98f2fed75ecc","branches":[{"condition":"Success","transition":"d1c611c0-e78d-49f7-b3f8-04de11ae4228"}],"parameters":[{"name":"LoggingBehavior","value":"Enable"}],"metadata":{"position":{"x":159,"y":39}},"type":"SetLoggingBehavior"},{"id":"b07c9c7f-cec8-4e37-8836-1b79817406dc","branches":[{"condition":"Error","transition":"d1c611c0-e78d-49f7-b3f8-04de11ae4228"},{"condition":"Success","transition":"2d8d4f53-badb-4b42-b2e8-4dce8034f12b"}],"parameters":[{"name":"FunctionArn","value":"arn:aws:lambda:us-west-2:403503132786:function:MigrationTestCC-InvokeTelephonyIntegrationApiFunction:active"},{"name":"TimeLimit","value":"8"},{"name":"Parameter","value":"createTransferVC","key":"methodName"}],"metadata":{"position":{"x":637,"y":39},"dynamicMetadata":{"methodName":false},"useDynamic":false},"type":"InvokeExternalResource","target":"Lambda"},{"id":"2d8d4f53-badb-4b42-b2e8-4dce8034f12b","branches":[{"condition":"Error","transition":"fdf939ab-d240-4c23-a6f3-8ed528cd47b1"},{"condition":"Success","transition":"fdf939ab-d240-4c23-a6f3-8ed528cd47b1"}],"parameters":[{"name":"Attribute","value":"voiceCallId","key":"voiceCallId","namespace":"External"}],"metadata":{"position":{"x":878,"y":39},"dynamicParams":["voiceCallId"]},"type":"SetAttributes"},{"id":"5b15c13e-5475-43b5-a395-b0f4fb4234ac","branches":[{"condition":"Success","transition":"809c177d-8e2e-45ab-9a2b-fe1d59975a16"}],"parameters":[{"name":"Text","value":"Transferring you to the appropriate queue. One moment please."},{"name":"TextToSpeechType","value":"text"}],"metadata":{"position":{"x":1600,"y":39},"useDynamic":false},"type":"PlayPrompt"},{"id":"809c177d-8e2e-45ab-9a2b-fe1d59975a16","branches":[{"condition":"Success","transition":"bd8314c3-aff2-499e-a9d8-7cf7aacce79b"}],"parameters":[{"name":"RecordingBehaviorOption","value":"Enable"},{"name":"RecordingParticipantOption","value":"Both"},{"name":"AnalyticsBehaviorOption","value":"Enable"},{"name":"AnalyticsMode","value":"RealTime"},{"name":"AnalyticsLanguageLocaleCode","value":"en-US"},{"name":"AnalyticsRedactionOption","value":"Enable"},{"name":"AnalyticsRedactionPolicy","value":"RedactedAndOriginal"},{"name":"AnalyticsCustomVocabulary","value":"None"}],"metadata":{"position":{"x":1837,"y":41}},"type":"SetRecordingBehavior"},{"id":"d1c611c0-e78d-49f7-b3f8-04de11ae4228","branches":[{"condition":"Looping","transition":"b07c9c7f-cec8-4e37-8836-1b79817406dc"},{"condition":"Complete","transition":"d5ab3b57-642f-49c9-accf-522f54f8ae6e"}],"parameters":[{"name":"LoopCount","value":"2"}],"metadata":{"position":{"x":397,"y":39},"useDynamic":false},"type":"Loop"},{"id":"d5ab3b57-642f-49c9-accf-522f54f8ae6e","branches":[{"condition":"Error","transition":"fdf939ab-d240-4c23-a6f3-8ed528cd47b1"},{"condition":"Success","transition":"fdf939ab-d240-4c23-a6f3-8ed528cd47b1"}],"parameters":[{"name":"Attribute","value":"VoiceCall record creation failed.","key":"error"}],"metadata":{"position":{"x":637,"y":280},"dynamicParams":[]},"type":"SetAttributes"},{"id":"bd8314c3-aff2-499e-a9d8-7cf7aacce79b","branches":[{"condition":"AtCapacity","transition":"b7e84b1a-2924-4682-895f-f7d2bba2891f"},{"condition":"Error","transition":"1b17452f-a511-41d7-bd13-fd8d8fd54221"}],"parameters":[],"metadata":{"position":{"x":2078,"y":41},"useDynamic":false},"target":"Queue","type":"Transfer"},{"id":"b7e84b1a-2924-4682-895f-f7d2bba2891f","branches":[{"condition":"Success","transition":"9d6d84f6-6c71-436e-b42e-333bb8d479e2"}],"parameters":[{"name":"Text","value":"We are experiencing a higher than normal volume of calls and cannot currently assist you. Please try again later. We apologize for any inconvenience. Goodbye."},{"name":"TextToSpeechType","value":"text"}],"metadata":{"position":{"x":2318,"y":39},"useDynamic":false},"type":"PlayPrompt"},{"id":"9d6d84f6-6c71-436e-b42e-333bb8d479e2","branches":[],"parameters":[],"metadata":{"position":{"x":2558,"y":43}},"type":"Disconnect"},{"id":"1b17452f-a511-41d7-bd13-fd8d8fd54221","branches":[{"condition":"Error","transition":"1a6b387d-0e8a-4615-b68c-e4b40bcbcfcc"},{"condition":"Success","transition":"1a6b387d-0e8a-4615-b68c-e4b40bcbcfcc"}],"parameters":[{"name":"Attribute","value":"Failed to transfer to queue.","key":"error"}],"metadata":{"position":{"x":2077,"y":277},"dynamicParams":[]},"type":"SetAttributes"},{"id":"1a6b387d-0e8a-4615-b68c-e4b40bcbcfcc","branches":[{"condition":"Success","transition":"9d6d84f6-6c71-436e-b42e-333bb8d479e2"}],"parameters":[{"name":"Text","value":"No agents are available to take your call. Please try again at a later time. We apologize for the inconvenience. Goodbye."},{"name":"TextToSpeechType","value":"text"}],"metadata":{"position":{"x":1838,"y":478},"useDynamic":false},"type":"PlayPrompt"},{"id":"bc4445ac-1dd6-41a2-917b-2ed3a5c9899e","branches":[{"condition":"Success","transition":"9d6d84f6-6c71-436e-b42e-333bb8d479e2"}],"parameters":[{"name":"Text","value":"The department you are trying to reach is not currently open. Please try your call again later. Goodbye."},{"name":"TextToSpeechType","value":"text"}],"metadata":{"position":{"x":1839,"y":278},"useDynamic":false},"type":"PlayPrompt"},{"id":"22be9ead-54a4-47e5-8947-55e750dd62f5","branches":[{"condition":"False","transition":"1a6b387d-0e8a-4615-b68c-e4b40bcbcfcc"},{"condition":"True","transition":"5b15c13e-5475-43b5-a395-b0f4fb4234ac"},{"condition":"Error","transition":"5edc975c-3342-4da7-b51b-0eca52fe1545"}],"parameters":[{"name":"Status","value":"Staffed"}],"metadata":{"position":{"x":1360,"y":40},"useDynamic":false},"type":"CheckStaffing"},{"id":"fdf939ab-d240-4c23-a6f3-8ed528cd47b1","branches":[{"condition":"True","transition":"22be9ead-54a4-47e5-8947-55e750dd62f5"},{"condition":"False","transition":"bc4445ac-1dd6-41a2-917b-2ed3a5c9899e"},{"condition":"Error","transition":"5edc975c-3342-4da7-b51b-0eca52fe1545"}],"parameters":[],"metadata":{"position":{"x":1120,"y":39}},"type":"CheckHoursOfOperation"},{"id":"5edc975c-3342-4da7-b51b-0eca52fe1545","branches":[{"condition":"Error","transition":"bc4445ac-1dd6-41a2-917b-2ed3a5c9899e"},{"condition":"Success","transition":"bc4445ac-1dd6-41a2-917b-2ed3a5c9899e"}],"parameters":[{"name":"Attribute","value":"Failed to check queue status.","key":"error"}],"metadata":{"position":{"x":1599,"y":281},"dynamicParams":[]},"type":"SetAttributes"}],"metadata":{"entryPointPosition":{"x":15,"y":40},"snapToGrid":false,"name":"Sample SCV Queue Transfer with Transcription using Contact Lens","description":"Creates a Voice Call record and transfers the call to the specified queue with transcription using Contact Lens.","type":"queueTransfer","status":"published","hash":"9ecb960bf454e3329f77e758cceff33e52011ea078b3c41ec6ea10f78c5cb7e3"}}
+{
+  "start": "6a5e5d4a-96c1-4590-9af4-98f2fed75ecc",
+  "version": "1",
+  "modules": [
+    {
+      "id": "6a5e5d4a-96c1-4590-9af4-98f2fed75ecc",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "d1c611c0-e78d-49f7-b3f8-04de11ae4228"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "LoggingBehavior",
+          "value": "Enable"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 159,
+          "y": 39
+        }
+      },
+      "type": "SetLoggingBehavior"
+    },
+    {
+      "id": "b07c9c7f-cec8-4e37-8836-1b79817406dc",
+      "branches": [
+        {
+          "condition": "Error",
+          "transition": "d1c611c0-e78d-49f7-b3f8-04de11ae4228"
+        },
+        {
+          "condition": "Success",
+          "transition": "2d8d4f53-badb-4b42-b2e8-4dce8034f12b"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "FunctionArn",
+          "value": "arn:aws:lambda:us-west-2:403503132786:function:MigrationTestCC-InvokeTelephonyIntegrationApiFunction:active"
+        },
+        {
+          "name": "TimeLimit",
+          "value": "8"
+        },
+        {
+          "name": "Parameter",
+          "value": "createTransferVC",
+          "key": "methodName"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 637,
+          "y": 39
+        },
+        "dynamicMetadata": {
+          "methodName": false
+        },
+        "useDynamic": false
+      },
+      "type": "InvokeExternalResource",
+      "target": "Lambda"
+    },
+    {
+      "id": "2d8d4f53-badb-4b42-b2e8-4dce8034f12b",
+      "branches": [
+        {
+          "condition": "Error",
+          "transition": "fdf939ab-d240-4c23-a6f3-8ed528cd47b1"
+        },
+        {
+          "condition": "Success",
+          "transition": "fdf939ab-d240-4c23-a6f3-8ed528cd47b1"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "voiceCallId",
+          "key": "voiceCallId",
+          "namespace": "External"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 878,
+          "y": 39
+        },
+        "dynamicParams": [
+          "voiceCallId"
+        ]
+      },
+      "type": "SetAttributes"
+    },
+    {
+      "id": "5b15c13e-5475-43b5-a395-b0f4fb4234ac",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "809c177d-8e2e-45ab-9a2b-fe1d59975a16"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Transferring you to the appropriate queue. One moment please."
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1600,
+          "y": 39
+        },
+        "useDynamic": false
+      },
+      "type": "PlayPrompt"
+    },
+    {
+      "id": "809c177d-8e2e-45ab-9a2b-fe1d59975a16",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "bd8314c3-aff2-499e-a9d8-7cf7aacce79b"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "RecordingBehaviorOption",
+          "value": "Enable"
+        },
+        {
+          "name": "RecordingParticipantOption",
+          "value": "Both"
+        },
+        {
+          "name": "AnalyticsBehaviorOption",
+          "value": "Enable"
+        },
+        {
+          "name": "AnalyticsMode",
+          "value": "RealTime"
+        },
+        {
+          "name": "AnalyticsLanguageLocaleCode",
+          "value": "en-US"
+        },
+        {
+          "name": "AnalyticsRedactionOption",
+          "value": "Enable"
+        },
+        {
+          "name": "AnalyticsRedactionPolicy",
+          "value": "RedactedAndOriginal"
+        },
+        {
+          "name": "AnalyticsCustomVocabulary",
+          "value": "None"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1837,
+          "y": 41
+        }
+      },
+      "type": "SetRecordingBehavior"
+    },
+    {
+      "id": "d1c611c0-e78d-49f7-b3f8-04de11ae4228",
+      "branches": [
+        {
+          "condition": "Looping",
+          "transition": "b07c9c7f-cec8-4e37-8836-1b79817406dc"
+        },
+        {
+          "condition": "Complete",
+          "transition": "d5ab3b57-642f-49c9-accf-522f54f8ae6e"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "LoopCount",
+          "value": "2"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 397,
+          "y": 39
+        },
+        "useDynamic": false
+      },
+      "type": "Loop"
+    },
+    {
+      "id": "d5ab3b57-642f-49c9-accf-522f54f8ae6e",
+      "branches": [
+        {
+          "condition": "Error",
+          "transition": "fdf939ab-d240-4c23-a6f3-8ed528cd47b1"
+        },
+        {
+          "condition": "Success",
+          "transition": "fdf939ab-d240-4c23-a6f3-8ed528cd47b1"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "VoiceCall record creation failed.",
+          "key": "error"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 637,
+          "y": 280
+        },
+        "dynamicParams": []
+      },
+      "type": "SetAttributes"
+    },
+    {
+      "id": "bd8314c3-aff2-499e-a9d8-7cf7aacce79b",
+      "branches": [
+        {
+          "condition": "AtCapacity",
+          "transition": "b7e84b1a-2924-4682-895f-f7d2bba2891f"
+        },
+        {
+          "condition": "Error",
+          "transition": "1b17452f-a511-41d7-bd13-fd8d8fd54221"
+        }
+      ],
+      "parameters": [],
+      "metadata": {
+        "position": {
+          "x": 2078,
+          "y": 41
+        },
+        "useDynamic": false
+      },
+      "target": "Queue",
+      "type": "Transfer"
+    },
+    {
+      "id": "b7e84b1a-2924-4682-895f-f7d2bba2891f",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "9d6d84f6-6c71-436e-b42e-333bb8d479e2"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "We are experiencing a higher than normal volume of calls and cannot currently assist you. Please try again later. We apologize for any inconvenience. Goodbye."
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 2318,
+          "y": 39
+        },
+        "useDynamic": false
+      },
+      "type": "PlayPrompt"
+    },
+    {
+      "id": "9d6d84f6-6c71-436e-b42e-333bb8d479e2",
+      "branches": [],
+      "parameters": [],
+      "metadata": {
+        "position": {
+          "x": 2558,
+          "y": 43
+        }
+      },
+      "type": "Disconnect"
+    },
+    {
+      "id": "1b17452f-a511-41d7-bd13-fd8d8fd54221",
+      "branches": [
+        {
+          "condition": "Error",
+          "transition": "1a6b387d-0e8a-4615-b68c-e4b40bcbcfcc"
+        },
+        {
+          "condition": "Success",
+          "transition": "1a6b387d-0e8a-4615-b68c-e4b40bcbcfcc"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "Failed to transfer to queue.",
+          "key": "error"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 2077,
+          "y": 277
+        },
+        "dynamicParams": []
+      },
+      "type": "SetAttributes"
+    },
+    {
+      "id": "1a6b387d-0e8a-4615-b68c-e4b40bcbcfcc",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "9d6d84f6-6c71-436e-b42e-333bb8d479e2"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "No agents are available to take your call. Please try again at a later time. We apologize for the inconvenience. Goodbye."
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1838,
+          "y": 478
+        },
+        "useDynamic": false
+      },
+      "type": "PlayPrompt"
+    },
+    {
+      "id": "bc4445ac-1dd6-41a2-917b-2ed3a5c9899e",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "9d6d84f6-6c71-436e-b42e-333bb8d479e2"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "The department you are trying to reach is not currently open. Please try your call again later. Goodbye."
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1839,
+          "y": 278
+        },
+        "useDynamic": false
+      },
+      "type": "PlayPrompt"
+    },
+    {
+      "id": "22be9ead-54a4-47e5-8947-55e750dd62f5",
+      "branches": [
+        {
+          "condition": "False",
+          "transition": "1a6b387d-0e8a-4615-b68c-e4b40bcbcfcc"
+        },
+        {
+          "condition": "True",
+          "transition": "5b15c13e-5475-43b5-a395-b0f4fb4234ac"
+        },
+        {
+          "condition": "Error",
+          "transition": "5edc975c-3342-4da7-b51b-0eca52fe1545"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Status",
+          "value": "Staffed"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1360,
+          "y": 40
+        },
+        "useDynamic": false
+      },
+      "type": "CheckStaffing"
+    },
+    {
+      "id": "fdf939ab-d240-4c23-a6f3-8ed528cd47b1",
+      "branches": [
+        {
+          "condition": "True",
+          "transition": "22be9ead-54a4-47e5-8947-55e750dd62f5"
+        },
+        {
+          "condition": "False",
+          "transition": "bc4445ac-1dd6-41a2-917b-2ed3a5c9899e"
+        },
+        {
+          "condition": "Error",
+          "transition": "5edc975c-3342-4da7-b51b-0eca52fe1545"
+        }
+      ],
+      "parameters": [],
+      "metadata": {
+        "position": {
+          "x": 1120,
+          "y": 39
+        }
+      },
+      "type": "CheckHoursOfOperation"
+    },
+    {
+      "id": "5edc975c-3342-4da7-b51b-0eca52fe1545",
+      "branches": [
+        {
+          "condition": "Error",
+          "transition": "bc4445ac-1dd6-41a2-917b-2ed3a5c9899e"
+        },
+        {
+          "condition": "Success",
+          "transition": "bc4445ac-1dd6-41a2-917b-2ed3a5c9899e"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "Failed to check queue status.",
+          "key": "error"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1599,
+          "y": 281
+        },
+        "dynamicParams": []
+      },
+      "type": "SetAttributes"
+    }
+  ],
+  "metadata": {
+    "entryPointPosition": {
+      "x": 15,
+      "y": 40
+    },
+    "snapToGrid": false,
+    "name": "Sample SCV Queue Transfer with Transcription using Contact Lens",
+    "description": "Creates a Voice Call record and transfers the call to the specified queue with transcription using Contact Lens.",
+    "type": "queueTransfer",
+    "status": "published",
+    "hash": "9ecb960bf454e3329f77e758cceff33e52011ea078b3c41ec6ea10f78c5cb7e3"
+  }
+}
