@@ -199,7 +199,7 @@
       "parameters": [
         {
           "name": "FunctionArn",
-          "value": "arn:aws:lambda:us-west-2:589596482256:function:SCV2-kvsConsumerTrigger:active"
+          "value": "arn:aws:lambda:us-west-2:403503132786:function:MigrationTestCC-kvsConsumerTrigger:active"
         },
         {
           "name": "TimeLimit",

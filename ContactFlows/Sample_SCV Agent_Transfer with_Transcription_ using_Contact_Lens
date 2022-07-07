@@ -1,0 +1,257 @@
+{
+  "start": "28d63d08-ddcb-48f8-99e7-e7883ad7f30b",
+  "version": "1",
+  "modules": [
+    {
+      "id": "28d63d08-ddcb-48f8-99e7-e7883ad7f30b",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "a200ee53-94d2-4e85-853b-7d3100e5fdd7"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "LoggingBehavior",
+          "value": "Enable"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 161,
+          "y": 43
+        }
+      },
+      "type": "SetLoggingBehavior"
+    },
+    {
+      "id": "10ddcd29-fc62-4ba7-9259-1e15cc03b549",
+      "branches": [
+        {
+          "condition": "Error",
+          "transition": "a200ee53-94d2-4e85-853b-7d3100e5fdd7"
+        },
+        {
+          "condition": "Success",
+          "transition": "7cae6c44-6911-4e40-bbf7-f0855d10c69e"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "FunctionArn",
+          "value": "arn:aws:lambda:us-west-2:403503132786:function:MigrationTestCC-InvokeTelephonyIntegrationApiFunction:active"
+        },
+        {
+          "name": "TimeLimit",
+          "value": "8"
+        },
+        {
+          "name": "Parameter",
+          "value": "createTransferVC",
+          "key": "methodName"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 643,
+          "y": 40
+        },
+        "dynamicMetadata": {
+          "methodName": false
+        },
+        "useDynamic": false
+      },
+      "type": "InvokeExternalResource",
+      "target": "Lambda"
+    },
+    {
+      "id": "7cae6c44-6911-4e40-bbf7-f0855d10c69e",
+      "branches": [
+        {
+          "condition": "Error",
+          "transition": "d7185b3f-5eca-4bc4-92f7-8861ab8c8d7f"
+        },
+        {
+          "condition": "Success",
+          "transition": "d7185b3f-5eca-4bc4-92f7-8861ab8c8d7f"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "voiceCallId",
+          "key": "voiceCallId",
+          "namespace": "External"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 883,
+          "y": 41
+        },
+        "dynamicParams": [
+          "voiceCallId"
+        ]
+      },
+      "type": "SetAttributes"
+    },
+    {
+      "id": "8a686eac-6f29-49bd-89d0-c3d6264f5c25",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "23a1264b-7708-48ad-84a7-e0d9ba772a56"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "RecordingBehaviorOption",
+          "value": "Enable"
+        },
+        {
+          "name": "RecordingParticipantOption",
+          "value": "Both"
+        },
+        {
+          "name": "AnalyticsBehaviorOption",
+          "value": "Enable"
+        },
+        {
+          "name": "AnalyticsMode",
+          "value": "RealTime"
+        },
+        {
+          "name": "AnalyticsLanguageLocaleCode",
+          "value": "en-US"
+        },
+        {
+          "name": "AnalyticsRedactionOption",
+          "value": "Enable"
+        },
+        {
+          "name": "AnalyticsRedactionPolicy",
+          "value": "RedactedAndOriginal"
+        },
+        {
+          "name": "AnalyticsCustomVocabulary",
+          "value": "None"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1364,
+          "y": 39
+        }
+      },
+      "type": "SetRecordingBehavior"
+    },
+    {
+      "id": "23a1264b-7708-48ad-84a7-e0d9ba772a56",
+      "branches": [],
+      "parameters": [],
+      "metadata": {
+        "position": {
+          "x": 1603,
+          "y": 42
+        },
+        "useDynamic": false
+      },
+      "type": "Transfer",
+      "target": "Agent"
+    },
+    {
+      "id": "d7185b3f-5eca-4bc4-92f7-8861ab8c8d7f",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "8a686eac-6f29-49bd-89d0-c3d6264f5c25"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Transferring now to an available agent."
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1124,
+          "y": 42
+        },
+        "useDynamic": false
+      },
+      "type": "PlayPrompt"
+    },
+    {
+      "id": "a200ee53-94d2-4e85-853b-7d3100e5fdd7",
+      "branches": [
+        {
+          "condition": "Looping",
+          "transition": "10ddcd29-fc62-4ba7-9259-1e15cc03b549"
+        },
+        {
+          "condition": "Complete",
+          "transition": "658f91a9-981b-4f5c-8c62-8e6c8263905c"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "LoopCount",
+          "value": "2"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 403,
+          "y": 41
+        },
+        "useDynamic": false
+      },
+      "type": "Loop"
+    },
+    {
+      "id": "658f91a9-981b-4f5c-8c62-8e6c8263905c",
+      "branches": [
+        {
+          "condition": "Error",
+          "transition": "d7185b3f-5eca-4bc4-92f7-8861ab8c8d7f"
+        },
+        {
+          "condition": "Success",
+          "transition": "d7185b3f-5eca-4bc4-92f7-8861ab8c8d7f"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "VoiceCall record creation failed.",
+          "key": "error"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 643,
+          "y": 279
+        },
+        "dynamicParams": []
+      },
+      "type": "SetAttributes"
+    }
+  ],
+  "metadata": {
+    "entryPointPosition": {
+      "x": 20,
+      "y": 39
+    },
+    "snapToGrid": false,
+    "name": "Sample SCV Agent Transfer with Transcription using Contact Lens",
+    "description": "Creates a Voice Call record and transfers the call to the specified agent with transcription using Contact Lens.",
+    "type": "agentTransfer",
+    "status": "published",
+    "hash": "8ccd07387255cbe244de5ee4b0a113a5eb1269369767fd5efd314a0c658b7a2c"
+  }
+}

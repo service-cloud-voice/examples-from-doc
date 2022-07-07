@@ -160,7 +160,7 @@
       "parameters": [
         {
           "name": "FunctionArn",
-          "value": "arn:aws:lambda:us-west-2:589596482256:function:SCV2-InvokeTelephonyIntegrationApiFunction:active"
+          "value": "arn:aws:lambda:us-west-2:403503132786:function:MigrationTestCC-InvokeTelephonyIntegrationApiFunction:active"
         },
         {
           "name": "TimeLimit",

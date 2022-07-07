@@ -1,8 +1,9 @@
 {
+  "start": "7e93d2e8-1a8b-4ffb-92d5-59a1f8f610a0",
+  "version": "1",
   "modules": [
     {
       "id": "8745493d-1171-442f-93c3-355818235c24",
-      "type": "Disconnect",
       "branches": [],
       "parameters": [],
       "metadata": {
@@ -10,11 +11,11 @@
           "x": 703,
           "y": 879
         }
-      }
+      },
+      "type": "Disconnect"
     },
     {
       "id": "b421568b-fe0f-4a6a-85d6-a35288fd8c1e",
-      "type": "PlayPrompt",
       "branches": [
         {
           "condition": "Success",
@@ -24,8 +25,7 @@
       "parameters": [
         {
           "name": "Text",
-          "value": "We’re transferring you to an agent. Thanks for waiting.",
-          "namespace": null
+          "value": "We're transferring you to an agent. Thanks for waiting."
         },
         {
           "name": "TextToSpeechType",
@@ -38,80 +38,32 @@
           "y": 21
         },
         "useDynamic": false
-      }
-    },
-    {
-      "id": "1108ef03-ad41-44a5-88fd-447ffe390074",
-      "type": "Transfer",
-      "branches": [
-        {
-          "condition": "AtCapacity",
-          "transition": "78696552-afe2-4956-bafc-197dd3c8dca4"
-        },
-        {
-          "condition": "Error",
-          "transition": "78696552-afe2-4956-bafc-197dd3c8dca4"
-        }
-      ],
-      "parameters": [],
-      "metadata": {
-        "position": {
-          "x": 938,
-          "y": 299
-        },
-        "useDynamic": false,
-        "queue": null
       },
-      "target": "Queue"
-    },
-    {
-      "id": "b3597472-f92c-4c36-b2d6-735d7ec7eb49",
-      "type": "Transfer",
-      "branches": [
-        {
-          "condition": "AtCapacity",
-          "transition": "94d7ce2f-671c-44ab-8ac8-8896b187f08c"
-        },
-        {
-          "condition": "Error",
-          "transition": "94d7ce2f-671c-44ab-8ac8-8896b187f08c"
-        }
-      ],
-      "parameters": [],
-      "metadata": {
-        "position": {
-          "x": 938,
-          "y": 577
-        },
-        "useDynamic": false,
-        "queue": null
-      },
-      "target": "Queue"
+      "type": "PlayPrompt"
     },
     {
       "id": "6e3125c0-e425-4bab-a5e6-0906f5f1a2e3",
-      "type": "SetAttributes",
       "branches": [
-        {
-          "condition": "Success",
-          "transition": "b421568b-fe0f-4a6a-85d6-a35288fd8c1e"
-        },
         {
           "condition": "Error",
           "transition": "94d7ce2f-671c-44ab-8ac8-8896b187f08c"
+        },
+        {
+          "condition": "Success",
+          "transition": "b421568b-fe0f-4a6a-85d6-a35288fd8c1e"
         }
       ],
       "parameters": [
         {
           "name": "Attribute",
-          "value": "queue",
-          "key": "queueARN",
+          "value": "agent",
+          "key": "agentARN",
           "namespace": "External"
         },
         {
           "name": "Attribute",
-          "value": "agent",
-          "key": "agentARN",
+          "value": "queue",
+          "key": "queueARN",
           "namespace": "External"
         }
       ],
@@ -120,26 +72,25 @@
           "x": 457,
           "y": 20
         }
-      }
+      },
+      "type": "SetAttributes"
     },
     {
       "id": "7e93d2e8-1a8b-4ffb-92d5-59a1f8f610a0",
-      "type": "InvokeExternalResource",
       "branches": [
-        {
-          "condition": "Success",
-          "transition": "6e3125c0-e425-4bab-a5e6-0906f5f1a2e3"
-        },
         {
           "condition": "Error",
           "transition": "94d7ce2f-671c-44ab-8ac8-8896b187f08c"
+        },
+        {
+          "condition": "Success",
+          "transition": "6e3125c0-e425-4bab-a5e6-0906f5f1a2e3"
         }
       ],
       "parameters": [
         {
           "name": "FunctionArn",
-          "value": "arn:aws:lambda:us-west-2:352672060859:function:Voiceinsights3StmfaO-InvokeTelephonyIntegrationApiFunction",
-          "namespace": null
+          "value": "arn:aws:lambda:us-west-2:403503132786:function:MigrationTestCC-InvokeTelephonyIntegrationApiFunction:active"
         },
         {
           "name": "TimeLimit",
@@ -147,33 +98,31 @@
         },
         {
           "name": "Parameter",
-          "key": "methodName",
-          "value": "executeOmniFlow",
-          "namespace": null
-        },
-        {
-          "name": "Parameter",
-          "key": "flowDevName",
-          "value": "flowApiName",
-          "namespace": "User Defined"
-        },
-        {
-          "name": "Parameter",
-          "key": "fallbackQueue",
-          "value": "fallbackQueue",
-          "namespace": "User Defined"
-        },
-        {
-          "name": "Parameter",
-          "key": "flowInput-relatedRecordId",
           "value": "005001002003004",
-          "namespace": null
+          "key": "flowInput-relatedRecordId"
         },
         {
           "name": "Parameter",
-          "key": "contactId",
-          "value": "contactId",
+          "value": "fallbackQueue",
+          "key": "fallbackQueue",
           "namespace": "User Defined"
+        },
+        {
+          "name": "Parameter",
+          "value": "flowApiName",
+          "key": "flowDevName",
+          "namespace": "User Defined"
+        },
+        {
+          "name": "Parameter",
+          "value": "contactId",
+          "key": "contactId",
+          "namespace": "User Defined"
+        },
+        {
+          "name": "Parameter",
+          "value": "executeOmniFlow",
+          "key": "methodName"
         }
       ],
       "metadata": {
@@ -190,64 +139,26 @@
         },
         "useDynamic": false
       },
+      "type": "InvokeExternalResource",
       "target": "Lambda"
     },
     {
-      "id": "9efacc94-82e9-4b59-a2b0-891dedb68112",
-      "type": "SetEventHook",
+      "id": "57344096-e5f3-453d-9e30-c40aa9173b64",
       "branches": [
-        {
-          "condition": "Success",
-          "transition": "1108ef03-ad41-44a5-88fd-447ffe390074"
-        },
         {
           "condition": "Error",
           "transition": "78696552-afe2-4956-bafc-197dd3c8dca4"
-        }
-      ],
-      "parameters": [
-        {
-          "name": "Type",
-          "value": "AgentWhisper"
         },
-        {
-          "name": "ContactFlowId",
-          "value": "arn:aws:connect:us-west-2:352672060859:instance/f75946c0-bc38-4252-8174-468f6ac2543d/contact-flow/34ffc587-fd4c-4dcb-b8d4-7508b88e00c9",
-          "resourceName": "Sample SCV Agent Whisper With Transcription"
-        }
-      ],
-      "metadata": {
-        "position": {
-          "x": 697,
-          "y": 298
-        },
-        "contactFlow": {
-          "id": "arn:aws:connect:us-west-2:352672060859:instance/f75946c0-bc38-4252-8174-468f6ac2543d/contact-flow/34ffc587-fd4c-4dcb-b8d4-7508b88e00c9",
-          "text": "Sample SCV Agent Whisper With Transcription"
-        },
-        "customerOrAgent": false,
-        "useDynamic": false
-      }
-    },
-    {
-      "id": "57344096-e5f3-453d-9e30-c40aa9173b64",
-      "type": "SetQueue",
-      "branches": [
         {
           "condition": "Success",
           "transition": "1051574a-df66-4378-a577-31c6f1067b66"
-        },
-        {
-          "condition": "Error",
-          "transition": "78696552-afe2-4956-bafc-197dd3c8dca4"
         }
       ],
       "parameters": [
         {
           "name": "Agent",
           "value": "agentARN",
-          "namespace": "User Defined",
-          "resourceName": null
+          "namespace": "User Defined"
         }
       ],
       "metadata": {
@@ -257,19 +168,71 @@
         },
         "useDynamic": true,
         "queue": "agentARN"
-      }
+      },
+      "type": "SetQueue"
+    },
+    {
+      "id": "1108ef03-ad41-44a5-88fd-447ffe390074",
+      "branches": [
+        {
+          "condition": "AtCapacity",
+          "transition": "78696552-afe2-4956-bafc-197dd3c8dca4"
+        },
+        {
+          "condition": "Error",
+          "transition": "78696552-afe2-4956-bafc-197dd3c8dca4"
+        }
+      ],
+      "parameters": [],
+      "metadata": {
+        "position": {
+          "x": 938,
+          "y": 299
+        },
+        "useDynamic": false
+      },
+      "target": "Queue",
+      "type": "Transfer"
+    },
+    {
+      "id": "78696552-afe2-4956-bafc-197dd3c8dca4",
+      "branches": [
+        {
+          "condition": "Error",
+          "transition": "94d7ce2f-671c-44ab-8ac8-8896b187f08c"
+        },
+        {
+          "condition": "Success",
+          "transition": "d5b2442b-8f60-45d5-bfd7-1e4a2029d5a9"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Queue",
+          "value": "queueARN",
+          "namespace": "User Defined"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 213,
+          "y": 580
+        },
+        "useDynamic": true,
+        "queue": "queueARN"
+      },
+      "type": "SetQueue"
     },
     {
       "id": "1051574a-df66-4378-a577-31c6f1067b66",
-      "type": "CheckStaffing",
       "branches": [
-        {
-          "condition": "True",
-          "transition": "9efacc94-82e9-4b59-a2b0-891dedb68112"
-        },
         {
           "condition": "False",
           "transition": "78696552-afe2-4956-bafc-197dd3c8dca4"
+        },
+        {
+          "condition": "True",
+          "transition": "9efacc94-82e9-4b59-a2b0-891dedb68112"
         },
         {
           "condition": "Error",
@@ -287,21 +250,20 @@
           "x": 459,
           "y": 299
         },
-        "useDynamic": false,
-        "queue": null
-      }
+        "useDynamic": false
+      },
+      "type": "CheckStaffing"
     },
     {
-      "id": "2e48f903-8e4b-45cd-be64-4153a1763f77",
-      "type": "SetEventHook",
+      "id": "9efacc94-82e9-4b59-a2b0-891dedb68112",
       "branches": [
         {
-          "condition": "Success",
-          "transition": "b3597472-f92c-4c36-b2d6-735d7ec7eb49"
+          "condition": "Error",
+          "transition": "78696552-afe2-4956-bafc-197dd3c8dca4"
         },
         {
-          "condition": "Error",
-          "transition": "94d7ce2f-671c-44ab-8ac8-8896b187f08c"
+          "condition": "Success",
+          "transition": "1108ef03-ad41-44a5-88fd-447ffe390074"
         }
       ],
       "parameters": [
@@ -311,26 +273,48 @@
         },
         {
           "name": "ContactFlowId",
-          "value": "arn:aws:connect:us-west-2:352672060859:instance/f75946c0-bc38-4252-8174-468f6ac2543d/contact-flow/34ffc587-fd4c-4dcb-b8d4-7508b88e00c9",
-          "resourceName": "Sample SCV Agent Whisper With Transcription"
+          "value": "beb5f40c-aee7-485e-8923-7725ce3a34d9"
         }
       ],
       "metadata": {
         "position": {
-          "x": 696,
-          "y": 578
+          "x": 697,
+          "y": 298
         },
         "contactFlow": {
-          "id": "arn:aws:connect:us-west-2:352672060859:instance/f75946c0-bc38-4252-8174-468f6ac2543d/contact-flow/34ffc587-fd4c-4dcb-b8d4-7508b88e00c9",
+          "id": "arn:aws:connect:us-west-2:545481702354:instance/12a0d5a3-253e-475e-bd4f-e7a4f04f2213/contact-flow/aefcb813-0fe8-4480-9e68-3632ebd5b40d",
           "text": "Sample SCV Agent Whisper With Transcription"
         },
         "customerOrAgent": false,
         "useDynamic": false
-      }
+      },
+      "type": "SetEventHook"
+    },
+    {
+      "id": "b3597472-f92c-4c36-b2d6-735d7ec7eb49",
+      "branches": [
+        {
+          "condition": "AtCapacity",
+          "transition": "94d7ce2f-671c-44ab-8ac8-8896b187f08c"
+        },
+        {
+          "condition": "Error",
+          "transition": "94d7ce2f-671c-44ab-8ac8-8896b187f08c"
+        }
+      ],
+      "parameters": [],
+      "metadata": {
+        "position": {
+          "x": 938,
+          "y": 577
+        },
+        "useDynamic": false
+      },
+      "target": "Queue",
+      "type": "Transfer"
     },
     {
       "id": "94d7ce2f-671c-44ab-8ac8-8896b187f08c",
-      "type": "PlayPrompt",
       "branches": [
         {
           "condition": "Success",
@@ -340,8 +324,7 @@
       "parameters": [
         {
           "name": "Text",
-          "value": "We’re sorry—something went wrong and we can’t help you right now. Please try calling us later.",
-          "namespace": null
+          "value": "We're sorry—something went wrong and we can't help you right now. Please try calling us later."
         },
         {
           "name": "TextToSpeechType",
@@ -354,49 +337,19 @@
           "y": 862
         },
         "useDynamic": false
-      }
-    },
-    {
-      "id": "78696552-afe2-4956-bafc-197dd3c8dca4",
-      "type": "SetQueue",
-      "branches": [
-        {
-          "condition": "Success",
-          "transition": "d5b2442b-8f60-45d5-bfd7-1e4a2029d5a9"
-        },
-        {
-          "condition": "Error",
-          "transition": "94d7ce2f-671c-44ab-8ac8-8896b187f08c"
-        }
-      ],
-      "parameters": [
-        {
-          "name": "Queue",
-          "value": "queueARN",
-          "namespace": "User Defined",
-          "resourceName": null
-        }
-      ],
-      "metadata": {
-        "position": {
-          "x": 213,
-          "y": 580
-        },
-        "useDynamic": true,
-        "queue": "queueARN"
-      }
+      },
+      "type": "PlayPrompt"
     },
     {
       "id": "d5b2442b-8f60-45d5-bfd7-1e4a2029d5a9",
-      "type": "CheckStaffing",
       "branches": [
-        {
-          "condition": "True",
-          "transition": "2e48f903-8e4b-45cd-be64-4153a1763f77"
-        },
         {
           "condition": "False",
           "transition": "94d7ce2f-671c-44ab-8ac8-8896b187f08c"
+        },
+        {
+          "condition": "True",
+          "transition": "2e48f903-8e4b-45cd-be64-4153a1763f77"
         },
         {
           "condition": "Error",
@@ -414,24 +367,57 @@
           "x": 459,
           "y": 580
         },
-        "useDynamic": false,
-        "queue": null
-      }
+        "useDynamic": false
+      },
+      "type": "CheckStaffing"
+    },
+    {
+      "id": "2e48f903-8e4b-45cd-be64-4153a1763f77",
+      "branches": [
+        {
+          "condition": "Error",
+          "transition": "94d7ce2f-671c-44ab-8ac8-8896b187f08c"
+        },
+        {
+          "condition": "Success",
+          "transition": "b3597472-f92c-4c36-b2d6-735d7ec7eb49"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Type",
+          "value": "AgentWhisper"
+        },
+        {
+          "name": "ContactFlowId",
+          "value": "beb5f40c-aee7-485e-8923-7725ce3a34d9"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 696,
+          "y": 578
+        },
+        "contactFlow": {
+          "id": "arn:aws:connect:us-west-2:545481702354:instance/12a0d5a3-253e-475e-bd4f-e7a4f04f2213/contact-flow/aefcb813-0fe8-4480-9e68-3632ebd5b40d",
+          "text": "Sample SCV Agent Whisper With Transcription"
+        },
+        "customerOrAgent": false,
+        "useDynamic": false
+      },
+      "type": "SetEventHook"
     }
   ],
-  "version": "1",
-  "start": "7e93d2e8-1a8b-4ffb-92d5-59a1f8f610a0",
   "metadata": {
     "entryPointPosition": {
       "x": 15,
       "y": 19
     },
     "snapToGrid": false,
-    "name": "Sample_SCV_Inbound_Subflow",
-    "description": "Sample SCV Inbound Subflow that can be called by your inbound contact flow to run an Omni-Channel flow to route calls.",
+    "name": "Sample SCV Inbound Subflow",
+    "description": "Routes the call using routing instructions coming from the configured OmniFlow.",
     "type": "contactFlow",
     "status": "published",
-    "hash": "fdf08ee97f4d21c9d396f26276aee4a96d9a8fdd61101d21a9d7bdc46fb71ddf"
-  },
-  "type": "contactFlow"
+    "hash": "5d04f9b7b8cf503c69ea30f9ed98bacab9dff41e2abba0c16b8dd3287ee028ba"
+  }
 }
