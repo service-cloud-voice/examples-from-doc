@@ -56,7 +56,9 @@ Since the Sample SCV Outbound Flow With Transcription Using Contact Lens offers 
 
 * [Sample SCV Transcription Subflow With Amazon Transcribe](Sample SCV Transcription Subflow With Amazon Transcribe): Enables recording and real-time transcription using Amazon Transcribe, and then transfers the voice call to the queue.
 
+* [Sample SCV Transcription Subflow With Contact Lens](Sample SCV Transcription Subflow With Contact Lens): Enables recording and real-time transcription using Contact Lens, and then transfers the voice call to the queue
 
+* [Sample SCV Omni-Channel Subflow - Basic Routing With Case Creation](Sample SCV Omni-Channel Subflow - Basic Routing With Case Creation): Creates a case for each inbound voice call, routes the call to a queue, and opens a screen-pop for the new case record when an agent accepts the call.
 
 ## Salesforce REST API Flows
 
