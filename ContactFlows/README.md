@@ -1,24 +1,65 @@
-
 # Service Cloud Voice Contact Flows
 
-These contact flows perform common functions when using Service Cloud Voice. For a description of how each of these contact flows work, see [Contact Flows (from the Service Cloud Voice Implementation Guide)](https://developer.salesforce.com/docs/atlas.en-us.voice_developer_guide.meta/voice_developer_guide/voice_contact_flows.htm).
+Salesforce provides several out-of-the box flows for Amazon Connect you can customize for your Service Cloud Voice contact center environment. Sample flows begin with the name “Sample SCV.” This page lists the most current JSON files for each sample flow. You can also access these flows directly from your Amazon Connect instance by selecting Routing > Contact flows.
 
+Each Sample SCV flow performs a voice call task, whether it’s to route incoming calls, transfer calls, route outgoing calls, or capture and transcribe audio. 
+
+Each flow is a flow map made up of blocks, beginning with an Entry block and ending with a Transfer to flow or Disconnect block. For example, the Sample SCV Inbound Flow is used to route incoming calls. When a customer calls the contact center, the voice call triggers the inbound flow, starting at the Entry block. The call then traverses the flow, block by block, stopping at each block to determine what happens next. The flow eventually arrives at the Transfer to flow block, which ends this flow and transfers the call to the Omni-Channel Subflow. If any errors are encountered at any point in the flow, the call gets routed to the Disconnect block.
+
+A subflow is a flow within a flow. Salesforce offers several out-of-the-box subflows that let you add features to a flow, such as Omni-Channel routing, callbacks and voicemails. 
+
+A subflow can’t be used on its own; instead, it must be added to a flow using the Transfer to flow block. You can add multiple subflows to a flow by daisy-chaining them together. 
+
+Some sample flows include subflows by default. For example, the Sample SCV Inbound Flow transfers out to the Sample SCV Omni-Channel Subflow, which then transfers out to a series of other subflows, ending with the Sample SCV Transcription Subflow with Contact Lens.
+
+Here’s an illustration of how an inbound call might flow through the daisy chain of subflows:
+A call comes in, which triggers the Sample SCV Inbound Flow.
+The call moves through the Sample SCV Inbound Flow, creating a voice call record before it’s transferred to the Sample SCV Omni-Channel Subflow.
+The call moves through the Sample SCV Omni-Channel Subflow, routing and prioritizing the call based on the routing logic of the specified Omni-Channel flow. After this, the call is transferred to the Sample SCV Callback Subflow.
+The call moves through the Sample SCV Callback Subflow, giving the caller the option to schedule a callback if the queue is busy. If the caller chooses to schedule a callback, the call is transferred to the Callback queue. If the caller chooses to remain on the line, the call is transferred to the Sample SCV Transcription Subflow with Contact Lens.
+The call moves through the Sample SCV Transcription Subflow with Contact Lens, enabling real-time transcription before finally transferring the call to the queue. This ends the entire flow.
+
+
+
+The order of the subflow chain matters. For example, for inbound calls, if you place the Omni-Channel Subflow before the Callback Subflow, then callback calls will be routed correctly. If, however, you flip the subflows by placing the Callback Subflow before the Omni-Channel Subflow, then the callback calls will be routed to the basic queue. 
+
+For inbound calls, you can’t point a phone number directly to a subflow; instead, point your phone number to the inbound flow. Subflows don’t create a voice call record in Salesforce; they rely on the inbound flow to do that.
+
+For more details about how Sample SCV contact flows work, see [Contact Flows (from the Service Cloud Voice Implementation Guide)](https://developer.salesforce.com/docs/atlas.en-us.voice_developer_guide.meta/voice_developer_guide/voice_contact_flows.htm).
+ 
 See Also:
-
 * [Service Cloud Voice in Salesforce Help](https://help.salesforce.com/articleView?id=voice_about.htm&type=5)
 * [Service Cloud Voice Implementation Guide](https://developer.salesforce.com/docs/atlas.en-us.voice_developer_guide.meta/voice_developer_guide/voice_intro.htm)
 
 ## Basic Flows
 
-* [Sample_SCV_Inbound_Flow_With_Transcription](Sample_SCV_Inbound_Flow_With_Transcription): This contact flow defines a basic interactive voice response (IVR) flow that includes creating a VoiceCall record in Salesforce and turning on transcription.
-* [Sample SCV Agent Whisper With Transcription](Sample_SCV_Agent_Whisper_With_Transcription): This contact flow prepares for the inbound call by starting media streaming and turning on transcription. This contact flow is assigned as the “whisper flow” during the [Inbound_Flow_With_Transcription](Sample_SCV_Inbound_Flow_With_Transcription) contact flow.
-* [Sample_SCV_Inbound_Subflow](Sample_SCV_Inbound_Subflow): This contact flow streamlines the integration with an Omni-Channel flow in order to route work. You can connect this subflow to your inbound contact flow.
-* [Sample_SCV_Outbound_Flow_With_Transcription](Sample_SCV_Outbound_Flow_With_Transcription): This contact flow defines the customer experience for an outbound call (the agent calling the customer) where transcription is enabled.
-* [Sample_SCV_Agent_Transfer](Sample_SCV_Agent_Transfer): This contact flow illustrates the customer experience when a call is transferred from one agent to another agent.
-* [Sample_SCV_Queue_Transfer](Sample_SCV_Queue_Transfer): This contact flow illustrates the customer experience when a call is transferred to a queue.
-* [Sample_SCV_Inbound](Sample_SCV_Inbound): This contact flow defines the customer experience for a simple inbound call. For a similar flow that also includes transcription, see [Sample_SCV_Inbound_Flow_With_Transcription](Sample_SCV_Inbound_Flow_With_Transcription).
+* [Sample SCV Inbound Flow](Sample SCV Inbound Flow): Creates a voice call record in Salesforce for the inbound call and transfers the call to the SCV Omni-Channel subflow.
+Associate your phone number with this flow so customers can reach your contact center.
+
+* [Sample SCV Outbound Flow With Transcription Using Contact Lens](Sample SCV Outbound Flow With Transcription Using Contact Lens): Starts transcription using Contact Lens for Amazon Connect, capturing and transcribing audio for outbound voice calls.
+If you use this preferred flow, you can’t use the [Sample SCV Outbound Flow With Transcription Using Amazon Transcribe](Sample SCV Outbound Flow With Transcription Using Amazon Transcribe) flow.
+
+* [Sample SCV Outbound Flow With Transcription Using Amazon Transcribe](Sample SCV Outbound Flow With Transcription Using Amazon Transcribe): Starts media streaming. Also starts transcription using Amazon Transcribe, capturing and transcribing audio for outbound voice calls.
+Since the Sample SCV Outbound Flow With Transcription Using Contact Lens offers more robust transcription features, consider using that flow instead of this one.
+
+* [Sample SCV Transfer Flow For Agent Transfers](Sample SCV Transfer Flow For Agent Transfers): Creates a voice call record and transfers the call from one agent to another specified agent
+
+* [Sample SCV Transfer Flow For Queue Transfers](Sample SCV Transfer Flow For Queue Transfers): Creates a voice call record and transfers the call from an agent to a specified queue.
+
+* [Sample SCV Transfer Flow For Omni-Channel Transfers](Sample SCV Transfer Flow For Omni-Channel Transfers): Creates a voice call record and transfers the call from an agent to a specified Omni-Channel flow.
+
+* [Sample SCV Agent Whisper Flow For Amazon Transcribe](Sample SCV Agent Whisper Flow For Amazon Transcribe): Starts media streaming. Also starts transcription using Amazon Transcribe to prepare for inbound  voice calls and voice call transfers.
+
+* [Sample SCV Voicemail Subflow](Sample SCV Voicemail Subflow): Enables voicemail recordings.
+
+* [Sample SCV Callback Subflow](Sample SCV Callback Subflow): Gives the caller the option to schedule a callback if the queue is busy. If the caller chooses to schedule a callback, transfers the voice call to the Callback queue. If the caller chooses to remain on the line, transfers the call to one of the SCV Transcription Subflows.
+
+* [Sample SCV Transcription Subflow With Amazon Transcribe](Sample SCV Transcription Subflow With Amazon Transcribe): Enables recording and real-time transcription using Amazon Transcribe, and then transfers the voice call to the queue.
+
+
 
 ## Salesforce REST API Flows
 
 * [Sample_SCV_REST_Check_For_Open_Cases](Sample_SCV_REST_Check_For_Open_Cases): This sample contact flow demonstrates how to check for open cases using the `InvokeSalesforceRestApiFunction` Lambda function.
 * [Sample_SCV_REST_Link_Call_To_Case](Sample_SCV_REST_Link_Call_To_Case): This sample contact flow demonstrates how to link a call to an open case using the `InvokeSalesforceRestApiFunction` Lambda function. This flow adds on to the simpler [Sample_SCV_REST_Check_For_Open_Cases](Sample_SCV_REST_Check_For_Open_Cases) contact flow.
+* [Sample SCV Field Service Phone Call Subflow](Sample SCV Field Service Phone Call Subflow): Connects field agents to contact center agents.
