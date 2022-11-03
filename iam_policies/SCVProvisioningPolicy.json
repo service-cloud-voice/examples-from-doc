@@ -71,6 +71,7 @@
         "lambda:ListVersionsByFunction",
         "lambda:PublishLayerVersion",
         "lambda:PublishVersion",
+        "lambda:PutFunctionEventInvokeConfig",
         "lambda:RemovePermission",
         "lambda:TagResource",
         "lambda:UpdateAlias",
