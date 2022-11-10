@@ -94,6 +94,8 @@
         "logs:PutLogEvents",
         "logs:PutResourcePolicy",
         "logs:PutRetentionPolicy",
+        "logs:TagLogGroup",
+        "logs:UntagLogGroup",
         "s3:CreateBucket",
         "s3:DeleteBucket",
         "s3:DeleteBucketPolicy",
