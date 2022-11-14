@@ -79,6 +79,7 @@
         "lambda:UpdateAlias",
         "lambda:UpdateFunctionConfiguration",
         "lambda:UpdateEventSourceMapping",
+        "lambda:UpdateFunctionCode",
         "logs:CreateLogGroup",
         "logs:CreateLogStream",
         "logs:DeleteLogGroup",
