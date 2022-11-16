@@ -59,6 +59,7 @@
         "lambda:DeleteLayerVersion",
         "lambda:GetAlias",
         "lambda:GetFunction",
+        "lambda:GetFunctionCodeSigningConfig",
         "lambda:GetLayerVersion",
         "lambda:GetPolicy",
         "lambda:GetEventSourceMapping",
