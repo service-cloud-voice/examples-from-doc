@@ -19,7 +19,7 @@ export default class ScvToolkitApiTester extends LightningElement {
 	}
 
 	connectedCallback() {
-		this.subscribeToVoiceToolkit();
+                this.subscribeToVoiceToolkit();
 	}
 
 	changeHandler(event) {
