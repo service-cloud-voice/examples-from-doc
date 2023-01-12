@@ -18,14 +18,8 @@ export default class ScvToolkitApiTester extends LightningElement {
 		this.conversationEventListener = this.onConversationEvent.bind(this);
 	}
 
-	renderedCallback() {
-		// To learn more about this lifecycle call, see:
-		// https://lwc.dev/guide/lifecycle#renderedcallback()
-		
-		if (!this.hasRendered) {
-			this.subscribeToVoiceToolkit();
-			this.hasRendered = true;
-	  }
+	connectedCallback() {
+		this.subscribeToVoiceToolkit();
 	}
 
 	changeHandler(event) {
