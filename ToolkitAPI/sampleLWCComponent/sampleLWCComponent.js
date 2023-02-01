@@ -10,38 +10,37 @@ export default class SampleLWCComponent extends LightningElement {
     transcript = 'No transcripts received yet.';
 
     constructor() {
-	    super();
-
-	    this.telephonyEventListener = this.onTelephonyEvent.bind(this);
-	    this.conversationEventListener = this.onConversationEvent.bind(this);
-    }
+        super();
+        this.telephonyEventListener = this.onTelephonyEvent.bind(this);
+        this.conversationEventListener = this.onConversationEvent.bind(this);
+    } 
 
     renderedCallback() {
         this.subscribeToVoiceToolkit();
     }
 
     changeHandler(event) {
-	    this.payload = event.target.value;
+        this.payload = event.target.value;
     }
 
     onInvokeNBA(event) {
         // Message must be in the format { key: 'value' }
-	    // Use in the Next Best Action strategy filter element with $Request.key
-	    // To learn more, see:
-	    // https://help.salesforce.com/articleView?id=nba_strategy_expressions.htm&type=5
+        // Use in the Next Best Action strategy filter element with $Request.key
+        // To learn more, see:
+        // https://help.salesforce.com/articleView?id=nba_strategy_expressions.htm&type=5
         this.getToolkitApi().updateNextBestActions(this.recordId, JSON.parse(this.payload));
     }
 
     onSubscribe(event) {
-	    this.subscribeToVoiceToolkit();
+        this.subscribeToVoiceToolkit();
     }
 
     onUnsubscribe(event) {
-	    this.unsubscribeFromVoiceToolkit();
+        this.unsubscribeFromVoiceToolkit();
     }
 
     subscribeToVoiceToolkit() {
-	    const toolkitApi = this.getToolkitApi();
+        const toolkitApi = this.getToolkitApi();
         toolkitApi.addEventListener('callstarted', this.telephonyEventListener);
         toolkitApi.addEventListener('callconnected', this.telephonyEventListener);
         toolkitApi.addEventListener('callended', this.telephonyEventListener);
@@ -59,7 +58,7 @@ export default class SampleLWCComponent extends LightningElement {
     }
 
     unsubscribeFromVoiceToolkit() {
-	    const toolkitApi = this.getToolkitApi();
+        const toolkitApi = this.getToolkitApi();
         toolkitApi.removeEventListener('callstarted', this.telephonyEventListener);
         toolkitApi.removeEventListener('callconnected', this.telephonyEventListener);
         toolkitApi.removeEventListener('callended', this.telephonyEventListener);
