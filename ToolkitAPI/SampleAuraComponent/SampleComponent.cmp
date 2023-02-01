@@ -14,6 +14,7 @@
     <aura:attribute name="digits" type="String" default=""/>
     <aura:attribute name="record" type="Object"/>
     <aura:attribute name="options" type="List" default="[{'label': 'INITIAL_CALLER', 'value': 'Initial_Caller'}, {'label': 'THIRD_PARTY', 'value': 'Third_Party'}]" description="Participant type options" />
+    <aura:attribute name="endCallOptions" type="List" default="[{'label': 'INITIAL_CALLER', 'value': 'Initial_Caller'}, {'label': 'THIRD_PARTY', 'value': 'Third_Party'}, {'label': 'AGENT', 'value': 'Agent'}]" description="Participant type options" />
     <aura:attribute name="contactOptions" type="List" default="[{ label: 'PHONE NUMBER', value: 'PhoneNumber' },{ label: 'AGENT/QUEUE ID', value: 'AgentOrQueueId' }]" description="Participant type options" />
     <aura:attribute name="comboBoxHoldValue" type="String" default="Initial_Caller"/>   
     <aura:attribute name="comboBoxResumeValue" type="String" default="Initial_Caller"/>
@@ -127,18 +128,14 @@
                 <lightning:button variant="brand" label="Decline Call" title="Decline Call" onclick="{! c.onDeclineCall }"/>
             </div>
             
-            <div class="slds-grid slds-p-bottom_medium" >
-             <lightning:combobox
+            <div class="slds-grid slds-p-bottom_medium">
+                <lightning:combobox
                 name="removeParticipant"
                 label="Remove Participant type"
                 value="{!v.comboBoxRemoveParticipantValue}"
                 placeholder="Select Participant type"
-                options="{!v.options}"
+                options="{!v.endCallOptions}"
                 onchange="{! c.handleComboboxRemoveParticipantChange}" ></lightning:combobox>
-            <lightning:button variant="brand" label="Remove Participant" onclick="{! c.onRemoveParticipant}"></lightning:button>
-            </div>
-            
-            <div class="slds-grid slds-p-bottom_medium">
                 <lightning:button variant="brand" label="End Call" title="End Call" onclick="{! c.onEndCall }"/>
             </div>
         </div>

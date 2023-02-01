@@ -35,10 +35,6 @@
         helper.declineCall(cmp);
     },
     
-    onRemoveParticipant: function(cmp, event, helper) {
-        helper.removeParticipant(cmp);
-    },
-    
     onEndCall: function(cmp, event, helper) {
         helper.endCall(cmp);
     },

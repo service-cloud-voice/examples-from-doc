@@ -85,14 +85,10 @@
     declineCall: function(cmp) {
         cmp.find('voiceToolkitApi').declineCall()
     },
-    
-    removeParticipant: function(cmp) {
-        var params = cmp.get('v.comboBoxRemoveParticipantValue');
-        cmp.find('voiceToolkitApi').removeParticipant(params)
-    },
 
     endCall: function(cmp) {
-        cmp.find('voiceToolkitApi').endCall()
+        var params = cmp.get('v.comboBoxRemoveParticipantValue');
+        cmp.find('voiceToolkitApi').endCall(params)
     },
 
     startPreviewCall: function(cmp) {
