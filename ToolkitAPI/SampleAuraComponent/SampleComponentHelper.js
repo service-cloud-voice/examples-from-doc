@@ -52,13 +52,44 @@
         cmp.find('voiceToolkitApi').unmute()
     },
     
+    merge: function(cmp) {
+        cmp.find('voiceToolkitApi').merge()
+    },
+    
+    swap: function(cmp) {
+        cmp.find('voiceToolkitApi').swap()
+    },
+    
+    pauseRecording: function(cmp) {
+        cmp.find('voiceToolkitApi').pauseRecording()
+    },
+    
+    resumeRecording: function(cmp) {
+        cmp.find('voiceToolkitApi').resumeRecording()
+    },
+    
+    hold: function(cmp) {
+        var params = cmp.get('v.comboBoxHoldValue');
+        cmp.find('voiceToolkitApi').hold(params)
+    },
+    
+    resume: function(cmp) {
+        var params = cmp.get('v.comboBoxResumeValue');
+        cmp.find('voiceToolkitApi').resume(params)
+    },
+    
     acceptCall: function(cmp) {
         cmp.find('voiceToolkitApi').acceptCall()
     },
 
     declineCall: function(cmp) {
         cmp.find('voiceToolkitApi').declineCall()
-    },   
+    },
+    
+    removeParticipant: function(cmp) {
+        var params = cmp.get('v.comboBoxRemoveParticipantValue');
+        cmp.find('voiceToolkitApi').removeParticipant(params)
+    },
 
     endCall: function(cmp) {
         cmp.find('voiceToolkitApi').endCall()
@@ -67,5 +98,22 @@
     startPreviewCall: function(cmp) {
         var params = cmp.get('v.phoneNumber');
         cmp.find('voiceToolkitApi').startPreviewCall(params);
+    },
+    
+    sendDigits: function(cmp) {
+        var params = cmp.get('v.digits');
+        cmp.find('voiceToolkitApi').sendDigits(params);
+    },
+    
+    addParticipant: function(cmp) {
+        var param1 = cmp.get('v.comboBoxAddParticipantValue');
+        var param2 = cmp.get('v.addParticipantValue');
+        cmp.find('voiceToolkitApi').addParticipant(param1, param2, false);
+    },
+    
+    blindTransfer: function(cmp) {
+        var param1 = cmp.get('v.comboBoxBlindTransferValue');
+        var param2 = cmp.get('v.blindTransferValue');
+        cmp.find('voiceToolkitApi').addParticipant(param1, param2, true);
     }
 })
