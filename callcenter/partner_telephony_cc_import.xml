@@ -1,0 +1,32 @@
+<callCenter>
+
+    <!-- General Info Section. This is a required section.-->
+    <section sortOrder="0" name="reqGeneralInfo" label="General Information">
+        <item sortOrder="1" name="reqDisplayName" label="Display Name">SCV Partner Telephony CC</item>
+        <item sortOrder="0" name="reqInternalName" label="InternalName">scvPartnerCC</item>
+       
+         <!-- Provide Full API Name of the Conversation Vendor Info Component present in installed vendor managed package-->
+        <item sortOrder="2" name="reqVendorInfoApiName" label="Conversation Vendor Info Developer Name">{API Full Name of a vendor from conversationVendorInfo}</item>
+    </section>
+
+    <!-- SCV Settings. This is a required section. -->    
+    <section sortOrder="1" name="reqHvcc" label="SCV Settings">
+        <item sortOrder="0" name="reqRelayState" label="Relay State">{replace this URL with relay state of your identity provider's app}</item>
+        <item sortOrder="1" name="reqIdentityUrl" label="Identity URL">{replace this URL with your IdP-Initiated Login UR}</item>
+        <item sortOrder="2"  name="reqTelephonyIntegrationCertificate" label="Telephony Integration Certificate">-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----</item>
+        <item sortOrder="3" name="reqLongDistPrefix" label="Long Distance Prefix">+1</item>
+        <item sortOrder="4" name="reqUniversalCallRecordingAccess" label="Universal Call Recording Access">false</item>
+    </section>
+
+
+    <!-- All below sections below contain vendor settings-->
+    <section sortOrder="2" name="TelephonyProviderSettings" label="Telephony Vendor Specific Settings">
+        <item sortOrder="0" name="settings" label="Settings 0">{Some Value}</item>
+        <item sortOrder="1" name="settings1" label="Settings 1">{Some Value}</item>
+        <item sortOrder="2" name="settings1" label="Settings 2">{Some Value}</item>
+        <item sortOrder="3" name="settings1" label="Settings 3">{Some Value}</item>
+    </section>
+</callCenter>
+

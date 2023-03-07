@@ -1,0 +1,772 @@
+{
+    "modules": [
+        {
+            "id": "51cc9461-dc49-404f-a5f7-d6fbebcee5e0",
+            "type": "SetAttributes",
+            "branches": [
+                {
+                    "condition": "Success",
+                    "transition": "bf76b969-19a5-426c-8f78-f91a35c61f76"
+                },
+                {
+                    "condition": "Error",
+                    "transition": "b4b07e49-8c73-4953-aa6e-03986036074f"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "Attribute",
+                    "value": "voiceCallId",
+                    "key": "VoiceCallId",
+                    "namespace": "External"
+                }
+            ],
+            "metadata": {
+                "position": {
+                    "x": 796,
+                    "y": 14
+                }
+            }
+        },
+        {
+            "id": "b4b07e49-8c73-4953-aa6e-03986036074f",
+            "type": "Disconnect",
+            "branches": [],
+            "parameters": [],
+            "metadata": {
+                "position": {
+                    "x": 810,
+                    "y": 238
+                }
+            }
+        },
+        {
+            "id": "bf76b969-19a5-426c-8f78-f91a35c61f76",
+            "type": "InvokeExternalResource",
+            "branches": [
+                {
+                    "condition": "Success",
+                    "transition": "f5dece07-fd22-45b6-b6ae-4e1a038c1f1b"
+                },
+                {
+                    "condition": "Error",
+                    "transition": "b4b07e49-8c73-4953-aa6e-03986036074f"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "FunctionArn",
+                    "value": "arn:aws:lambda:us-east-1:812113044155:function:botta-ltm-stack-InvokeSalesforceRestApiFunction-1179ZKOGVWFZP",
+                    "namespace": null
+                },
+                {
+                    "name": "TimeLimit",
+                    "value": "3"
+                },
+                {
+                    "name": "Parameter",
+                    "key": "methodName",
+                    "value": "queryRecord",
+                    "namespace": null
+                },
+                {
+                    "name": "Parameter",
+                    "key": "soql",
+                    "value": "SELECT Id FROM Case WHERE ContactPhone = '$.CustomerEndpoint.Address' AND IsClosed = false",
+                    "namespace": null
+                }
+            ],
+            "metadata": {
+                "position": {
+                    "x": 1031,
+                    "y": 20
+                },
+                "dynamicMetadata": {
+                    "methodName": false,
+                    "soql": false
+                },
+                "useDynamic": false
+            },
+            "target": "Lambda"
+        },
+        {
+            "id": "f5dece07-fd22-45b6-b6ae-4e1a038c1f1b",
+            "type": "SetAttributes",
+            "branches": [
+                {
+                    "condition": "Success",
+                    "transition": "16aa29a0-a8cb-47b3-9939-63dbf826767d"
+                },
+                {
+                    "condition": "Error",
+                    "transition": "b4b07e49-8c73-4953-aa6e-03986036074f"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "Attribute",
+                    "value": "Id",
+                    "key": "CaseId",
+                    "namespace": "External"
+                }
+            ],
+            "metadata": {
+                "position": {
+                    "x": 81,
+                    "y": 305
+                }
+            }
+        },
+        {
+            "id": "16aa29a0-a8cb-47b3-9939-63dbf826767d",
+            "type": "PlayPrompt",
+            "branches": [
+                {
+                    "condition": "Success",
+                    "transition": "ca4f3eee-3aa6-4b3a-9b02-6552d7a34b26"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "Text",
+                    "value": "Case Id is $.Attributes.CaseId",
+                    "namespace": null
+                },
+                {
+                    "name": "TextToSpeechType",
+                    "value": "text"
+                }
+            ],
+            "metadata": {
+                "position": {
+                    "x": 346,
+                    "y": 315
+                },
+                "useDynamic": false
+            }
+        },
+        {
+            "id": "a209d517-8ffc-4f49-9f45-f70ba86f58db",
+            "type": "PlayPrompt",
+            "branches": [
+                {
+                    "condition": "Success",
+                    "transition": "a487dc05-83a8-4a8f-8378-1cb1f6d88468"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "Text",
+                    "value": "VoiceCall Updated Successfully",
+                    "namespace": null
+                },
+                {
+                    "name": "TextToSpeechType",
+                    "value": "text"
+                }
+            ],
+            "metadata": {
+                "position": {
+                    "x": 745,
+                    "y": 1534
+                },
+                "useDynamic": false
+            }
+        },
+        {
+            "id": "a487dc05-83a8-4a8f-8378-1cb1f6d88468",
+            "type": "Disconnect",
+            "branches": [],
+            "parameters": [],
+            "metadata": {
+                "position": {
+                    "x": 1123,
+                    "y": 1570
+                }
+            }
+        },
+        {
+            "id": "9cf96cbe-f246-4f43-875a-521cb98d8dc8",
+            "type": "SetAttributes",
+            "branches": [
+                {
+                    "condition": "Success",
+                    "transition": "6e1d0815-af42-4d37-9abe-08b5451c588a"
+                },
+                {
+                    "condition": "Error",
+                    "transition": "a487dc05-83a8-4a8f-8378-1cb1f6d88468"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "Attribute",
+                    "value": "recordId",
+                    "key": "CaseId",
+                    "namespace": "External"
+                }
+            ],
+            "metadata": {
+                "position": {
+                    "x": 1131,
+                    "y": 1187
+                }
+            }
+        },
+        {
+            "id": "6e1d0815-af42-4d37-9abe-08b5451c588a",
+            "type": "InvokeExternalResource",
+            "branches": [
+                {
+                    "condition": "Success",
+                    "transition": "a209d517-8ffc-4f49-9f45-f70ba86f58db"
+                },
+                {
+                    "condition": "Error",
+                    "transition": "a487dc05-83a8-4a8f-8378-1cb1f6d88468"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "FunctionArn",
+                    "value": "arn:aws:lambda:us-east-1:812113044155:function:botta-ltm-stack-InvokeSalesforceRestApiFunction-1179ZKOGVWFZP",
+                    "namespace": null
+                },
+                {
+                    "name": "TimeLimit",
+                    "value": "3"
+                },
+                {
+                    "name": "Parameter",
+                    "key": "methodName",
+                    "value": "updateRecord",
+                    "namespace": null
+                },
+                {
+                    "name": "Parameter",
+                    "key": "RelatedRecordId",
+                    "value": "CaseId",
+                    "namespace": "User Defined"
+                },
+                {
+                    "name": "Parameter",
+                    "key": "objectApiName",
+                    "value": "VoiceCall",
+                    "namespace": null
+                },
+                {
+                    "name": "Parameter",
+                    "key": "recordId",
+                    "value": "VoiceCallId",
+                    "namespace": "User Defined"
+                }
+            ],
+            "metadata": {
+                "position": {
+                    "x": 449,
+                    "y": 1532
+                },
+                "dynamicMetadata": {
+                    "methodName": false,
+                    "RelatedRecordId": true,
+                    "objectApiName": false,
+                    "recordId": true
+                },
+                "useDynamic": false
+            },
+            "target": "Lambda"
+        },
+        {
+            "id": "f2cb0f73-5728-40c5-894b-1c90b9e7b69d",
+            "type": "PlayPrompt",
+            "branches": [
+                {
+                    "condition": "Success",
+                    "transition": "9cf96cbe-f246-4f43-875a-521cb98d8dc8"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "Text",
+                    "value": "Case Created Successfully: $.External.recordId",
+                    "namespace": null
+                },
+                {
+                    "name": "TextToSpeechType",
+                    "value": "text"
+                }
+            ],
+            "metadata": {
+                "position": {
+                    "x": 909,
+                    "y": 1187
+                },
+                "useDynamic": false
+            }
+        },
+        {
+            "id": "6de370db-9c42-4aed-ac63-e93e9b5daea4",
+            "type": "PlayPrompt",
+            "branches": [
+                {
+                    "condition": "Success",
+                    "transition": "c8d4b3af-2059-49fa-a7b5-0e93a20954cb"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "Text",
+                    "value": "Contact was created",
+                    "namespace": null
+                },
+                {
+                    "name": "TextToSpeechType",
+                    "value": "text"
+                }
+            ],
+            "metadata": {
+                "position": {
+                    "x": 1151,
+                    "y": 946
+                },
+                "useDynamic": false
+            }
+        },
+        {
+            "id": "c8d4b3af-2059-49fa-a7b5-0e93a20954cb",
+            "type": "InvokeExternalResource",
+            "branches": [
+                {
+                    "condition": "Success",
+                    "transition": "f2cb0f73-5728-40c5-894b-1c90b9e7b69d"
+                },
+                {
+                    "condition": "Error",
+                    "transition": "cc6e2b52-a588-4662-be42-cc50e8f981f5"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "FunctionArn",
+                    "value": "arn:aws:lambda:us-east-1:812113044155:function:botta-ltm-stack-InvokeSalesforceRestApiFunction-1179ZKOGVWFZP",
+                    "namespace": null
+                },
+                {
+                    "name": "TimeLimit",
+                    "value": "3"
+                },
+                {
+                    "name": "Parameter",
+                    "key": "methodName",
+                    "value": "createRecord",
+                    "namespace": null
+                },
+                {
+                    "name": "Parameter",
+                    "key": "objectApiName",
+                    "value": "Case",
+                    "namespace": null
+                },
+                {
+                    "name": "Parameter",
+                    "key": "Description",
+                    "value": "This case was created automatically by Amazon Connect",
+                    "namespace": null
+                },
+                {
+                    "name": "Parameter",
+                    "key": "ContactId",
+                    "value": "ContactId",
+                    "namespace": "User Defined"
+                }
+            ],
+            "metadata": {
+                "position": {
+                    "x": 629,
+                    "y": 1159
+                },
+                "dynamicMetadata": {
+                    "methodName": false,
+                    "objectApiName": false,
+                    "Description": false,
+                    "ContactId": true
+                },
+                "useDynamic": false
+            },
+            "target": "Lambda"
+        },
+        {
+            "id": "d07dffd1-3794-4c4e-80c7-d14cf1cbef06",
+            "type": "SetAttributes",
+            "branches": [
+                {
+                    "condition": "Success",
+                    "transition": "6de370db-9c42-4aed-ac63-e93e9b5daea4"
+                },
+                {
+                    "condition": "Error",
+                    "transition": "cc6e2b52-a588-4662-be42-cc50e8f981f5"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "Attribute",
+                    "value": "recordId",
+                    "key": "ContactId",
+                    "namespace": "External"
+                }
+            ],
+            "metadata": {
+                "position": {
+                    "x": 909,
+                    "y": 934
+                }
+            }
+        },
+        {
+            "id": "6d5d1a8a-8dd4-41b7-a909-0d84f8a6b659",
+            "type": "CheckAttribute",
+            "branches": [
+                {
+                    "condition": "Evaluate",
+                    "conditionType": "Contains",
+                    "conditionValue": "003",
+                    "transition": "c8d4b3af-2059-49fa-a7b5-0e93a20954cb"
+                },
+                {
+                    "condition": "NoMatch",
+                    "transition": "f311790e-7465-4b74-8b73-c32f28753a45"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "Attribute",
+                    "value": "ContactId"
+                },
+                {
+                    "name": "Namespace",
+                    "value": "User Defined"
+                }
+            ],
+            "metadata": {
+                "position": {
+                    "x": 394,
+                    "y": 912
+                },
+                "conditionMetadata": [
+                    {
+                        "id": "72498a25-6014-4506-a9fd-04b6cf3968c8",
+                        "operator": {
+                            "name": "Contains",
+                            "value": "Contains",
+                            "shortDisplay": "contains"
+                        },
+                        "value": "003"
+                    }
+                ]
+            }
+        },
+        {
+            "id": "f311790e-7465-4b74-8b73-c32f28753a45",
+            "type": "InvokeExternalResource",
+            "branches": [
+                {
+                    "condition": "Success",
+                    "transition": "d07dffd1-3794-4c4e-80c7-d14cf1cbef06"
+                },
+                {
+                    "condition": "Error",
+                    "transition": "cc6e2b52-a588-4662-be42-cc50e8f981f5"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "FunctionArn",
+                    "value": "arn:aws:lambda:us-east-1:812113044155:function:botta-ltm-stack-InvokeSalesforceRestApiFunction-1179ZKOGVWFZP",
+                    "namespace": null
+                },
+                {
+                    "name": "TimeLimit",
+                    "value": "3"
+                },
+                {
+                    "name": "Parameter",
+                    "key": "methodName",
+                    "value": "createRecord",
+                    "namespace": null
+                },
+                {
+                    "name": "Parameter",
+                    "key": "objectApiName",
+                    "value": "Contact",
+                    "namespace": null
+                },
+                {
+                    "name": "Parameter",
+                    "key": "Phone",
+                    "value": "Customer Number",
+                    "namespace": "System"
+                },
+                {
+                    "name": "Parameter",
+                    "key": "LastName",
+                    "value": "Unknown",
+                    "namespace": null
+                }
+            ],
+            "metadata": {
+                "position": {
+                    "x": 668,
+                    "y": 927
+                },
+                "dynamicMetadata": {
+                    "methodName": false,
+                    "objectApiName": false,
+                    "Phone": true,
+                    "LastName": false
+                },
+                "useDynamic": false
+            },
+            "target": "Lambda"
+        },
+        {
+            "id": "a855ff02-b1e7-4240-a8e9-9ab45f5917fd",
+            "type": "SetAttributes",
+            "branches": [
+                {
+                    "condition": "Success",
+                    "transition": "6d5d1a8a-8dd4-41b7-a909-0d84f8a6b659"
+                },
+                {
+                    "condition": "Error",
+                    "transition": "cc6e2b52-a588-4662-be42-cc50e8f981f5"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "Attribute",
+                    "value": "Id",
+                    "key": "ContactId",
+                    "namespace": "External"
+                }
+            ],
+            "metadata": {
+                "position": {
+                    "x": 593,
+                    "y": 573
+                }
+            }
+        },
+        {
+            "id": "cc6e2b52-a588-4662-be42-cc50e8f981f5",
+            "type": "Disconnect",
+            "branches": [],
+            "parameters": [],
+            "metadata": {
+                "position": {
+                    "x": 1038,
+                    "y": 777
+                }
+            }
+        },
+        {
+            "id": "ca4f3eee-3aa6-4b3a-9b02-6552d7a34b26",
+            "type": "CheckAttribute",
+            "branches": [
+                {
+                    "condition": "Evaluate",
+                    "conditionType": "Contains",
+                    "conditionValue": "500",
+                    "transition": "6e1d0815-af42-4d37-9abe-08b5451c588a"
+                },
+                {
+                    "condition": "NoMatch",
+                    "transition": "05c87f99-0614-4c13-a84c-93c1b00e3e0e"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "Attribute",
+                    "value": "CaseId"
+                },
+                {
+                    "name": "Namespace",
+                    "value": "User Defined"
+                }
+            ],
+            "metadata": {
+                "position": {
+                    "x": 91,
+                    "y": 566
+                },
+                "conditionMetadata": [
+                    {
+                        "id": "8a2b5fda-7fae-4a7c-aa09-ceec74666996",
+                        "operator": {
+                            "name": "Contains",
+                            "value": "Contains",
+                            "shortDisplay": "contains"
+                        },
+                        "value": "500"
+                    }
+                ]
+            }
+        },
+        {
+            "id": "05c87f99-0614-4c13-a84c-93c1b00e3e0e",
+            "type": "InvokeExternalResource",
+            "branches": [
+                {
+                    "condition": "Success",
+                    "transition": "a855ff02-b1e7-4240-a8e9-9ab45f5917fd"
+                },
+                {
+                    "condition": "Error",
+                    "transition": "cc6e2b52-a588-4662-be42-cc50e8f981f5"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "FunctionArn",
+                    "value": "arn:aws:lambda:us-east-1:812113044155:function:botta-ltm-stack-InvokeSalesforceRestApiFunction-1179ZKOGVWFZP",
+                    "namespace": null
+                },
+                {
+                    "name": "TimeLimit",
+                    "value": "3"
+                },
+                {
+                    "name": "Parameter",
+                    "key": "methodName",
+                    "value": "queryRecord",
+                    "namespace": null
+                },
+                {
+                    "name": "Parameter",
+                    "key": "soql",
+                    "value": "SELECT Id FROM Contact where Phone = '$.CustomerEndpoint.Address'",
+                    "namespace": null
+                }
+            ],
+            "metadata": {
+                "position": {
+                    "x": 356,
+                    "y": 571
+                },
+                "dynamicMetadata": {
+                    "methodName": false,
+                    "soql": false
+                },
+                "useDynamic": false
+            },
+            "target": "Lambda"
+        },
+        {
+            "id": "ab30bff4-a9c4-4591-ab79-3509a6af0126",
+            "type": "InvokeExternalResource",
+            "branches": [
+                {
+                    "condition": "Success",
+                    "transition": "51cc9461-dc49-404f-a5f7-d6fbebcee5e0"
+                },
+                {
+                    "condition": "Error",
+                    "transition": "b4b07e49-8c73-4953-aa6e-03986036074f"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "FunctionArn",
+                    "value": "arn:aws:lambda:us-east-1:812113044155:function:botta-ltm-stack-InvokeTelephonyIntegrationApiFunct-1J0Z4OSTRRRQW",
+                    "namespace": null
+                },
+                {
+                    "name": "TimeLimit",
+                    "value": "8"
+                },
+                {
+                    "name": "Parameter",
+                    "key": "methodName",
+                    "value": "createVoiceCall",
+                    "namespace": null
+                }
+            ],
+            "metadata": {
+                "position": {
+                    "x": 576,
+                    "y": 16
+                },
+                "dynamicMetadata": {
+                    "methodName": false
+                },
+                "useDynamic": false
+            },
+            "target": "Lambda"
+        },
+        {
+            "id": "a27d95d9-7a65-4456-b210-aa576e814420",
+            "type": "SetLoggingBehavior",
+            "branches": [
+                {
+                    "condition": "Success",
+                    "transition": "a9282319-83c3-4037-be21-b8684877e9fd"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "LoggingBehavior",
+                    "value": "Enable"
+                }
+            ],
+            "metadata": {
+                "position": {
+                    "x": 123,
+                    "y": 17
+                }
+            }
+        },
+        {
+            "id": "a9282319-83c3-4037-be21-b8684877e9fd",
+            "type": "PlayPrompt",
+            "branches": [
+                {
+                    "condition": "Success",
+                    "transition": "ab30bff4-a9c4-4591-ab79-3509a6af0126"
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "Text",
+                    "value": "Version 3.7",
+                    "namespace": null
+                },
+                {
+                    "name": "TextToSpeechType",
+                    "value": "text"
+                }
+            ],
+            "metadata": {
+                "position": {
+                    "x": 355,
+                    "y": 20
+                },
+                "useDynamic": false
+            }
+        }
+    ],
+    "version": "1",
+    "type": "contactFlow",
+    "start": "a27d95d9-7a65-4456-b210-aa576e814420",
+    "metadata": {
+        "entryPointPosition": {
+            "x": 15,
+            "y": 20
+        },
+        "snapToGrid": false,
+        "name": "Sample_REST_Link_Call_To_Case",
+        "description": null,
+        "type": "contactFlow",
+        "status": "saved",
+        "hash": "9037151eea4a79dae693c76d5e0957b4d954c2d36b3ec12c9602e3e2c2189a47"
+    }
+}

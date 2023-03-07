@@ -1,0 +1,525 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: |
+  Deploys Service Cloud Voice  Monitoring Lambda that sends email based on the configured cloudwatch alarms.
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: Lambda Environment Variables
+        Parameters:
+          - ConnectInstanceId
+          - InvokeSalesforceRestApiArn
+Parameters:
+  InvokeSalesforceRestApiArn:
+    Description: Arn of the InvokeSalesforceRestApi.
+    Default: REPLACEME
+    Type: String
+  ConnectInstanceId:
+    Description: Amazon connect instance id to monitor.
+    Default: REPLACEME
+    Type: String
+  Version:
+    Description: Version of the Monitoring Alert Lambda.
+    Default: V7.0
+    Type: String
+  CallCenterApiName:
+    Description: Call Center ApiName given during the provision UI. This is the prefix used for lambda function naming.
+    Default: REPLACEME
+    Type: String
+
+Resources:
+  ToEmailParamName:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: toEmail
+      Type: String
+      Value: "replaceme@yourorg.com,replaceme1@yourorg.com"
+      Description: The name of the SSM parameter used to store the to addresses separated by comma.
+  CcEmailParamName:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: ccEmail
+      Type: String
+      Value: "PLACEHOLDER" # parameter store doesn't support empty value
+      Description: The name of the SSM parameter used to store the cc addresses separated by comma.
+  BccEmailParamName:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: bccEmail
+      Type: String
+      Value: "PLACEHOLDER"
+      Description: The name of the SSM parameter used to store the bcc addresses separated by comma.
+  EmailSubjectParamName:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: emailSubject
+      Type: String
+      Value: "Subject of the email"
+      Description: SSM Parameter for subject email address.
+  EmailBodyParamName:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: emailBody
+      Type: String
+      Value: "Body of the alert email \n"
+      Description: The name of the SSM parameter used to store the body of the email.
+  TemplateIdEmailParamName:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: emailTemplateId
+      Type: String
+      Value: "PLACEHOLDER"
+      Description: The name of the SSM parameter used to store template id.
+
+  SCVMonitoringAlertLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri:
+        Bucket:
+          Fn::Sub: "prod-scv-resources-${AWS::Region}"
+        Key:
+          Fn::Sub: "alertMonitoring${Version}"
+      Environment:
+        Variables:
+          INVOKE_SALESFORCE_REST_API_ARN: !Sub "${InvokeSalesforceRestApiArn}"
+          TO_EMAIL:   !Ref ToEmailParamName
+          CC_EMAIL:   !Ref CcEmailParamName
+          BCC_EMAIL:  !Ref BccEmailParamName
+          EMAIL_BODY: !Ref EmailBodyParamName
+          EMAIL_SUBJECT: !Ref EmailSubjectParamName
+          EMAIL_TEMPLATE_ID: !Ref TemplateIdEmailParamName
+          CONNECT_INSTANCE_ID: !Sub "${ConnectInstanceId}"
+
+      Handler: handler.handler
+      AutoPublishAlias: active
+      VersionDescription: !Sub "Service Cloud Voice Lambda Version ${Version}"
+      Role: !GetAtt SCVMonitoringAlertRoleResource.Arn
+      Timeout: 15
+      Runtime: nodejs14.x
+      FunctionName: !Sub "${CallCenterApiName}-MonitoringAlert"
+      Layers:
+        - !Ref SCVMonitoringAlertLayer
+      Events:
+        SNSEvent:
+          Type: SNS
+          Properties:
+            Topic: !Ref SCVAlarmSnsTopic
+
+  SCVMonitoringAlertLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: alertMonitoringFunctionLayer
+      Description: alertMonitoringFunction layer
+      ContentUri:
+        Bucket: !Sub "prod-scv-resources-${AWS::Region}"
+        Key: !Sub "alertMonitoring${Version}"
+      CompatibleRuntimes:
+        - nodejs14.x
+      LicenseInfo: MIT
+      RetentionPolicy: Retain
+    Metadata:
+      BuildMethod: nodejs14.x
+
+  SCVMonitoringAlertRoleResource:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Action:
+              - sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: SCVMonitoringAlertRolePolicy
+          PolicyDocument:
+            Statement:
+              - Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                  - connect:Get*
+                  - connect:Describe*
+                  - connect:List*
+                  - ssm:Get*
+                  - ssm:Put*
+                  - ssm:Describe*
+                  - lambda:InvokeFunction
+                Resource:
+                  - "*"
+                Effect: Allow
+      RoleName: !Sub "${CallCenterApiName}-SCVMonitoringAlertRole"
+
+  SCVAlarmSnsTopic:
+    Type: AWS::SNS::Topic
+    DependsOn:
+      - SCVMonitoringAlertLambda
+    Properties:
+      TopicName:
+        !Sub "${CallCenterApiName}-monitoringAlertTopic"
+      Subscription:
+        - Protocol: lambda
+          Endpoint: !GetAtt SCVMonitoringAlertLambda.Arn
+
+  SCVMonitoringAlertLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: "lambda:InvokeFunction"
+      FunctionName: !Ref SCVMonitoringAlertLambda.Alias
+      Principal: sns.amazonaws.com
+
+  SCVAlarmSnsTopicPolicy:
+    Type: AWS::SNS::TopicPolicy
+    Properties:
+      Topics:
+        - !Ref SCVAlarmSnsTopic
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action: "sns:Publish"
+            Resource: !Ref SCVAlarmSnsTopic
+            Principal:
+              Service:
+                - cloudwatch.amazonaws.com
+            Condition:
+              ArnLike:
+                AWS:SourceArn: !Sub 'arn:aws:*:*:${AWS::AccountId}:*'
+
+  ConcurrentCallsPercentageAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "Connect Concurrent Calls Percentage InstanceId ${ConnectInstanceId}"
+      AlarmDescription: !Sub "The number of concurrent active voice calls in the connect instance during the evaluation period was greater than threshold."
+      Namespace: AWS/Connect
+      MetricName: ConcurrentCallsPercentage
+      Statistic: Maximum
+      Unit: Count
+      AlarmActions:
+        - !Ref SCVAlarmSnsTopic
+      Period: 60
+      Threshold: 0.8
+      EvaluationPeriods: 2
+      Dimensions:
+        - Name: InstanceId
+          Value: !Ref ConnectInstanceId
+        - Name: MetricGroup
+          Value: VoiceCalls
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: "notBreaching"
+
+  CTRDataSyncFunctionErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "Lambda ${CallCenterApiName}-CTRDataSyncFunction errors."
+      AlarmDescription: !Sub "The number of invocations of ${CallCenterApiName}-CTRDataSyncFunction that resulted in a function error. Function errors include exceptions thrown by your code and exceptions thrown by the Lambda runtime."
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Statistic: Sum
+      Unit: Count
+      AlarmActions:
+        - !Ref SCVAlarmSnsTopic
+      Period: 60
+      Threshold: 2
+      EvaluationPeriods: 1
+      Dimensions:
+        - Name: FunctionName
+          Value: !Sub ${CallCenterApiName}-CTRDataSyncFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: "notBreaching"
+  CTRDataSyncFunctionThrottlesAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "Lambda ${CallCenterApiName}-CTRDataSyncFunction throttles."
+      AlarmDescription: !Sub "The number of invocation requests of ${CallCenterApiName}-CTRDataSyncFunction that are throttled. Review concurrent executions quota for the region, or the reserved concurrency limit that you configured on the function."
+      Namespace: AWS/Lambda
+      MetricName: Throttles
+      Statistic: Sum
+      Unit: Count
+      AlarmActions:
+        - !Ref SCVAlarmSnsTopic
+      Period: 60
+      Threshold: 5
+      EvaluationPeriods: 1
+      Dimensions:
+        - Name: FunctionName
+          Value: !Sub ${CallCenterApiName}-CTRDataSyncFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: "notBreaching"
+  CTRDataSyncFunctionDurationsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "Lambda ${CallCenterApiName}-CTRDataSyncFunction duration"
+      AlarmDescription: !Sub "The amount of time that your function code spends processing an event."
+      Namespace: AWS/Lambda
+      MetricName: Duration
+      Statistic: Average
+      Unit: Count
+      AlarmActions:
+        - !Ref SCVAlarmSnsTopic
+      Period: 60
+      Threshold: 10
+      EvaluationPeriods: 1
+      Dimensions:
+        - Name: FunctionName
+          Value: !Sub ${CallCenterApiName}-CTRDataSyncFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: "notBreaching"
+
+  InvokeTelephonyIntegrationApiFunctionErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "Lambda ${CallCenterApiName}-InvokeTelephonyIntegrationApiFunction errors"
+      AlarmDescription: !Sub "The number of invocations of ${CallCenterApiName}-InvokeTelephonyIntegrationApiFunction that resulted in a function error. Function errors include exceptions thrown by your code and exceptions thrown by the Lambda runtime."
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Statistic: Sum
+      Unit: Count
+      AlarmActions:
+        - !Ref SCVAlarmSnsTopic
+      Period: 60
+      Threshold: 2
+      EvaluationPeriods: 1
+      Dimensions:
+        - Name: FunctionName
+          Value: !Sub ${CallCenterApiName}-InvokeTelephonyIntegrationApiFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: "notBreaching"
+  InvokeTelephonyIntegrationApiFunctionThrottlesAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "Lambda ${CallCenterApiName}-InvokeTelephonyIntegrationApiFunction throttles."
+      AlarmDescription: !Sub "The number of invocation requests of ${CallCenterApiName}-InvokeTelephonyIntegrationApiFunction that are throttled. Review concurrent executions quota for the region, or the reserved concurrency limit that you configured on the function."
+      Namespace: AWS/Lambda
+      MetricName: Throttles
+      Statistic: Sum
+      Unit: Count
+      AlarmActions:
+        - !Ref SCVAlarmSnsTopic
+      Period: 60
+      Threshold: 5
+      EvaluationPeriods: 1
+      Dimensions:
+        - Name: FunctionName
+          Value: !Sub ${CallCenterApiName}-InvokeTelephonyIntegrationApiFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: "notBreaching"
+  InvokeTelephonyIntegrationApiFunctionDurationsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "Lambda ${CallCenterApiName}-InvokeTelephonyIntegrationApiFunction duration"
+      AlarmDescription: !Sub "The amount of time that your function code spends processing an event."
+      Namespace: AWS/Lambda
+      MetricName: Duration
+      Statistic: Average
+      Unit: Count
+      AlarmActions:
+        - !Ref SCVAlarmSnsTopic
+      Period: 60
+      Threshold: 10
+      EvaluationPeriods: 1
+      Dimensions:
+        - Name: FunctionName
+          Value: !Sub ${CallCenterApiName}-InvokeTelephonyIntegrationApiFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: "notBreaching"
+
+  kvsConsumerTriggerErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "Lambda ${CallCenterApiName}-kvsConsumerTrigger errors."
+      AlarmDescription: !Sub "The number of invocations of ${CallCenterApiName}-kvsConsumerTrigger that resulted in a function error. Function errors include exceptions thrown by your code and exceptions thrown by the Lambda runtime."
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Statistic: Sum
+      Unit: Count
+      AlarmActions:
+        - !Ref SCVAlarmSnsTopic
+      Period: 60
+      Threshold: 2
+      EvaluationPeriods: 1
+      Dimensions:
+        - Name: FunctionName
+          Value: !Sub ${CallCenterApiName}-kvsConsumerTrigger
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: "notBreaching"
+  kvsConsumerTriggerThrottlesAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "Lambda ${CallCenterApiName}-kvsConsumerTrigger throttles."
+      AlarmDescription: !Sub "The number of invocation requests of ${CallCenterApiName}-kvsConsumerTrigger that are throttled. Review concurrent executions quota for the region, or the reserved concurrency limit that you configured on the function."
+      Namespace: AWS/Lambda
+      MetricName: Throttles
+      Statistic: Sum
+      Unit: Count
+      AlarmActions:
+        - !Ref SCVAlarmSnsTopic
+      Period: 60
+      Threshold: 5
+      EvaluationPeriods: 1
+      Dimensions:
+        - Name: FunctionName
+          Value: !Sub ${CallCenterApiName}-kvsConsumerTrigger
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: "notBreaching"
+  kvsConsumerTriggerDurationsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "Lambda ${CallCenterApiName}-kvsConsumerTrigger duration"
+      AlarmDescription: !Sub "The amount of time that your function code spends processing an event."
+      Namespace: AWS/Lambda
+      MetricName: Duration
+      Statistic: Average
+      Unit: Count
+      AlarmActions:
+        - !Ref SCVAlarmSnsTopic
+      Period: 60
+      Threshold: 10
+      EvaluationPeriods: 1
+      Dimensions:
+        - Name: FunctionName
+          Value: !Sub ${CallCenterApiName}-kvsConsumerTrigger
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: "notBreaching"
+
+  kvsTranscriberErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "Lambda ${CallCenterApiName}-kvsTranscriber errors."
+      AlarmDescription: !Sub "The number of invocations of ${CallCenterApiName}-kvsTranscriber that resulted in a function error. Function errors include exceptions thrown by your code and exceptions thrown by the Lambda runtime."
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Statistic: Sum
+      Unit: Count
+      AlarmActions:
+        - !Ref SCVAlarmSnsTopic
+      Period: 60
+      Threshold: 2
+      EvaluationPeriods: 1
+      Dimensions:
+        - Name: FunctionName
+          Value: !Sub ${CallCenterApiName}-kvsTranscriber
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: "notBreaching"
+  kvsTranscriberThrottlesAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "Lambda ${CallCenterApiName}-kvsTranscriber throttles."
+      AlarmDescription: !Sub "The number of invocation requests of ${CallCenterApiName}-kvsTranscriber that are throttled. Review concurrent executions quota for the region, or the reserved concurrency limit that you configured on the function."
+      Namespace: AWS/Lambda
+      MetricName: Throttles
+      Statistic: Sum
+      Unit: Count
+      AlarmActions:
+        - !Ref SCVAlarmSnsTopic
+      Period: 60
+      Threshold: 5
+      EvaluationPeriods: 1
+      Dimensions:
+        - Name: FunctionName
+          Value: !Sub ${CallCenterApiName}-kvsTranscriber
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: "notBreaching"
+  kvsTranscriberDurationsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "Lambda ${CallCenterApiName}-kvsTranscriber duration"
+      AlarmDescription: !Sub "The amount of time that your function code spends processing an event."
+      Namespace: AWS/Lambda
+      MetricName: Duration
+      Statistic: Average
+      Unit: Count
+      AlarmActions:
+        - !Ref SCVAlarmSnsTopic
+      Period: 60
+      Threshold: 10
+      EvaluationPeriods: 1
+      Dimensions:
+        - Name: FunctionName
+          Value: !Sub ${CallCenterApiName}-kvsTranscriber
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: "notBreaching"
+
+  InvokeSalesforceRestApiFunctionFunctionErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "Lambda ${CallCenterApiName}-InvokeSalesforceRestApiFunction errors"
+      AlarmDescription: !Sub "The number of invocations of ${CallCenterApiName}-InvokeSalesforceRestApiFunction that resulted in a function error. Function errors include exceptions thrown by your code and exceptions thrown by the Lambda runtime."
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Statistic: Sum
+      Unit: Count
+      AlarmActions:
+        - !Ref SCVAlarmSnsTopic
+      Period: 60
+      Threshold: 2
+      EvaluationPeriods: 1
+      Dimensions:
+        - Name: FunctionName
+          Value: !Sub ${CallCenterApiName}-InvokeSalesforceRestApiFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: "notBreaching"
+  InvokeSalesforceRestApiFunctionThrottlesAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "Lambda ${CallCenterApiName}-InvokeSalesforceRestApiFunction throttles."
+      AlarmDescription: !Sub "The number of invocation requests of ${CallCenterApiName}-InvokeSalesforceRestApiFunction that are throttled. Review concurrent executions quota for the region, or the reserved concurrency limit that you configured on the function."
+      Namespace: AWS/Lambda
+      MetricName: Throttles
+      Statistic: Sum
+      Unit: Count
+      AlarmActions:
+        - !Ref SCVAlarmSnsTopic
+      Period: 60
+      Threshold: 5
+      EvaluationPeriods: 1
+      Dimensions:
+        - Name: FunctionName
+          Value: !Sub ${CallCenterApiName}-InvokeSalesforceRestApiFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: "notBreaching"
+  InvokeSalesforceRestApiFunctionDurationsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "Lambda ${CallCenterApiName}-InvokeSalesforceRestApiFunction duration"
+      AlarmDescription: !Sub "The amount of time that your function code spends processing an event."
+      Namespace: AWS/Lambda
+      MetricName: Duration
+      Statistic: Average
+      Unit: Count
+      AlarmActions:
+        - !Ref SCVAlarmSnsTopic
+      Period: 60
+      Threshold: 10
+      EvaluationPeriods: 1
+      Dimensions:
+        - Name: FunctionName
+          Value: !Sub ${CallCenterApiName}-InvokeSalesforceRestApiFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: "notBreaching"
+
+  SCVLambdaDashboards:
+    Type: "AWS::CloudWatch::Dashboard"
+    Properties:
+      DashboardBody: !Sub '{"widgets": [{"type": "metric","x": 0,"y": 0,"width": 6,"height": 6,"properties": {"metrics": [["AWS/Lambda","Errors","FunctionName","${CallCenterApiName}-InvokeSalesforceRestApiFunction"],[".","ConcurrentExecutions",".","."],[".","Invocations",".","."],[".","Throttles",".","."]],"view": "timeSeries","stacked": true,"region": "${AWS::Region}","stat": "Sum","period": 300,"title": "Salesforce REST API Stats"}},{"type": "metric","x": 6,"y": 0,"width": 6,"height": 6,"properties": {"metrics": [["AWS/Lambda","Errors","FunctionName","${CallCenterApiName}-InvokeTelephonyIntegrationApiFunction"],[".","ConcurrentExecutions",".","."],[".","Invocations",".","."],[".","Throttles",".","."]],"view": "timeSeries","stacked": true,"region": "${AWS::Region}","stat": "Sum","period": 300,"title": "Telephony Integration API Stats"}},{"type": "metric","x": 12,"y": 0,"width": 6,"height": 6,"properties": {"metrics": [["AWS/Lambda","Errors","FunctionName","${CallCenterApiName}-CTRDataSyncFunction"],[".","ConcurrentExecutions",".","."],[".","Invocations",".","."],[".","Throttles",".","."]],"view": "timeSeries","stacked": true,"region": "${AWS::Region}","stat": "Sum","period": 300,"title": "CTR Sync Stats"}},{"type": "metric","x": 0,"y": 6,"width": 6,"height": 6,"properties": {"metrics": [["AWS/Lambda","Errors","FunctionName","${CallCenterApiName}-kvsTranscriber"],[".","ConcurrentExecutions",".","."],[".","Invocations",".","."],[".","Throttles",".","."]],"view": "timeSeries","stacked": true,"region": "${AWS::Region}","stat": "Sum","period": 300,"title": "KVS Transcriber Stats"}}]}'
+      DashboardName: !Sub '${CallCenterApiName}-SCVLambdaDashboards'
+  SCVConnectDashboards:
+    Type: "AWS::CloudWatch::Dashboard"
+    Properties:
+      DashboardBody: !Sub '{"widgets":[{"type":"metric","x":0,"y":0,"width":6,"height":6,"properties":{"metrics":[["AWS/Connect","ToInstancePacketLossRate","Participant","Agent","TypeofConnection","WebRTC","InstanceID","${ConnectInstanceId}","StreamType","Voice"]],"view":"timeSeries","stacked":false,"region":"${AWS::Region}","stat":"Sum","period":300,"title":"Packet Loss Rate"}},{"type":"metric","x":6,"y":0,"width":6,"height":6,"properties":{"metrics":[["AWS/Connect","CallsBreachingConcurrencyQuota","InstanceID","${ConnectInstanceId}"]],"view":"timeSeries","stacked":false,"region":"${AWS::Region}","stat":"Sum","period":300,"title":"Calls Breaching Concurrency"}},{"type":"metric","x":0,"y":12,"width":6,"height":6,"properties":{"metrics":[["AWS/Connect","MissedCalls","InstanceID","${ConnectInstanceId}"]],"view":"timeSeries","stacked":false,"region":"${AWS::Region}","stat":"Sum","period":300,"title":"Missed Calls"}},{"type":"metric","x":6,"y":0,"width":6,"height":6,"properties":{"metrics":[["AWS/Connect","MisconfiguredPhoneNumbers","InstanceID","${ConnectInstanceId}"]],"view":"timeSeries","stacked":false,"region":"${AWS::Region}","stat":"Sum","period":300,"title":"MisConfigured Phone numbers"}},{"type":"metric","x":6,"y":6,"width":6,"height":6,"properties":{"metrics":[["AWS/Connect","ThrottledCalls","InstanceID","${ConnectInstanceId}"]],"view":"timeSeries","stacked":false,"region":"${AWS::Region}","stat":"Sum","period":300,"title":"Throttled Calls"}},{"type":"metric","x":6,"y":12,"width":6,"height":6,"properties":{"metrics":[["AWS/Connect","CallRecordingUploadError","InstanceID","${ConnectInstanceId}"]],"view":"timeSeries","stacked":false,"region":"${AWS::Region}","stat":"Sum","period":300,"title":"Call Recording Upload Error"}},{"type":"metric","x":12,"y":0,"width":6,"height":6,"properties":{"metrics":[["AWS/Connect","CallsPerInterval","InstanceID","${ConnectInstanceId}"]],"view":"timeSeries","stacked":false,"region":"${AWS::Region}","stat":"Sum","period":300,"title":"Call Per Interval"}},{"type":"metric","x":12,"y":6,"width":6,"height":6,"properties":{"metrics":[["AWS/Connect","ConcurrentCalls","InstanceID","${ConnectInstanceId}"]],"view":"timeSeries","stacked":false,"region":"${AWS::Region}","stat":"Sum","period":300,"title":"Concurrent Calls"}},{"type":"metric","x":12,"y":12,"width":6,"height":6,"properties":{"metrics":[["AWS/Connect","ConcurrentCallsPercentage","InstanceID","${ConnectInstanceId}"]],"view":"timeSeries","stacked":false,"region":"${AWS::Region}","stat":"Sum","period":300,"title":"Concurrent Calls Percentage"}}]}'
+      DashboardName: !Sub '${CallCenterApiName}-SCVConnectDashboards'
+Outputs:
+  SCVMonitoringAlertRoleResource:
+    Description: IAM Role created for Monitoring Alert Lambda
+    Value: !GetAtt SCVMonitoringAlertRoleResource.Arn
+  SCVLambdaDashboards:
+    Description: SCV Lambda dashboards output ARN
+    Value: !Ref SCVLambdaDashboards
+  SCVConnectDashboards:
+    Description: SCV Connect dashboards output ARN
+    Value: !Ref SCVConnectDashboards
