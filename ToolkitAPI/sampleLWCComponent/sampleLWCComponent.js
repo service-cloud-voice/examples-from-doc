@@ -175,35 +175,27 @@ export default class SampleLWCComponent extends LightningElement {
         this.getToolkitApi().unmute();
     }
     
-    acceptCall() {
+    onAcceptCall() {
         this.getToolkitApi().acceptCall();
     }
 
-    declineCall() {
+    onDeclineCall() {
         this.getToolkitApi().declineCall();
     }  
 
-    endCall() {
-        this.getToolkitApi().endCall();
+    onEndCall() {
+        this.getToolkitApi().endCall(this.comboBoxRemoveParticipantValue);
     }
 
     onSendDigits() {
 		this.getToolkitApi().sendDigits(this.sendDigits);
 	}
 
-    onMute() {
-        this.getToolkitApi().mute();
-    }
-    
-    onUnmute() {
-        this.getToolkitApi().unmute();
-    }
-
 	onPauseRecording() {
         this.getToolkitApi().pauseRecording();
     }
     
-    onUnmute() {
+    onResumeRecording() {
         this.getToolkitApi().resumeRecording();
     }
 
@@ -222,10 +214,6 @@ export default class SampleLWCComponent extends LightningElement {
     onDeclineCall() {
         this.getToolkitApi().declineCall();
     }  
-
-    onEndCall() {
-        this.getToolkitApi().endCall(this.comboBoxRemoveParticipantValue);
-    }
 
 	onSwap() {
         this.getToolkitApi().swap();
