@@ -174,7 +174,7 @@ export default class SampleLWCComponent extends LightningElement {
     onAcceptCall() {
         this.getToolkitApi().acceptCall();
     }
-
+    
     onDeclineCall() {
         this.getToolkitApi().declineCall();
     }  
