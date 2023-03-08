@@ -131,38 +131,38 @@ export default class SampleLWCComponent extends LightningElement {
         this.comboBoxHoldValue = event.detail.value;
     }
 
-	handleComboboxResumeChange(event) {
+    handleComboboxResumeChange(event) {
         this.comboBoxResumeValue = event.detail.value;
     }
 
-	handleComboboxRemoveParticipantChange(event) {
+    handleComboboxRemoveParticipantChange(event) {
         this.comboBoxRemoveParticipantValue = event.detail.value;
     }
 
-	handleComboboxContactTypeChange(event) {
+    handleComboboxContactTypeChange(event) {
         this.comboBoxContactTypeValue = event.detail.value;
     }
 
-	handleComboboxContactTypeAddParticipantChange(event) {
+    handleComboboxContactTypeAddParticipantChange(event) {
         this.comboBoxAddParticipantContactTypeValue = event.detail.value;
     }
 
-	changePreviewCallHandler(event) {
-		this.previewPhoneNumber = event.target.value;
-	}
+    changePreviewCallHandler(event) {
+    	this.previewPhoneNumber = event.target.value;
+    }
 
-	changeAddParticipantHandler(event) {
-		this.addParticipantPhoneNumber = event.target.value;
-	}
+    changeAddParticipantHandler(event) {
+    	this.addParticipantPhoneNumber = event.target.value;
+    }
 
-	handleBlindTransferChange(event) {
-		this.isBlindTransfer = event.target.checked;        
-	}
+    handleBlindTransferChange(event) {
+    	this.isBlindTransfer = event.target.checked;        
+    }
 
-	changeSendDigitsHandler(event) {
-		this.sendDigits = event.target.value;
-	}
-     
+    changeSendDigitsHandler(event) {
+    	this.sendDigits = event.target.value;
+    }
+ 
     onMute() {
         this.getToolkitApi().mute();
     }
@@ -170,7 +170,7 @@ export default class SampleLWCComponent extends LightningElement {
     onUnmute() {
         this.getToolkitApi().unmute();
     }
-    
+
     onAcceptCall() {
         this.getToolkitApi().acceptCall();
     }
@@ -184,38 +184,38 @@ export default class SampleLWCComponent extends LightningElement {
     }
 
     onSendDigits() {
-		this.getToolkitApi().sendDigits(this.sendDigits);
-	}
+    	this.getToolkitApi().sendDigits(this.sendDigits);
+    }
 
-	onPauseRecording() {
+    onPauseRecording() {
         this.getToolkitApi().pauseRecording();
     }
-    
+
     onResumeRecording() {
         this.getToolkitApi().resumeRecording();
     }
 
-	onHold() {
+    onHold() {
         this.getToolkitApi().hold(this.comboBoxHoldValue);
     }
 
-	onResume() {
+    onResume() {
         this.getToolkitApi().resume(this.comboBoxResumeValue);
     }
 
-	onSwap() {
+    onSwap() {
         this.getToolkitApi().swap();
     }
 
-	onMerge() {
+    onMerge() {
         this.getToolkitApi().merge();
     }
 
-	onStartPreviewCall() {
+    onStartPreviewCall() {
         this.getToolkitApi().startPreviewCall(this.previewPhoneNumber);
     }
 
-	onAddParticipant() {
+    onAddParticipant() {
         this.getToolkitApi().addParticipant(this.comboBoxAddParticipantContactTypeValue, this.addParticipantPhoneNumber, this.isBlindTransfer);
     }
 }
