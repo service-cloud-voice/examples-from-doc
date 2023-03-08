@@ -206,14 +206,6 @@ export default class SampleLWCComponent extends LightningElement {
 	onResume() {
         this.getToolkitApi().resume(this.comboBoxResumeValue);
     }
-    
-    onAcceptCall() {
-        this.getToolkitApi().acceptCall();
-    }
-
-    onDeclineCall() {
-        this.getToolkitApi().declineCall();
-    }  
 
 	onSwap() {
         this.getToolkitApi().swap();
