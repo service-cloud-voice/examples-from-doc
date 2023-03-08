@@ -147,10 +147,6 @@ export default class SampleLWCComponent extends LightningElement {
         this.comboBoxAddParticipantContactTypeValue = event.detail.value;
     }
 
-	changeHandler(event) {
-		this.payload = event.target.value;
-	}
-
 	changePreviewCallHandler(event) {
 		this.previewPhoneNumber = event.target.value;
 	}
