@@ -112,15 +112,15 @@ export default class SampleLWCComponent extends LightningElement {
         ];
     }
 
-	get endCallOptions() {
-		return [
+    get endCallOptions() {
+    	return [
             { label: 'INITIAL_CALLER', value: 'Initial_Caller' },
             { label: 'THIRD_PARTY', value: 'Third_Party' },
-			{ label: 'AGENT', value: 'Agent' }
+    		{ label: 'AGENT', value: 'Agent' }
         ];
-	}
+    }
 
-	get contactOptions() {
+    get contactOptions() {
         return [
             { label: 'PHONE NUMBER', value: 'PhoneNumber' },
             { label: 'AGENT/QUEUE ID', value: 'AgentOrQueueId' }
