@@ -9,17 +9,17 @@ export default class SampleLWCComponent extends LightningElement {
     teleEvent = 'No events received yet.';
     transcript = 'No transcripts received yet.';
     previewPhoneNumber = '';
-	addParticipantPhoneNumber = '';
-	teleEvent = 'No events received yet.';
-	transcript = 'No transcripts received yet.';
-	sendDigits = '';
-	comboBoxHoldValue = 'Initial_Caller';
-	comboBoxResumeValue = 'Initial_Caller';
-	comboBoxRemoveParticipantValue = 'Initial_Caller';
-	comboBoxContactTypeValue = 'PhoneNumber';
-	comboBoxAddParticipantContactTypeValue = 'PhoneNumber';
-	hasRendered = false;
-	isBlindTransfer = false;
+    addParticipantPhoneNumber = '';
+    teleEvent = 'No events received yet.';
+    transcript = 'No transcripts received yet.';
+    sendDigits = '';
+    comboBoxHoldValue = 'Initial_Caller';
+    comboBoxResumeValue = 'Initial_Caller';
+    comboBoxRemoveParticipantValue = 'Initial_Caller';
+    comboBoxContactTypeValue = 'PhoneNumber';
+    comboBoxAddParticipantContactTypeValue = 'PhoneNumber';
+    hasRendered = false;
+    isBlindTransfer = false;
 
     constructor() {
         super();
