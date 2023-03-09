@@ -1,7 +1,7 @@
 import { LightningElement, api, track } from 'lwc';
 
 export default class SampleLWCComponent extends LightningElement {
-    @track headSetControlsDisabled = true;
+    @track telephonyActionControlsDisabled = true;
 
     @api recordId;  
 
@@ -10,8 +10,6 @@ export default class SampleLWCComponent extends LightningElement {
     transcript = 'No transcripts received yet.';
     previewPhoneNumber = '';
     addParticipantPhoneNumber = '';
-    teleEvent = 'No events received yet.';
-    transcript = 'No transcripts received yet.';
     sendDigits = '';
     comboBoxHoldValue = 'Initial_Caller';
     comboBoxResumeValue = 'Initial_Caller';
@@ -89,10 +87,10 @@ export default class SampleLWCComponent extends LightningElement {
 
     onTelephonyEvent(event) {
         if (event.type === 'callstarted') {
-            this.headSetControlsDisabled = false;
+            this.telephonyActionControlsDisabled = false;
         }
         if (event.type === 'callended') {
-            this.headSetControlsDisabled = true;
+            this.telephonyActionControlsDisabled = true;
         }
         this.teleEvent = event.type;
     }
