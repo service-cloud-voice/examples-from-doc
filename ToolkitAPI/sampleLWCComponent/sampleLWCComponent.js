@@ -116,7 +116,7 @@ export default class SampleLWCComponent extends LightningElement {
     	return [
             { label: 'INITIAL_CALLER', value: 'Initial_Caller' },
             { label: 'THIRD_PARTY', value: 'Third_Party' },
-    		{ label: 'AGENT', value: 'Agent' }
+    	    { label: 'AGENT', value: 'Agent' }
         ];
     }
 
