@@ -2,7 +2,7 @@
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "GeneralRoles",
+            "Sid": "WildcardAccess",
             "Effect": "Allow",
             "Action": [
                 "ds:*",
@@ -77,7 +77,6 @@
                 "s3:GetBucketTagging",
                 "s3:GetBucketVersioning",
                 "s3:GetObjectAcl",
-                "s3:PutAccountPublicAccessBlock",
                 "s3:PutBucketPolicy",
                 "s3:PutBucketNotification",
                 "s3:PutBucketVersioning",
@@ -103,7 +102,7 @@
             "Resource": "*"
         },
         {
-            "Sid": "ResourceActions",
+            "Sid": "ResourceBasedAccess",
             "Effect": "Allow",
             "Action": [
                 "ssm:*",
@@ -127,7 +126,7 @@
             ]
         },
         {
-            "Sid": "IAMRoles",
+            "Sid": "IAMAccess",
             "Effect": "Allow",
             "Action": [
                 "iam:*Role*",
@@ -147,7 +146,7 @@
             ]
         },
         {
-            "Sid": "CloudformationRoles",
+            "Sid": "CloudformationAccess",
             "Effect": "Allow",
             "Action": "cloudformation:*",
             "Resource": [
@@ -168,7 +167,7 @@
             ]
         },
         {
-            "Sid": "ConnectRoles",
+            "Sid": "ConnectAccess",
             "Effect": "Allow",
             "Action": "connect:*",
             "Resource": "arn:aws:connect:*:{AWS_ACCOUNT_ID}:instance/*"
