@@ -20,21 +20,82 @@
             <lightning-button variant="brand" label="Invoke" onclick={onInvokeNBA}></lightning-button>
         </div>
 
-        <p class="slds-text-title_caps slds-p-horizontal_medium slds-p-top_medium">HEADSET ACTIONS</p>
+        <p class="slds-text-title_caps slds-p-horizontal_medium slds-p-top_medium">TELEPHONY ACTIONS</p>
 
         <div class="slds-p-horizontal_medium">
             <div class="slds-grid">
-                <lightning-button variant="brand" label="Mute Call" onclick={onMute} disabled={headSetControlsDisabled}></lightning-button>
-                <lightning-button variant="brand" label="Unmute Call" onclick={onUnmute} disabled={headSetControlsDisabled}></lightning-button>
+                <lightning-button variant="brand" label="Mute Call" onclick={onMute} disabled={telephonyActionControlsDisabled}></lightning-button>
+                <lightning-button variant="brand" label="Unmute Call" onclick={onUnmute} disabled={telephonyActionControlsDisabled}></lightning-button>
+            </div>
+
+            <div class="slds-grid">
+                <lightning-button variant="brand" label="Pause Recording" onclick={onPauseRecording} disabled={telephonyActionControlsDisabled}></lightning-button>
+                <lightning-button variant="brand" label="Resume Recording" onclick={onResumeRecording} disabled={telephonyActionControlsDisabled}></lightning-button>
             </div>
             
             <div class="slds-grid">
-                <lightning-button variant="brand" label="Accept Call" onclick={onAcceptCall} disabled={headSetControlsDisabled}></lightning-button>
-                <lightning-button variant="brand" label="Decline Call" onclick={onDeclineCall} disabled={headSetControlsDisabled}></lightning-button>
+            <lightning-combobox
+            name="hold"
+            label="Hold Participant type"
+            value={comboBoxHoldValue}
+            placeholder="Select Participant type"
+            options={options}
+            onchange={handleComboboxHoldChange} ></lightning-combobox>
+            <lightning-button variant="brand" label="Hold" onclick={onHold}></lightning-button>
             </div>
+
+            <div class="slds-grid">
+                <lightning-combobox
+                name="resume"
+                label="Resume Participant type"
+                value={comboBoxResumeValue}
+                placeholder="Select Participant type"
+                options={options}
+                onchange={handleComboboxResumeChange} ></lightning-combobox>
+            <lightning-button variant="brand" label="Resume" onclick={onResume}></lightning-button>
+            </div>
+            <div class="slds-grid">
+                <lightning-button variant="brand" label="Swap" onclick={onSwap} disabled={telephonyActionControlsDisabled}></lightning-button>
+            </div>
+            <div class="slds-grid">
+                <lightning-button variant="brand" label="Merge" onclick={onMerge} disabled={telephonyActionControlsDisabled}></lightning-button>
+            </div>
+            <div class="slds-grid">
+                <lightning-input label="Preview Dialer" value={previewPhoneNumber} placeholder="xxx-xxx-xxxx" onchange={changePreviewCallHandler}></lightning-input>
+                <lightning-button variant="brand" label="Preview Dial" onclick={onStartPreviewCall}></lightning-button>
+            </div>
+            </br>
+            <div class="slds-grid">
+                <lightning-combobox
+                name="contactType"
+                label="Contact Type"
+                value={comboBoxAddParticipantContactTypeValue}
+                placeholder="Select Contact type"
+                options={contactOptions}
+                onchange={handleComboboxContactTypeAddParticipantChange} disabled={telephonyActionControlsDisabled}></lightning-combobox>
+                <lightning-input label="Add participant" value={addParticipantPhoneNumber} onchange={changeAddParticipantHandler} disabled={telephonyActionControlsDisabled}></lightning-input>    
+            </div>
+            </br>
+            <div class="slds-grid"><lightning-input type="checkbox" label="Is Blind Transfer" checked={isBlindTransfer} onchange={handleBlindTransferChange} disabled={telephonyActionControlsDisabled}></lightning-input></div>
+            <div class="slds-grid"><lightning-button variant="brand" label="Add Participant" onclick={onAddParticipant} disabled={telephonyActionControlsDisabled}></lightning-button></div>
             
             <div class="slds-grid">
-                <lightning-button variant="brand" label="End Call" onclick={onEndCall} disabled={headSetControlsDisabled}></lightning-button>
+                <lightning-button variant="brand" label="Accept Call" onclick={onAcceptCall} disabled={telephonyActionControlsDisabled}></lightning-button>
+                <lightning-button variant="brand" label="Decline Call" onclick={onDeclineCall} disabled={telephonyActionControlsDisabled}></lightning-button>
+            </div>
+            <div class="slds-grid">
+                <lightning-combobox
+                name="resume"
+                label="Remove Participant type"
+                value={comboBoxRemoveParticipantValue}
+                placeholder="Select Participant type"
+                options={endCallOptions}
+                onchange={handleComboboxRemoveParticipantChange} ></lightning-combobox>
+                <lightning-button variant="brand" label="End Call" onclick={onEndCall} disabled={telephonyActionControlsDisabled}></lightning-button>
+            </div>
+            <div class="slds-grid">
+                <lightning-input label="Send Digits" value={sendDigits} onchange={changeSendDigitsHandler} data-id='sendDigits' disabled={telephonyActionControlsDisabled}></lightning-input>
+                <lightning-button variant="brand" label="Send Digits" onclick={onSendDigits} disabled={telephonyActionControlsDisabled}></lightning-button>
             </div>
         </div>
     </lightning-card>

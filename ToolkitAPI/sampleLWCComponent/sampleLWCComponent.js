@@ -1,13 +1,23 @@
 import { LightningElement, api, track } from 'lwc';
 
 export default class SampleLWCComponent extends LightningElement {
-    @track headSetControlsDisabled = true;
+    @track telephonyActionControlsDisabled = true;
 
     @api recordId;  
 
     payload = '{"key": "value"}';
     teleEvent = 'No events received yet.';
     transcript = 'No transcripts received yet.';
+    previewPhoneNumber = '';
+    addParticipantPhoneNumber = '';
+    sendDigits = '';
+    comboBoxHoldValue = 'Initial_Caller';
+    comboBoxResumeValue = 'Initial_Caller';
+    comboBoxRemoveParticipantValue = 'Initial_Caller';
+    comboBoxContactTypeValue = 'PhoneNumber';
+    comboBoxAddParticipantContactTypeValue = 'PhoneNumber';
+    hasRendered = false;
+    isBlindTransfer = false;
 
     constructor() {
         super();
@@ -77,10 +87,10 @@ export default class SampleLWCComponent extends LightningElement {
 
     onTelephonyEvent(event) {
         if (event.type === 'callstarted') {
-            this.headSetControlsDisabled = false;
+            this.telephonyActionControlsDisabled = false;
         }
         if (event.type === 'callended') {
-            this.headSetControlsDisabled = true;
+            this.telephonyActionControlsDisabled = true;
         }
         this.teleEvent = event.type;
     }
@@ -92,7 +102,65 @@ export default class SampleLWCComponent extends LightningElement {
     getToolkitApi() {
         return this.template.querySelector('lightning-service-cloud-voice-toolkit-api');
     }
-     
+
+    get options() {
+        return [
+            { label: 'INITIAL_CALLER', value: 'Initial_Caller' },
+            { label: 'THIRD_PARTY', value: 'Third_Party' }
+        ];
+    }
+
+    get endCallOptions() {
+    	return [
+            { label: 'INITIAL_CALLER', value: 'Initial_Caller' },
+            { label: 'THIRD_PARTY', value: 'Third_Party' },
+    	    { label: 'AGENT', value: 'Agent' }
+        ];
+    }
+
+    get contactOptions() {
+        return [
+            { label: 'PHONE NUMBER', value: 'PhoneNumber' },
+            { label: 'AGENT/QUEUE ID', value: 'AgentOrQueueId' }
+        ];
+    }
+
+    handleComboboxHoldChange(event) {
+        this.comboBoxHoldValue = event.detail.value;
+    }
+
+    handleComboboxResumeChange(event) {
+        this.comboBoxResumeValue = event.detail.value;
+    }
+
+    handleComboboxRemoveParticipantChange(event) {
+        this.comboBoxRemoveParticipantValue = event.detail.value;
+    }
+
+    handleComboboxContactTypeChange(event) {
+        this.comboBoxContactTypeValue = event.detail.value;
+    }
+
+    handleComboboxContactTypeAddParticipantChange(event) {
+        this.comboBoxAddParticipantContactTypeValue = event.detail.value;
+    }
+
+    changePreviewCallHandler(event) {
+    	this.previewPhoneNumber = event.target.value;
+    }
+
+    changeAddParticipantHandler(event) {
+    	this.addParticipantPhoneNumber = event.target.value;
+    }
+
+    handleBlindTransferChange(event) {
+    	this.isBlindTransfer = event.target.checked;        
+    }
+
+    changeSendDigitsHandler(event) {
+    	this.sendDigits = event.target.value;
+    }
+ 
     onMute() {
         this.getToolkitApi().mute();
     }
@@ -100,16 +168,52 @@ export default class SampleLWCComponent extends LightningElement {
     onUnmute() {
         this.getToolkitApi().unmute();
     }
-    
-    acceptCall() {
+
+    onAcceptCall() {
         this.getToolkitApi().acceptCall();
     }
-
-    declineCall() {
+    
+    onDeclineCall() {
         this.getToolkitApi().declineCall();
     }  
 
-    endCall() {
-        this.getToolkitApi().endCall();
+    onEndCall() {
+        this.getToolkitApi().endCall(this.comboBoxRemoveParticipantValue);
+    }
+
+    onSendDigits() {
+    	this.getToolkitApi().sendDigits(this.sendDigits);
+    }
+
+    onPauseRecording() {
+        this.getToolkitApi().pauseRecording();
+    }
+
+    onResumeRecording() {
+        this.getToolkitApi().resumeRecording();
+    }
+
+    onHold() {
+        this.getToolkitApi().hold(this.comboBoxHoldValue);
+    }
+
+    onResume() {
+        this.getToolkitApi().resume(this.comboBoxResumeValue);
+    }
+
+    onSwap() {
+        this.getToolkitApi().swap();
+    }
+
+    onMerge() {
+        this.getToolkitApi().merge();
+    }
+
+    onStartPreviewCall() {
+        this.getToolkitApi().startPreviewCall(this.previewPhoneNumber);
+    }
+
+    onAddParticipant() {
+        this.getToolkitApi().addParticipant(this.comboBoxAddParticipantContactTypeValue, this.addParticipantPhoneNumber, this.isBlindTransfer);
     }
 }
