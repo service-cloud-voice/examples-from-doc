@@ -86,7 +86,7 @@ export default class SampleLWCComponent extends LightningElement {
     }
 
     onTelephonyEvent(event) {
-        if (event.type === 'callstarted') {
+        if (event.type === 'callstarted' || event.type === 'callconnected') {
             this.telephonyActionControlsDisabled = false;
         }
         if (event.type === 'callended') {
