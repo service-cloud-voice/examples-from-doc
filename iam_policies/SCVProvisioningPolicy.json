@@ -60,7 +60,9 @@
                 "arn:aws:s3:::prod-scv-resources-*",
                 "arn:aws:s3:::prod-byoa-scv-resources-*",
                 "arn:aws:s3:::*-byoa-cloudtrail/*",
-                "arn:aws:s3:::*-<AWS_ACCOUNT_ID>/*"
+                "arn:aws:s3:::*-<AWS_ACCOUNT_ID>/*",                
+                "arn:aws:s3:::<BYOAC_CUSTOM_S3_BUCKET>",
+                "arn:aws:s3:::<BYOAC_CUSTOM_S3_BUCKET>/*"
             ]
         },
         {
@@ -116,6 +118,7 @@
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:layer:*:*",
                 "arn:aws:s3:::*-byoa-cloudtrail",
                 "arn:aws:s3:::*-<AWS_ACCOUNT_ID>",
+                "arn:aws:s3:::<BYOAC_CUSTOM_S3_BUCKET>",
                 "arn:aws:s3:::prod-scv-resources-*",
                 "arn:aws:s3:::prod-byoa-scv-resources-*",
                 "arn:aws:cloudwatch::<AWS_ACCOUNT_ID>:dashboard/*-ServiceCloudVoice*",
