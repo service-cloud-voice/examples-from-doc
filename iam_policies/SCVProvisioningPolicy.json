@@ -28,21 +28,39 @@
                 "events:PutTargets",
                 "events:RemoveTargets",
                 "kms:CreateKey",
-                "lambda:Add*",
-                "lambda:Create*",
-                "lambda:Get*",
-                "lambda:Delete*",
-                "lambda:*EventSourceMapping",
-                "lambda:*Function",
-                "lambda:*Function*",
-                "lambda:List*",
-                "lambda:Publish*",
-                "lambda:PutFunction*",
-                "lambda:Remove*",
-                "lambda:Update*",
-                "lambda:*Resource"
+                "lambda:CreateEventSourceMapping",
+                "lambda:GetEventSourceMapping",
+                "lambda:DeleteEventSourceMapping",
+                "lambda:UpdateEventSourceMapping"
             ],
             "Resource": "*"
+        },
+        {
+            "Sid": "LambdaAccess",
+            "Effect": "Allow",
+            "Action": [
+                "lambda:*"
+            ],
+            "Resource": [
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*ContactLensConsumerFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*MailPackagingFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*MailTranscribeFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*AuthKeysSSMUtilFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*CustomSSMFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*InvokeTelephonyIntegrationApiFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*CTRDataSyncFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*RealtimeAlert*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*MailAudioProcessingFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*InvokeSalesforceRestApiFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*PostCallAnalysisTriggerFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*kvsTranscriber*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*ConsumerTrigger*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*HandleContactEventsFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*ContactLensProcessorFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*ConnectConfigurationFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*ProviderCreator*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*S3BucketEventBridgeConfigurationFunction*"
+            ]
         },
         {
             "Sid": "S3Write",
