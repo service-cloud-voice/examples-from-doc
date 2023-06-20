@@ -11,3 +11,4 @@ This policy is used for creating an Amazon Connect Partner Telephony Contact cen
 
 * Replace <AWS_ACCOUNT_ID> with the AWS Amazon Account number.
 * Replace <Contact_Center_Internal_Name> with the internal name given for creating contact center.
+* If you are creating a salesforce contact center using an existing amazon-connect instance , replace <BYOAC_CUSTOM_S3_BUCKET> with the name of the S3 Bucket you have configured for call recordings storage in your existing amazon-connect instance, if you have configured one.In all other cases, do not replace this.
