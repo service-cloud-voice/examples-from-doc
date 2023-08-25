@@ -59,7 +59,8 @@
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*ContactLensProcessorFunction*",
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*ConnectConfigurationFunction*",
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*ProviderCreator*",
-                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*S3BucketEventBridgeConfigurationFunction*"
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*S3BucketEventBridgeConfigurationFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*TDGConfigurationFunction*"
             ]
         },
         {
@@ -147,14 +148,18 @@
                 "arn:aws:sns:*:<AWS_ACCOUNT_ID>:*",
                 "arn:aws:cloudformation:*:<AWS_ACCOUNT_ID>:stack/*ContactCenterStack/*",
                 "arn:aws:cloudformation:*:<AWS_ACCOUNT_ID>:stack/*ContactCenterStack*/*",
-                "arn:aws:cloudformation:*:<AWS_ACCOUNT_ID>:stack/SCVBYOATenantStack/*"
+                "arn:aws:cloudformation:*:<AWS_ACCOUNT_ID>:stack/SCVBYOATenantStack/*",
+                "arn:aws:cloudformation:*:<AWS_ACCOUNT_ID>:stack/*SCVTrafficDistributionStack/*"
             ]
         },
         {
             "Sid": "ConnectAccess",
             "Effect": "Allow",
             "Action": "connect:*",
-            "Resource": "arn:aws:connect:*:<AWS_ACCOUNT_ID>:instance/*"
+            "Resource": [
+                "arn:aws:connect:*:<AWS_ACCOUNT_ID>:instance/*",
+                "arn:aws:connect:*:<AWS_ACCOUNT_ID>:traffic-distribution-group/*"
+            ]
         }
     ]
 }
