@@ -60,7 +60,8 @@
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*ConnectConfigurationFunction*",
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*ProviderCreator*",
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*S3BucketEventBridgeConfigurationFunction*",
-                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*TDGConfigurationFunction*"
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*TDGConfigurationFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*S3BucketPolicyConfigurationFunction*"
             ]
         },
         {
