@@ -7,33 +7,46 @@
             "Action": [
                 "ds:*",
                 "logs:*",
-                "cloudformation:CreateChangeSet",
-                "cloudformation:CreateStackSet",
-                "cloudformation:DeactivateType",
-                "cloudformation:DeleteChangeSet",
-                "cloudformation:DeleteStackSet",
-                "cloudformation:ExecuteChangeSet",
-                "cloudformation:ListStacks",
-                "cloudformation:ListExports",
-                "cloudformation:ListImports",
-                "cloudformation:UpdateStack",
-                "cloudformation:UpdateStackInstances",
-                "cloudformation:UpdateStackSet",
-                "connect:CreateInstance",
-                "connect:ListInstances",
+                "lambda:GetEventSourceMapping",
+                "kms:CreateKey"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "EventsAccess",
+            "Effect": "Allow",
+            "Action": [
                 "events:DeleteRule",
                 "events:DescribeRule",
                 "events:PutEvents",
                 "events:PutRule",
                 "events:PutTargets",
-                "events:RemoveTargets",
-                "kms:CreateKey",
-                "lambda:CreateEventSourceMapping",
-                "lambda:GetEventSourceMapping",
-                "lambda:DeleteEventSourceMapping",
-                "lambda:UpdateEventSourceMapping"
+                "events:RemoveTargets"
             ],
-            "Resource": "*"
+            "Resource": [
+                "arn:aws:events:*:<AWS_ACCOUNT_ID>:rule/*VoiceMail*",
+                "arn:aws:events:*:<AWS_ACCOUNT_ID>:rule/*-ScheduledRule",
+                "arn:aws:events:*:<AWS_ACCOUNT_ID>:rule/*-ContactEventsRule"
+            ]
+        },
+        {
+            "Sid": "LambdaEventSourceAccess",
+            "Effect": "Allow",
+            "Action": [
+                "lambda:CreateEventSourceMapping",
+                "lambda:UpdateEventSourceMapping",
+                "lambda:DeleteEventSourceMapping"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "StringLike": {
+                    "lambda:FunctionArn": [
+                        "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*MailAudioProcessingFunction*",
+                        "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*CTRDataSyncFunction*",
+                        "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*ContactLensConsumerFunction*"
+                    ]
+                }
+            }
         },
         {
             "Sid": "LambdaAccess",
@@ -60,8 +73,9 @@
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*ConnectConfigurationFunction*",
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*ProviderCreator*",
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*S3BucketEventBridgeConfigurationFunction*",
-                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*TDGConfigurationFunction*",
-                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*S3BucketPolicyConfigurationFunction*"
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*S3BucketPolicyConfigurationFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*SCVAccessBYOACConfigurationFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*TDGConfigurationFunction*"
             ]
         },
         {
@@ -80,7 +94,7 @@
                 "arn:aws:s3:::prod-scv-resources-*",
                 "arn:aws:s3:::prod-byoa-scv-resources-*",
                 "arn:aws:s3:::*-byoa-cloudtrail/*",
-                "arn:aws:s3:::*-<AWS_ACCOUNT_ID>/*",                
+                "arn:aws:s3:::*-<AWS_ACCOUNT_ID>/*",
                 "arn:aws:s3:::<BYOAC_CUSTOM_S3_BUCKET>",
                 "arn:aws:s3:::<BYOAC_CUSTOM_S3_BUCKET>/*"
             ]
@@ -101,11 +115,13 @@
                 "arn:aws:kms:*:<AWS_ACCOUNT_ID>:key/*",
                 "arn:aws:kms:*:<AWS_ACCOUNT_ID>:alias/*LMKvsKey",
                 "arn:aws:kms:*:<AWS_ACCOUNT_ID>:alias/*KvsKey",
-                "arn:aws:sns:*:<AWS_ACCOUNT_ID>:*",
+                "arn:aws:sns:*:<AWS_ACCOUNT_ID>:*-RealtimeAlertTopic",
                 "arn:aws:cloudwatch::<AWS_ACCOUNT_ID>:dashboard/*-ServiceCloudVoice*",
-                "arn:aws:cloudwatch:*:<AWS_ACCOUNT_ID>:alarm:*",
+                "arn:aws:cloudwatch:*:<AWS_ACCOUNT_ID>:alarm:SCV*",
                 "arn:aws:kinesis:*:<AWS_ACCOUNT_ID>:stream/*-<AWS_ACCOUNT_ID>-CTRStream",
                 "arn:aws:kinesis:*:<AWS_ACCOUNT_ID>:stream/*-<AWS_ACCOUNT_ID>-ContactLensStream",
+                "arn:aws:kinesis:*:<AWS_ACCOUNT_ID>:stream/<BYOAC_CUSTOM_CTR_STREAM>",
+                "arn:aws:kinesis:*:<AWS_ACCOUNT_ID>:stream/<BYOAC_CUSTOM_CLS_STREAM>",
                 "arn:aws:cloudtrail:*:<AWS_ACCOUNT_ID>:trail/scvBYOACloudTrail"
             ]
         },
@@ -115,16 +131,17 @@
             "Action": [
                 "iam:*Role*",
                 "iam:*Roles*",
+                "iam:*Policy*",
                 "iam:*SAMLProvider"
             ],
             "Resource": [
                 "arn:aws:iam::<AWS_ACCOUNT_ID>:role/SCV*",
+                "arn:aws:iam::<AWS_ACCOUNT_ID>:policy/scv/SCV*",
                 "arn:aws:iam::<AWS_ACCOUNT_ID>:role/BYOA*",
                 "arn:aws:iam::<AWS_ACCOUNT_ID>:role/*-SCVS3Role*",
                 "arn:aws:iam::<AWS_ACCOUNT_ID>:role/*-SAMLRole*",
                 "arn:aws:iam::<AWS_ACCOUNT_ID>:role/*-ConnectCallRole*",
-                "arn:aws:iam::<AWS_ACCOUNT_ID>:role/*HandleContactEvents*",
-                "arn:aws:iam::<AWS_ACCOUNT_ID>:role/*-RealtimeAlertRole",
+                "arn:aws:iam::<AWS_ACCOUNT_ID>:role/*SCVCustomAccessRole",
                 "arn:aws:iam::<AWS_ACCOUNT_ID>:saml-provider/SalesforceServiceVoiceIdp",
                 "arn:aws:iam::<AWS_ACCOUNT_ID>:role/aws-service-role/*"
             ]
@@ -134,19 +151,15 @@
             "Effect": "Allow",
             "Action": "cloudformation:*",
             "Resource": [
-                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:function:*",
-                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:layer:*:*",
+                "arn:aws:cloudformation:*:aws:transform/Serverless-*",
                 "arn:aws:s3:::*-byoa-cloudtrail",
                 "arn:aws:s3:::*-<AWS_ACCOUNT_ID>",
                 "arn:aws:s3:::<BYOAC_CUSTOM_S3_BUCKET>",
                 "arn:aws:s3:::prod-scv-resources-*",
                 "arn:aws:s3:::prod-byoa-scv-resources-*",
                 "arn:aws:cloudwatch::<AWS_ACCOUNT_ID>:dashboard/*-ServiceCloudVoice*",
-                "arn:aws:cloudwatch:*:<AWS_ACCOUNT_ID>:alarm:*",
-                "arn:aws:iam::<AWS_ACCOUNT_ID>:role/*",
                 "arn:aws:kinesis:*:<AWS_ACCOUNT_ID>:stream/*-<AWS_ACCOUNT_ID>-CTRStream",
                 "arn:aws:kinesis:*:<AWS_ACCOUNT_ID>:stream/*-<AWS_ACCOUNT_ID>-ContactLensStream",
-                "arn:aws:sns:*:<AWS_ACCOUNT_ID>:*",
                 "arn:aws:cloudformation:*:<AWS_ACCOUNT_ID>:stack/*ContactCenterStack/*",
                 "arn:aws:cloudformation:*:<AWS_ACCOUNT_ID>:stack/*ContactCenterStack*/*",
                 "arn:aws:cloudformation:*:<AWS_ACCOUNT_ID>:stack/SCVBYOATenantStack/*",
@@ -156,8 +169,46 @@
         {
             "Sid": "ConnectAccess",
             "Effect": "Allow",
-            "Action": "connect:*",
+            "Action": [
+                "connect:Get*",
+                "connect:List*",
+                "connect:Search*",
+                "connect:Describe*",
+                "connect:CreateContactFlow",
+                "connect:CreateInstance",
+                "connect:CreateHoursOfOperation",
+                "connect:CreateContactFlowModule",
+                "connect:CreateQueue",
+                "connect:CreateQuickConnect",
+                "connect:CreateRoutingProfile",
+                "connect:CreateUser",
+                "connect:ReplicateInstance",
+                "connect:StartOutboundVoiceContact",
+                "connect:TagResource",
+                "connect:AssociateApprovedOrigin",
+                "connect:AssociateLambdaFunction",
+                "connect:DisassociateLambdaFunction",
+                "connect:DisassociateApprovedOrigin",
+                "connect:DeleteQueue",
+                "connect:DeleteUser",
+                "connect:DeleteQuickConnect",
+                "connect:CreateTrafficDistributionGroup",
+                "connect:UpdateTrafficDistribution",
+                "connect:DisassociateRoutingProfileQueues",
+                "connect:MonitorContact",
+                "connect:UpdateQuickConnectName",
+                "connect:UpdateInstanceAttribute",
+                "connect:UpdateHoursOfOperation",
+                "connect:UpdateQueueName",
+                "connect:UpdateQueueStatus",
+                "connect:UpdateUserRoutingProfile",
+                "connect:UpdateContactAttributes",
+                "connect:UpdateRoutingProfileQueues",
+                "connect:UpdateRoutingProfileName",
+                "connect:UpdateRoutingProfileDefaultOutboundQueue"
+            ],
             "Resource": [
+                "arn:aws:connect:*:<AWS_ACCOUNT_ID>:/instance",
                 "arn:aws:connect:*:<AWS_ACCOUNT_ID>:instance/*",
                 "arn:aws:connect:*:<AWS_ACCOUNT_ID>:traffic-distribution-group/*"
             ]
