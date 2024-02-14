@@ -162,7 +162,7 @@
                 "arn:aws:kinesis:*:<AWS_ACCOUNT_ID>:stream/*-<AWS_ACCOUNT_ID>-ContactLensStream",
                 "arn:aws:cloudformation:*:<AWS_ACCOUNT_ID>:stack/*ContactCenterStack/*",
                 "arn:aws:cloudformation:*:<AWS_ACCOUNT_ID>:stack/*ContactCenterStack*/*",
-                "arn:aws:cloudformation:*:<AWS_ACCOUNT_ID>:stack/SCVBYOATenantStack/*",
+                "arn:aws:cloudformation:*:<AWS_ACCOUNT_ID>:stack/SCVBYOATenantStack*/*",
                 "arn:aws:cloudformation:*:<AWS_ACCOUNT_ID>:stack/*SCVTrafficDistributionStack/*"
             ]
         },
