@@ -75,7 +75,8 @@
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*S3BucketEventBridgeConfigurationFunction*",
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*S3BucketPolicyConfigurationFunction*",
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*SCVAccessBYOACConfigurationFunction*",
-                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*TDGConfigurationFunction*"
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*TDGConfigurationFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*ContactDataSyncFunction*"
             ]
         },
         {
@@ -96,7 +97,8 @@
                 "arn:aws:s3:::*-byoa-cloudtrail/*",
                 "arn:aws:s3:::*-<AWS_ACCOUNT_ID>/*",
                 "arn:aws:s3:::<BYOAC_CUSTOM_S3_BUCKET>",
-                "arn:aws:s3:::<BYOAC_CUSTOM_S3_BUCKET>/*"
+                "arn:aws:s3:::<BYOAC_CUSTOM_S3_BUCKET>/*",
+                "arn:aws:s3:::prod-scv-saml-metadata/*"
             ]
         },
         {
@@ -174,6 +176,7 @@
                 "connect:List*",
                 "connect:Search*",
                 "connect:Describe*",
+                "connect:CreateAgentStatus",
                 "connect:CreateContactFlow",
                 "connect:CreateInstance",
                 "connect:CreateHoursOfOperation",
@@ -205,7 +208,8 @@
                 "connect:UpdateContactAttributes",
                 "connect:UpdateRoutingProfileQueues",
                 "connect:UpdateRoutingProfileName",
-                "connect:UpdateRoutingProfileDefaultOutboundQueue"
+                "connect:UpdateRoutingProfileDefaultOutboundQueue",
+                "connect:PutUserStatus"
             ],
             "Resource": [
                 "arn:aws:connect:*:<AWS_ACCOUNT_ID>:/instance",
