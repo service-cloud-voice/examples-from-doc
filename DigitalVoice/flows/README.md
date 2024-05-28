@@ -32,8 +32,8 @@ In case you face an invalid version error as can be seen this image, you need to
   
 ![img.png](img.png)
 
-By default, the zip routing file assumes that workbench version used to import flow in 61.  
-In case, you are using any other version, do the following steps -  
+By default, the zip routing file assumes that workbench/api version used to import flow is 61.  
+In case, you are using any other version, you need to do the following steps -  
 Extract the zip file.  
 Change version tag in package.xml from 61.0 to the relevant version.  
 Change apiVersion tag in flows/WhatsApp_Routing.flow.xml from 61.0 to the relevant version.  
