@@ -2,7 +2,7 @@
 
 This Lightning component illustrates how to use the Service Cloud Voice Toolkit API. To learn about Service Cloud Voice, see [Service Cloud Voice in Salesforce Help](https://help.salesforce.com/articleView?id=voice_about.htm&type=5). Also refer to the [Voice Implementation Guide](https://developer.salesforce.com/docs/atlas.en-us.voice_developer_guide.meta/voice_developer_guide/voice_intro.htm).
 
-- [Sample Lightning Web Component](SampleLWCComponent/): This Lightning component demonstrates the functionality of the Toolkit API using the Lightning Web Component (LWC) framework.
+- [Sample Lightning Web Component](sampleLWCComponent/): This Lightning component demonstrates the functionality of the Toolkit API using the Lightning Web Component (LWC) framework.
 - [Sample Aura Component](SampleAuraComponent/): This Lightning component demonstrates the functionality of the Toolkit API using the Aura framework.
 
 ## Handling Events with the Aura Component
