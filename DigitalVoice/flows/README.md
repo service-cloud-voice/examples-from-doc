@@ -13,7 +13,8 @@ Open “Default to Queue” Action and reset “Service Channel” and “Queue 
 For Service Channel, delete the Phone and then add Phone again.  
 For Queue ID, delete the “WhatsApp Queue” and then add “WhatsApp Queue” again.  
 Click on Done.  
-Repeat the same steps for “Routing to same agent” Action and then click “Save As” to save the flow.  
+Repeat the same steps for “Routing to same agent” Action where for Queue ID, delete the “WhatsApp Fallback Queue” and then add WhatsApp Fallback Queue” again.  
+Then click “Save As” to save the flow.  
 Activate the flow.  
 
 
