@@ -6,11 +6,17 @@
             "Effect": "Allow",
             "Action": [
                 "ds:*",
-                "logs:*",
+                "logs:DescribeLogGroups",
                 "lambda:GetEventSourceMapping",
                 "kms:CreateKey"
             ],
             "Resource": "*"
+        },
+        {
+            "Sid": "LogsAccess",
+            "Effect": "Allow",
+            "Action": "logs:*",
+            "Resource": "arn:aws:logs:*:<AWS_ACCOUNT_ID>:log-group:*scvbyoaaccesscloudwatchloggroup*"
         },
         {
             "Sid": "EventsAccess",
