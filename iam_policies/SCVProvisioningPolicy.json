@@ -82,7 +82,8 @@
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*S3BucketPolicyConfigurationFunction*",
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*SCVAccessBYOACConfigurationFunction*",
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*TDGConfigurationFunction*",
-                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*ContactDataSyncFunction*"
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*ContactDataSyncFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:event-source-mapping*"
             ]
         },
         {
@@ -144,6 +145,7 @@
             ],
             "Resource": [
                 "arn:aws:iam::<AWS_ACCOUNT_ID>:role/SCV*",
+                "arn:aws:iam::<AWS_ACCOUNT_ID>:role/*HandleContactEvents*",
                 "arn:aws:iam::<AWS_ACCOUNT_ID>:policy/scv/SCV*",
                 "arn:aws:iam::<AWS_ACCOUNT_ID>:role/BYOA*",
                 "arn:aws:iam::<AWS_ACCOUNT_ID>:role/*-SCVS3Role*",
@@ -214,6 +216,7 @@
                 "connect:UpdateContactAttributes",
                 "connect:UpdateRoutingProfileQueues",
                 "connect:UpdateRoutingProfileName",
+                "connect:UpdateContactRoutingData",
                 "connect:UpdateRoutingProfileDefaultOutboundQueue",
                 "connect:PutUserStatus"
             ],
