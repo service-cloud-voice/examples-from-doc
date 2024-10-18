@@ -37,6 +37,10 @@
         "TRANSCRIPT",
         cmp._conversationEventListener
       );
+    
+    cmp
+      .find("voiceToolkitApi")
+      .addTelephonyEventListener("AUDIO_STATS", cmp._telephonyEventListener);
   },
 
   unsubscribeFromVoiceToolkit: function (cmp) {
@@ -74,6 +78,9 @@
         "TRANSCRIPT",
         cmp._conversationEventListener
       );
+    cmp
+      .find("voiceToolkitApi")
+      .removeTelephonyEventListener("AUDIO_STATS", cmp._telephonyEventListener);
   },
 
   telephonyEventListener: function (cmp, event) {
