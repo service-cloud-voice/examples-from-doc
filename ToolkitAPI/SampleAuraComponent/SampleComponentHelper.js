@@ -78,6 +78,7 @@
         "TRANSCRIPT",
         cmp._conversationEventListener
       );
+    
     cmp
       .find("voiceToolkitApi")
       .removeTelephonyEventListener("AUDIO_STATS", cmp._telephonyEventListener);
