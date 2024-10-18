@@ -94,6 +94,7 @@ export default class SampleLWCComponent extends LightningElement {
     toolkitApi.addEventListener("pauserecording", this.telephonyEventListener);
     toolkitApi.addEventListener("resumerecording", this.telephonyEventListener);
     toolkitApi.addEventListener("transcript", this.telephonyEventListener);
+    toolkitApi.addEventListener("audiostats", this.telephonyEventListener);
   }
 
   unsubscribeFromVoiceToolkit() {
@@ -127,6 +128,7 @@ export default class SampleLWCComponent extends LightningElement {
       this.telephonyEventListener
     );
     toolkitApi.removeEventListener("transcript", this.telephonyEventListener);
+    toolkitApi.removeEventListener("audiostats", this.telephonyEventListener);
   }
 
   onTelephonyEvent(event) {
