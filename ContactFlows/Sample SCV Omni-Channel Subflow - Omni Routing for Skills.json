@@ -1,0 +1,375 @@
+{
+  "Version": "2019-10-30",
+  "StartAction": "7fd754e1-18e9-471b-834d-8f043e40ac60",
+  "Metadata": {
+    "entryPointPosition": {
+      "x": 14.4,
+      "y": 44
+    },
+    "ActionMetadata": {
+      "d35a3ab7-eed0-468f-b3cf-f626bc22c1e9": {
+        "position": {
+          "x": 2536.8,
+          "y": 182.4
+        }
+      },
+      "39a1e5a9-6e6f-4c1f-9269-a073a34b288f": {
+        "position": {
+          "x": 1913.6,
+          "y": 52.8
+        },
+        "dynamicParams": []
+      },
+      "9bccf0c0-dc57-4edb-b262-9f289be201fc": {
+        "position": {
+          "x": 2252,
+          "y": 81.6
+        }
+      },
+      "329366cd-ace6-432c-86ce-6ea73757563c": {
+        "position": {
+          "x": 1668,
+          "y": 53.6
+        },
+        "parameters": {
+          "ContactFlowId": {
+            "displayName": "Sample SCV Callback Subflow"
+          }
+        },
+        "ContactFlow": {
+          "text": "Sample SCV Callback Subflow"
+        }
+      },
+      "7fd754e1-18e9-471b-834d-8f043e40ac60": {
+        "position": {
+          "x": 177.6,
+          "y": 17.6
+        }
+      },
+      "4a1a4ace-47f6-41cf-986c-2f8d1cf7af6d": {
+        "position": {
+          "x": 696.8,
+          "y": 587.2
+        },
+        "dynamicParams": []
+      },
+      "96ba39a5-f769-4162-bd4b-07fe4978a030": {
+        "position": {
+          "x": 510.4,
+          "y": 226.4
+        }
+      },
+      "Holding Queue": {
+        "position": {
+          "x": 193.6,
+          "y": 254.4
+        },
+        "isFriendlyName": true
+      },
+      "7a0e3a7b-e5da-4ce3-a77f-696d3eac13f6": {
+        "position": {
+          "x": 1446.4,
+          "y": -103.2
+        }
+      },
+      "82813f62-e8ee-43f5-8d98-e50a41aa5a15": {
+        "position": {
+          "x": 403.2,
+          "y": 7.2
+        },
+        "parameters": {
+          "LambdaFunctionARN": {
+            "displayName": "OregonRecheck-InvokeTelephonyIntegrationApiFunction:active"
+          }
+        },
+        "dynamicMetadata": {
+          "flowInput-recordId": false,
+          "methodName": false,
+          "flowInput-IncomingCallPhoneNumber": false,
+          "fallbackQueue": false,
+          "flowDevName": false
+        }
+      },
+      "1db8e227-572b-4bc7-a830-514ba1c41cd1": {
+        "position": {
+          "x": 1876.8,
+          "y": 284.8
+        },
+        "dynamicParams": []
+      },
+      "b14328be-639f-4b5c-8ef2-8c4d77e1d2bd": {
+        "position": {
+          "x": 1012.8,
+          "y": 11.2
+        },
+        "parameters": {
+          "QueueId": {
+            "useDynamic": true
+          }
+        },
+        "useDynamic": true
+      },
+      "da2ed7fc-68d1-4b25-a70c-5a0385ff7835": {
+        "position": {
+          "x": 696,
+          "y": 12
+        },
+        "dynamicParams": []
+      }
+    },
+    "Annotations": [],
+    "name": "Sample SCV Omni-Channel Subflow - Omni Routing for Skills",
+    "description": "Creates a case for each inbound voice call, routes the call to a queue, and opens a screen-pop for the new case record when an agent accepts the call.",
+    "type": "contactFlow",
+    "status": "published",
+    "hash": {}
+  },
+  "Actions": [
+    {
+      "Parameters": {},
+      "Identifier": "d35a3ab7-eed0-468f-b3cf-f626bc22c1e9",
+      "Type": "DisconnectParticipant",
+      "Transitions": {}
+    },
+    {
+      "Parameters": {
+        "Attributes": {
+          "error": "Failed to transfer to callback flow."
+        }
+      },
+      "Identifier": "39a1e5a9-6e6f-4c1f-9269-a073a34b288f",
+      "Type": "UpdateContactAttributes",
+      "Transitions": {
+        "NextAction": "9bccf0c0-dc57-4edb-b262-9f289be201fc",
+        "Errors": [
+          {
+            "NextAction": "9bccf0c0-dc57-4edb-b262-9f289be201fc",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "Text": "I'm sorry. We have encountered an error and cannot currently handle your call. Please try again later. We apologize for any inconvenience. Goodbye. test2"
+      },
+      "Identifier": "9bccf0c0-dc57-4edb-b262-9f289be201fc",
+      "Type": "MessageParticipant",
+      "Transitions": {
+        "NextAction": "d35a3ab7-eed0-468f-b3cf-f626bc22c1e9",
+        "Errors": [
+          {
+            "NextAction": "d35a3ab7-eed0-468f-b3cf-f626bc22c1e9",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "ContactFlowId": "arn:aws:connect:us-west-2:015492860849:instance/a143ae01-9f2b-4152-8217-d16088f0751a/contact-flow/85332486-07c6-44ed-858c-17caf20ca913"
+      },
+      "Identifier": "329366cd-ace6-432c-86ce-6ea73757563c",
+      "Type": "TransferToFlow",
+      "Transitions": {
+        "NextAction": "39a1e5a9-6e6f-4c1f-9269-a073a34b288f",
+        "Errors": [
+          {
+            "NextAction": "39a1e5a9-6e6f-4c1f-9269-a073a34b288f",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "Text": "Welcome to filebased flow"
+      },
+      "Identifier": "7fd754e1-18e9-471b-834d-8f043e40ac60",
+      "Type": "MessageParticipant",
+      "Transitions": {
+        "NextAction": "Holding Queue",
+        "Errors": [
+          {
+            "NextAction": "4a1a4ace-47f6-41cf-986c-2f8d1cf7af6d",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "Attributes": {
+          "error": "Omni routing failed."
+        }
+      },
+      "Identifier": "4a1a4ace-47f6-41cf-986c-2f8d1cf7af6d",
+      "Type": "UpdateContactAttributes",
+      "Transitions": {
+        "NextAction": "9bccf0c0-dc57-4edb-b262-9f289be201fc",
+        "Errors": [
+          {
+            "NextAction": "9bccf0c0-dc57-4edb-b262-9f289be201fc",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "Text": "Invoke Omni Flow Failed,"
+      },
+      "Identifier": "96ba39a5-f769-4162-bd4b-07fe4978a030",
+      "Type": "MessageParticipant",
+      "Transitions": {
+        "NextAction": "4a1a4ace-47f6-41cf-986c-2f8d1cf7af6d",
+        "Errors": [
+          {
+            "NextAction": "4a1a4ace-47f6-41cf-986c-2f8d1cf7af6d",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "RoutingCriteria": {
+          "Steps": [
+            {
+              "Expression": {
+                "AttributeCondition": {
+                  "Name": "Routing",
+                  "Value": "True",
+                  "ProficiencyLevel": 1,
+                  "ComparisonOperator": "NumberGreaterOrEqualTo"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "Identifier": "Holding Queue",
+      "Type": "UpdateContactRoutingCriteria",
+      "Transitions": {
+        "NextAction": "82813f62-e8ee-43f5-8d98-e50a41aa5a15",
+        "Errors": [
+          {
+            "NextAction": "4a1a4ace-47f6-41cf-986c-2f8d1cf7af6d",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "MetricType": "NumberOfAgentsOnline"
+      },
+      "Identifier": "7a0e3a7b-e5da-4ce3-a77f-696d3eac13f6",
+      "Type": "CheckMetricData",
+      "Transitions": {
+        "NextAction": "39a1e5a9-6e6f-4c1f-9269-a073a34b288f",
+        "Conditions": [
+          {
+            "NextAction": "329366cd-ace6-432c-86ce-6ea73757563c",
+            "Condition": {
+              "Operator": "NumberGreaterThan",
+              "Operands": [
+                "0"
+              ]
+            }
+          }
+        ],
+        "Errors": [
+          {
+            "NextAction": "329366cd-ace6-432c-86ce-6ea73757563c",
+            "ErrorType": "NoMatchingCondition"
+          },
+          {
+            "NextAction": "39a1e5a9-6e6f-4c1f-9269-a073a34b288f",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "LambdaFunctionARN": "arn:aws:lambda:us-west-2:015492860849:function:OregonRecheck-InvokeTelephonyIntegrationApiFunction:active",
+        "InvocationTimeLimitSeconds": "8",
+        "LambdaInvocationAttributes": {
+          "flowInput-recordId": "$.Attributes.voiceCallId",
+          "methodName": "executeOmniFlow",
+          "flowInput-IncomingCallPhoneNumber": "$.CustomerEndpoint.Address",
+          "fallbackQueue": "SkillbasedQueue",
+          "flowDevName": "UnifiedRoutingSBR"
+        },
+        "ResponseValidation": {
+          "ResponseType": "JSON"
+        }
+      },
+      "Identifier": "82813f62-e8ee-43f5-8d98-e50a41aa5a15",
+      "Type": "InvokeLambdaFunction",
+      "Transitions": {
+        "NextAction": "da2ed7fc-68d1-4b25-a70c-5a0385ff7835",
+        "Errors": [
+          {
+            "NextAction": "96ba39a5-f769-4162-bd4b-07fe4978a030",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "Attributes": {
+          "error": "Failed to set the working queue."
+        }
+      },
+      "Identifier": "1db8e227-572b-4bc7-a830-514ba1c41cd1",
+      "Type": "UpdateContactAttributes",
+      "Transitions": {
+        "NextAction": "9bccf0c0-dc57-4edb-b262-9f289be201fc",
+        "Errors": [
+          {
+            "NextAction": "9bccf0c0-dc57-4edb-b262-9f289be201fc",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "QueueId": "$.Attributes.queueArn"
+      },
+      "Identifier": "b14328be-639f-4b5c-8ef2-8c4d77e1d2bd",
+      "Type": "UpdateContactTargetQueue",
+      "Transitions": {
+        "NextAction": "7a0e3a7b-e5da-4ce3-a77f-696d3eac13f6",
+        "Errors": [
+          {
+            "NextAction": "1db8e227-572b-4bc7-a830-514ba1c41cd1",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "Attributes": {
+          "queueArn": "arn:aws:connect:us-west-2:015492860849:instance/a143ae01-9f2b-4152-8217-d16088f0751a/queue/923fc7ef-b062-46a9-95c7-f0ea222bb439"
+        },
+        "TargetContact": "Current"
+      },
+      "Identifier": "da2ed7fc-68d1-4b25-a70c-5a0385ff7835",
+      "Type": "UpdateContactAttributes",
+      "Transitions": {
+        "NextAction": "b14328be-639f-4b5c-8ef2-8c4d77e1d2bd",
+        "Errors": [
+          {
+            "NextAction": "1db8e227-572b-4bc7-a830-514ba1c41cd1",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    }
+  ]
+}
