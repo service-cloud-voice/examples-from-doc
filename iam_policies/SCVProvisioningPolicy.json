@@ -218,7 +218,9 @@
                 "connect:UpdateRoutingProfileName",
                 "connect:UpdateContactRoutingData",
                 "connect:UpdateRoutingProfileDefaultOutboundQueue",
-                "connect:PutUserStatus"
+                "connect:PutUserStatus",
+                "connect:CreatePredefinedAttribute",
+                "connect:DeletePredefinedAttribute"
             ],
             "Resource": [
                 "arn:aws:connect:*:<AWS_ACCOUNT_ID>:/instance",
