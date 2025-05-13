@@ -4,46 +4,31 @@
     <section sortOrder="0" name="reqGeneralInfo" label="General Information">
         <item sortOrder="1" name="reqDisplayName" label="Display Name">Amazon Connect Partner Telephony</item>
         <item sortOrder="0" name="reqInternalName" label="InternalName">AmazonConnectPartnerTelephonyCC</item>
-       
-         <!-- Provide Full API Name of the Conversation Vendor Info Component present in installed vendor managed package-->
+        <item sortOrder="6" name="reqVersion" label="Contact Center Version">18.0</item>
+        <!-- Provide Full API Name of the Conversation Vendor Info Component present in installed vendor managed package-->
         <item sortOrder="2" name="reqVendorInfoApiName" label="Conversation Vendor Info Developer Name">c__AMAZON_CONNECT</item>
     </section>
 
-    <!-- SCV Settings. This is a required section. -->    
+    <!-- SCV Settings. This is a required section. -->
     <section sortOrder="1" name="reqHvcc" label="SCV Settings">
-        <item sortOrder="0" name="reqRelayState" label="Relay State">https://us-west-2.console.aws.amazon.com/connect/federate/123456abcd-0367-42bd-962d-50b329761d61</item>
-        <item sortOrder="1" name="reqIdentityUrl" label="Identity URL">https://example.my.salesforce.com/idp/login?app=0spRM0000004CgQ</item>
-        <item sortOrder="2" 
-            name="reqTelephonyIntegrationCertificate" label="Telephony Integration Certificate">-----BEGIN CERTIFICATE-----
-MIIC/jCCAeYCCQCIBPHtpQA4CjANBgkqhkiG9w0BAQsFADBBMQswCQYDVQQGEwJV
-UzELMAkGA1UECAwCQ0ExJTAjBgkqhkiG9w0BCQEWFm9mYXRlaGlAc2FsZXNmb3Jj
-ZS5jb20wHhcNMjAwNTIyMDUxOTU4WhcNMjEwNTIyMDUxOTU4WjBBMQswCQYDVQQG
-EwJVUzELMAkGA1UECAwCQ0ExJTAjBgkqhkiG9w0BCQEWFm9mYXRlaGlAc2FsZXNm
-b3JjZS5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC2xABiXaS/
-ZTMY+SlXocYT3cgrnw9b8pHfx8EZ1XCQebfn4n9PWAhfF2y+NAHJcAnVxk1Hht8d
-jsHexeNQhjF6xvyk4uA9nPFxft52WClYzJ1eZJeg8DRntAsJ5T2x/LI2Ol8Wcboz
-sZ+KasdC8NNd/65dKx297mTbqcYQ4jv9bKtniFQ4ZibrWjjG9cTKu9eCArzBJmzQ
-R+CXkZUmVJNfPRuQaMFvkxpETHKU6qlLVQbmMocb91g2XRzXZMNo2WBIkhmobH2F
-jbNNKy+B6z50grewtSrFFCoAfmtPspMZw/6VfvMdkFge+ymZkyNBT2El8r17pd5e
-45hsaPBI6XG1AgMBAAEwDQYJKoZIhvcNAQELBQADggEBACE4cbldEtB+S6z7Gh4q
-fEhJ6xH2Aa1+VE1wrj+gIXLFanEp1eyWbLeM2TEwdv0G9P38wA20fJW/X2ZYgHDk
-aFWBvKNjQxRNslMKZ+xDXVEoP42EY5YH37Vo3L2s1FirPGFKWdFUxoWGh5I9ZHGc
-FN1mTx0lMF2PHqcjLTMeoanImVEbLveB9yCBcVSI3wswc4S51puswqiSU1E3WARi
-wJnKaUgZQwphWGOMQ+YrLpuBIHcswr20OCil+0DwggQGsRz0WkDg/+Z0G553rWVR
-1XhjBmA6TTKEC0xTTnwLMYEQA0qQupTGRDFC1FO5rFJGGe9tczdtFOKLqCaqwkXV
-DZg=
------END CERTIFICATE-----</item>
-        <item sortOrder="3" name="reqLongDistPrefix" label="Long Distance Prefix">+1</item>
-        <item sortOrder="4" name="reqInstanceName" label="Instance Name">AmazonConnectInstanceName</item>
-        <item sortOrder="5" name="reqInstanceRecordingRole" label="Instance Recording Role">arn:aws:iam::{Customer Account Id}:role/byotAmazonConnect-ConnectCallRole</item>
-        <item sortOrder="6" name="reqSettingsRelayState" label="Settings Relay State">https://us-west-2.console.aws.amazon.com/connect/federate/4438c192-4536-4b14-8b4c-7b1267458a33</item>
+        <item sortOrder="0" name="reqInstanceName" label="Instance Name">AmazonConnectInstanceName</item>
+        <item sortOrder="1" name="reqInstanceId" label="Instance ID">AmazonConnectInstanceId</item>
+        <item sortOrder="2" name="reqConnectedAppId" label="Connected App ID">0H4Z60000008OwGXXX</item>
+        <item sortOrder="3" name="reqSettingsRelayState" label="Settings Relay State">https://us-west-2.console.aws.amazon.com/connect/federate/123456abcd-0367-42bd-962d-50b329761XXX</item>
+        <item sortOrder="4" name="reqRelayState" label="Relay State">https://us-west-2.console.aws.amazon.com/connect/federate/123456abcd-0367-42bd-962d-50b329761XXX</item>
+        <item sortOrder="5" name="reqIdentityUrl" label="Identity URL">https://example.my.salesforce.com/idp/login?app=0spRM0000004XXX</item>
+        <item sortOrder="6" name="reqRegion" label="Region">us-west-2</item>
         <item sortOrder="7" name="reqUniversalCallRecordingAccess" label="Universal Call Recording Access">false</item>
-    </section>
-
-
-    <!-- All below sections below contain vendor settings-->
-    <section sortOrder="2" name="AmazonConnectSettings" label="Amazon Connect Settings">
-        <item sortOrder="0" name="reqRegion" label="Region">us-west-2</item>
+        <item sortOrder="8" name="reqLongDistPrefix" label="Long Distance Prefix">+1</item>
+        <item sortOrder="9" name="reqThirdPartyIDP" label="Third Party IDP Configuration">true</item>
+        <item sortOrder="10" name="reqTransferTargetForOmniFlowTransfer" label="Transfer Target for Omni Flow Transfer">AmazonQuickConnectARN</item>
+        <item sortOrder="11" name="reqTransferTargetForOmniFlowTransferDisplayName" label="Transfer Target for Omni Flow Transfer Display Name">QuickConnect Display Name</item>
+        <item sortOrder="12"
+              name="reqTelephonyIntegrationCertificate" label="Telephony Integration Certificate">CERTIFICATE-</item>
+        <item sortOrder="13" name="reqTelephonyIntegrationKeyPairExpDate" label="Telephony Integration Key Pair Expiry Date">25/02/2026 09:04:49</item>
+        <item sortOrder="14" name="reqAmazonConnectManagementRole" label="Amazon Connect Management Role">arn:aws:iam::XXXXXXXXXXXX:role/SCVAmazonConnectManagementRole</item>
+        <item sortOrder="15" name="reqUpdateCredentialRole" label="Update Credential Role for Telephony Integration Certificate">arn:aws:iam::890742609842:role/SCVUpdateCredentialRole</item>
+        <item sortOrder="16" name="reqInstanceRecordingRole" label="Instance Recording Role">arn:aws:iam::XXXXXXXXXXXX:role/multiorgscc1-ConnectCallRole</item>
+        <item sortOrder="17" name="reqSCVS3Role" label="S3 bucket access Role">arn:aws:iam::XXXXXXXXXXXX:role/multiorgscc1-SCVS3Role</item>
     </section>
 </callCenter>
-
