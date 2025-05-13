@@ -60,6 +60,16 @@ Since the Sample SCV Outbound Flow With Transcription Using Contact Lens offers 
 
 * [Sample SCV Omni-Channel Subflow - Basic Routing With Case Creation](Sample SCV Omni-Channel Subflow - Basic Routing With Case Creation): Creates a case for each inbound voice call, routes the call to a queue, and opens a screen-pop for the new case record when an agent accepts the call.
 
+## Unified Routing Flows
+
+* [Sample SCV Omni-Channel Subflow - Omni Routing With Case Creation](Sample SCV Omni-Channel Subflow - Omni Routing With Case Creation): Creates a case for each inbound voice call, routes the call using Omni Routing Engine, and opens a screen-pop for the new case record when an agent accepts the call.
+
+* [Sample SCV Omni-Channel Subflow - Omni Routing for Skills](Sample SCV Omni-Channel Subflow - Omni Routing for Skills): Creates a case for each inbound voice call, routes the call to agent with Skill using Omni Routing Engine, and opens a screen-pop for the new case record when an agent accepts the call.
+
+* [Sample SCV Transfer Flow For Omni Routing Transfers](Sample SCV Transfer Flow For Omni Routing Transfers): Creates a voice call record and transfers the call from an agent to a specified agent or queue using Omni Routing Engine.
+
+* [Sample SCV Voicemail Subflow for Omni Routing] (Sample SCV Voicemail Subflow for Omni Routing): Enables voicemail recordings for calls routed with Omni Routing Engine.
+
 ## Salesforce REST API Flows
 
 * [Sample_SCV_REST_Check_For_Open_Cases](Sample_SCV_REST_Check_For_Open_Cases): This sample contact flow demonstrates how to check for open cases using the `InvokeSalesforceRestApiFunction` Lambda function.
