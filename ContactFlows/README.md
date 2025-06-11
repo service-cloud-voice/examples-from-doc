@@ -70,6 +70,14 @@ Since the Sample SCV Outbound Flow With Transcription Using Contact Lens offers 
 
 * [Sample SCV Voicemail Subflow for Omni Routing] (Sample SCV Voicemail Subflow for Omni Routing): Enables voicemail recordings for calls routed with Omni Routing Engine.
 
+## Direct to Rep Flows
+
+* [Sample SCV Direct to Rep Subflow](Sample SCV Direct to Rep Subflow): Routes the call to the agent associated with the dialed number via omni direct to agent routing.
+
+* [Sample SCV Inbound Flow for Direct to Rep](Sample SCV Inbound Flow for Direct to Rep): Creates a voice call record in Salesforce for the inbound call and transfers the call to the SCV Direct Agent Routing Subflow.
+
+* [Sample SCV Outbound Flow From Rep With Caller ID Override](Sample SCV Outbound Flow From Rep With Caller ID Override): Sample SCV flow to override caller id for outgoing calls based on the org settings.
+
 ## Salesforce REST API Flows
 
 * [Sample_SCV_REST_Check_For_Open_Cases](Sample_SCV_REST_Check_For_Open_Cases): This sample contact flow demonstrates how to check for open cases using the `InvokeSalesforceRestApiFunction` Lambda function.
