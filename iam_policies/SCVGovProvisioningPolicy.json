@@ -1,0 +1,231 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "WildcardAccess",
+            "Effect": "Allow",
+            "Action": [
+                "ds:*",
+                "logs:DescribeLogGroups",
+                "lambda:GetEventSourceMapping",
+                "kms:CreateKey"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "LogsAccess",
+            "Effect": "Allow",
+            "Action": "logs:*",
+            "Resource": "arn:aws-us-gov:logs:*:<AWS_ACCOUNT_ID>:log-group:*scvbyoaaccesscloudwatchloggroup*"
+        },
+        {
+            "Sid": "EventsAccess",
+            "Effect": "Allow",
+            "Action": [
+                "events:DeleteRule",
+                "events:DescribeRule",
+                "events:PutEvents",
+                "events:PutRule",
+                "events:PutTargets",
+                "events:RemoveTargets"
+            ],
+            "Resource": [
+                "arn:aws-us-gov:events:*:<AWS_ACCOUNT_ID>:rule/*VoiceMail*",
+                "arn:aws-us-gov:events:*:<AWS_ACCOUNT_ID>:rule/*-ScheduledRule",
+                "arn:aws-us-gov:events:*:<AWS_ACCOUNT_ID>:rule/*-ContactEventsRule"
+            ]
+        },
+        {
+            "Sid": "LambdaEventSourceAccess",
+            "Effect": "Allow",
+            "Action": [
+                "lambda:CreateEventSourceMapping",
+                "lambda:UpdateEventSourceMapping",
+                "lambda:DeleteEventSourceMapping"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "StringLike": {
+                    "lambda:FunctionArn": [
+                        "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*MailAudioProcessingFunction*",
+                        "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*CTRDataSyncFunction*",
+                        "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*ContactLensConsumerFunction*"
+                    ]
+                }
+            }
+        },
+        {
+            "Sid": "LambdaAccess",
+            "Effect": "Allow",
+            "Action": [
+                "lambda:*"
+            ],
+            "Resource": [
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*ContactLensConsumerFunction*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*MailPackagingFunction*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*MailTranscribeFunction*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*AuthKeysSSMUtilFunction*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*CustomSSMFunction*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*InvokeTelephonyIntegrationApiFunction*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*CTRDataSyncFunction*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*RealtimeAlert*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*MailAudioProcessingFunction*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*InvokeSalesforceRestApiFunction*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*PostCallAnalysisTriggerFunction*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*kvsTranscriber*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*ConsumerTrigger*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*HandleContactEventsFunction*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*ContactLensProcessorFunction*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*ConnectConfigurationFunction*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*ProviderCreator*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*S3BucketEventBridgeConfigurationFunction*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*S3BucketPolicyConfigurationFunction*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*SCVAccessBYOACConfigurationFunction*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*TDGConfigurationFunction*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*ContactDataSyncFunction*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:event-source-mapping*"
+            ]
+        },
+        {
+            "Sid": "S3Write",
+            "Effect": "Allow",
+            "Action": [
+                "s3:List*",
+                "s3:Get*",
+                "s3:Create*",
+                "s3:Put*",
+                "s3:Delete*"
+            ],
+            "Resource": [
+                "arn:aws-us-gov:s3:::*-byoa-cloudtrail",
+                "arn:aws-us-gov:s3:::*-<AWS_ACCOUNT_ID>",
+                "arn:aws-us-gov:s3:::prod-scv-resources-*",
+                "arn:aws-us-gov:s3:::prod-byoa-scv-resources-*",
+                "arn:aws-us-gov:s3:::*-byoa-cloudtrail/*",
+                "arn:aws-us-gov:s3:::*-<AWS_ACCOUNT_ID>/*",
+                "arn:aws-us-gov:s3:::<BYOAC_CUSTOM_S3_BUCKET>",
+                "arn:aws-us-gov:s3:::<BYOAC_CUSTOM_S3_BUCKET>/*",
+                "arn:aws-us-gov:s3:::prod-scv-rzone-iso-2-saml-metadata/*"
+            ]
+        },
+        {
+            "Sid": "ResourceBasedAccess",
+            "Effect": "Allow",
+            "Action": [
+                "ssm:*",
+                "kms:*",
+                "sns:*",
+                "cloudwatch:*",
+                "kinesis:*",
+                "cloudTrail:*"
+            ],
+            "Resource": [
+                "arn:aws-us-gov:ssm:*:<AWS_ACCOUNT_ID>:parameter/<Contact_Center_Internal_Name>-*",
+                "arn:aws-us-gov:kms:*:<AWS_ACCOUNT_ID>:key/*",
+                "arn:aws-us-gov:kms:*:<AWS_ACCOUNT_ID>:alias/*LMKvsKey",
+                "arn:aws-us-gov:kms:*:<AWS_ACCOUNT_ID>:alias/*KvsKey",
+                "arn:aws-us-gov:sns:*:<AWS_ACCOUNT_ID>:*-RealtimeAlertTopic",
+                "arn:aws-us-gov:cloudwatch::<AWS_ACCOUNT_ID>:dashboard/*-ServiceCloudVoice*",
+                "arn:aws-us-gov:cloudwatch:*:<AWS_ACCOUNT_ID>:alarm:SCV*",
+                "arn:aws-us-gov:kinesis:*:<AWS_ACCOUNT_ID>:stream/*-<AWS_ACCOUNT_ID>-CTRStream",
+                "arn:aws-us-gov:kinesis:*:<AWS_ACCOUNT_ID>:stream/*-<AWS_ACCOUNT_ID>-ContactLensStream",
+                "arn:aws-us-gov:kinesis:*:<AWS_ACCOUNT_ID>:stream/<BYOAC_CUSTOM_CTR_STREAM>",
+                "arn:aws-us-gov:kinesis:*:<AWS_ACCOUNT_ID>:stream/<BYOAC_CUSTOM_CLS_STREAM>",
+                "arn:aws-us-gov:cloudtrail:*:<AWS_ACCOUNT_ID>:trail/scvBYOACloudTrail"
+            ]
+        },
+        {
+            "Sid": "IAMAccess",
+            "Effect": "Allow",
+            "Action": [
+                "iam:*Role*",
+                "iam:*Roles*",
+                "iam:*Policy*",
+                "iam:*SAMLProvider"
+            ],
+            "Resource": [
+                "arn:aws-us-gov:iam::<AWS_ACCOUNT_ID>:role/SCV*",
+                "arn:aws-us-gov:iam::<AWS_ACCOUNT_ID>:role/*HandleContactEvents*",
+                "arn:aws-us-gov:iam::<AWS_ACCOUNT_ID>:policy/scv/SCV*",
+                "arn:aws-us-gov:iam::<AWS_ACCOUNT_ID>:role/BYOA*",
+                "arn:aws-us-gov:iam::<AWS_ACCOUNT_ID>:role/*-SCVS3Role*",
+                "arn:aws-us-gov:iam::<AWS_ACCOUNT_ID>:role/*-SAMLRole*",
+                "arn:aws-us-gov:iam::<AWS_ACCOUNT_ID>:role/*-ConnectCallRole*",
+                "arn:aws-us-gov:iam::<AWS_ACCOUNT_ID>:role/*SCVCustomAccessRole",
+                "arn:aws-us-gov:iam::<AWS_ACCOUNT_ID>:saml-provider/SalesforceServiceVoiceIdp",
+                "arn:aws-us-gov:iam::<AWS_ACCOUNT_ID>:role/aws-service-role/*"
+            ]
+        },
+        {
+            "Sid": "CloudformationAccess",
+            "Effect": "Allow",
+            "Action": "cloudformation:*",
+            "Resource": [
+                "arn:aws-us-gov:cloudformation:*:aws:transform/Serverless-*",
+                "arn:aws-us-gov:s3:::*-byoa-cloudtrail",
+                "arn:aws-us-gov:s3:::*-<AWS_ACCOUNT_ID>",
+                "arn:aws-us-gov:s3:::<BYOAC_CUSTOM_S3_BUCKET>",
+                "arn:aws-us-gov:s3:::prod-scv-resources-*",
+                "arn:aws-us-gov:s3:::prod-byoa-scv-resources-*",
+                "arn:aws-us-gov:cloudwatch::<AWS_ACCOUNT_ID>:dashboard/*-ServiceCloudVoice*",
+                "arn:aws-us-gov:kinesis:*:<AWS_ACCOUNT_ID>:stream/*-<AWS_ACCOUNT_ID>-CTRStream",
+                "arn:aws-us-gov:kinesis:*:<AWS_ACCOUNT_ID>:stream/*-<AWS_ACCOUNT_ID>-ContactLensStream",
+                "arn:aws-us-gov:cloudformation:*:<AWS_ACCOUNT_ID>:stack/*ContactCenterStack/*",
+                "arn:aws-us-gov:cloudformation:*:<AWS_ACCOUNT_ID>:stack/*ContactCenterStack*/*",
+                "arn:aws-us-gov:cloudformation:*:<AWS_ACCOUNT_ID>:stack/SCVBYOATenantStack*/*",
+                "arn:aws-us-gov:cloudformation:*:<AWS_ACCOUNT_ID>:stack/*SCVTrafficDistributionStack/*"
+            ]
+        },
+        {
+            "Sid": "ConnectAccess",
+            "Effect": "Allow",
+            "Action": [
+                "connect:Get*",
+                "connect:List*",
+                "connect:Search*",
+                "connect:Describe*",
+                "connect:CreateAgentStatus",
+                "connect:CreateContactFlow",
+                "connect:CreateInstance",
+                "connect:CreateHoursOfOperation",
+                "connect:CreateContactFlowModule",
+                "connect:CreateQueue",
+                "connect:CreateQuickConnect",
+                "connect:CreateRoutingProfile",
+                "connect:CreateUser",
+                "connect:ReplicateInstance",
+                "connect:StartOutboundVoiceContact",
+                "connect:TagResource",
+                "connect:AssociateApprovedOrigin",
+                "connect:AssociateLambdaFunction",
+                "connect:DisassociateLambdaFunction",
+                "connect:DisassociateApprovedOrigin",
+                "connect:DeleteQueue",
+                "connect:DeleteUser",
+                "connect:DeleteQuickConnect",
+                "connect:CreateTrafficDistributionGroup",
+                "connect:UpdateTrafficDistribution",
+                "connect:DisassociateRoutingProfileQueues",
+                "connect:MonitorContact",
+                "connect:UpdateQuickConnectName",
+                "connect:UpdateInstanceAttribute",
+                "connect:UpdateHoursOfOperation",
+                "connect:UpdateQueueName",
+                "connect:UpdateQueueStatus",
+                "connect:UpdateUserRoutingProfile",
+                "connect:UpdateContactAttributes",
+                "connect:UpdateRoutingProfileQueues",
+                "connect:UpdateRoutingProfileName",
+                "connect:UpdateRoutingProfileDefaultOutboundQueue",
+                "connect:PutUserStatus",
+                "connect:CreatePredefinedAttribute",
+                "connect:DeletePredefinedAttribute"
+            ],
+            "Resource": [
+                "arn:aws-us-gov:connect:*:<AWS_ACCOUNT_ID>:/instance",
+                "arn:aws-us-gov:connect:*:<AWS_ACCOUNT_ID>:instance/*",
+                "arn:aws-us-gov:connect:*:<AWS_ACCOUNT_ID>:traffic-distribution-group/*"
+            ]
+        }
+    ]
+}

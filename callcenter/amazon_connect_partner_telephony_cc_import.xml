@@ -2,11 +2,11 @@
 
     <!-- General Info Section. This is a required section.-->
     <section sortOrder="0" name="reqGeneralInfo" label="General Information">
-        <item sortOrder="1" name="reqDisplayName" label="Display Name">Amazon Connect Partner Telephony</item>
         <item sortOrder="0" name="reqInternalName" label="InternalName">AmazonConnectPartnerTelephonyCC</item>
-        <item sortOrder="6" name="reqVersion" label="Contact Center Version">18.0</item>
+        <item sortOrder="1" name="reqDisplayName" label="Display Name">Amazon Connect Partner Telephony</item>
         <!-- Provide Full API Name of the Conversation Vendor Info Component present in installed vendor managed package-->
         <item sortOrder="2" name="reqVendorInfoApiName" label="Conversation Vendor Info Developer Name">c__AMAZON_CONNECT</item>
+        <item sortOrder="3" name="reqVersion" label="Contact Center Version">18.0</item>
     </section>
 
     <!-- SCV Settings. This is a required section. -->
