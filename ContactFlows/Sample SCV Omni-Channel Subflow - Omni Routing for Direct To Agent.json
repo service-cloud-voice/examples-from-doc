@@ -13,32 +13,6 @@
           "y": 22
         }
       },
-      "Holding Queue": {
-        "position": {
-          "x": 242,
-          "y": 318
-        },
-        "isFriendlyName": true
-      },
-      "d35a3ab7-eed0-468f-b3cf-f626bc22c1e9": {
-        "position": {
-          "x": 2805,
-          "y": 419
-        }
-      },
-      "9bccf0c0-dc57-4edb-b262-9f289be201fc": {
-        "position": {
-          "x": 2434,
-          "y": 309
-        }
-      },
-      "39a1e5a9-6e6f-4c1f-9269-a073a34b288f": {
-        "position": {
-          "x": 2100,
-          "y": 86
-        },
-        "dynamicParams": []
-      },
       "4a1a4ace-47f6-41cf-986c-2f8d1cf7af6d": {
         "position": {
           "x": 871,
@@ -46,32 +20,29 @@
         },
         "dynamicParams": []
       },
-      "96ba39a5-f769-4162-bd4b-07fe4978a030": {
+      "d35a3ab7-eed0-468f-b3cf-f626bc22c1e9": {
         "position": {
-          "x": 758,
-          "y": 312
+          "x": 2452,
+          "y": 396
         }
       },
-      "82813f62-e8ee-43f5-8d98-e50a41aa5a15": {
+      "9bccf0c0-dc57-4edb-b262-9f289be201fc": {
         "position": {
-          "x": 504,
-          "y": 9
-        },
-        "parameters": {
-          "LambdaFunctionARN": {
-            "displayName": "shuchunorgfarm-InvokeTelephonyIntegrationApiFunction:active"
-          }
-        },
-        "dynamicMetadata": {
-          "flowInput-recordId": false,
-          "methodName": false,
-          "flowInput-IncomingCallPhoneNumber": false
+          "x": 2135,
+          "y": 388
         }
+      },
+      "39a1e5a9-6e6f-4c1f-9269-a073a34b288f": {
+        "position": {
+          "x": 1830,
+          "y": 205
+        },
+        "dynamicParams": []
       },
       "329366cd-ace6-432c-86ce-6ea73757563c": {
         "position": {
-          "x": 1714,
-          "y": 102
+          "x": 1518,
+          "y": 117
         },
         "parameters": {
           "ContactFlowId": {
@@ -84,22 +55,15 @@
       },
       "1db8e227-572b-4bc7-a830-514ba1c41cd1": {
         "position": {
-          "x": 1535,
-          "y": 346
-        },
-        "dynamicParams": []
-      },
-      "da2ed7fc-68d1-4b25-a70c-5a0385ff7835": {
-        "position": {
-          "x": 852,
-          "y": -1
+          "x": 1469,
+          "y": 396
         },
         "dynamicParams": []
       },
       "b14328be-639f-4b5c-8ef2-8c4d77e1d2bd": {
         "position": {
-          "x": 1266,
-          "y": 14
+          "x": 1190,
+          "y": 29
         },
         "parameters": {
           "QueueId": {
@@ -107,11 +71,47 @@
           }
         },
         "useDynamic": true
+      },
+      "Holding Queue": {
+        "position": {
+          "x": 242,
+          "y": 318
+        },
+        "isFriendlyName": true
+      },
+      "96ba39a5-f769-4162-bd4b-07fe4978a030": {
+        "position": {
+          "x": 638,
+          "y": 283
+        }
+      },
+      "d18eea05-2038-4384-8341-6b7b4a98366b": {
+        "position": {
+          "x": 836,
+          "y": 14
+        },
+        "dynamicParams": []
+      },
+      "82813f62-e8ee-43f5-8d98-e50a41aa5a15": {
+        "position": {
+          "x": 503,
+          "y": 8
+        },
+        "parameters": {
+          "LambdaFunctionARN": {
+            "displayName": "shuchunorgfarm-InvokeTelephonyIntegrationApiFunction:active"
+          }
+        },
+        "dynamicMetadata": {
+          "flowInput-recordId": false,
+          "methodName": false,
+          "flowInput-IncomingCallPhoneNumber": false
+        }
       }
     },
     "Annotations": [],
-    "name": "Sample SCV Omni-Channel Subflow - Omni Routing for Skills",
-    "description": "Creates a case for each inbound voice call, routes the call to agent with Skill using Omni Routing Engine, and opens a screen-pop for the new case record when an agent accepts the call.",
+    "name": "Sample SCV Omni-Channel Subflow - Omni Routing for Direct To Agent",
+    "description": "Creates a case for each inbound voice call, routes the call to agent with Direct To Agent using Omni Routing Engine, and opens a screen-pop for the new case record when an agent accepts the call.",
     "type": "contactFlow",
     "status": "PUBLISHED",
     "hash": {}
@@ -135,28 +135,17 @@
     },
     {
       "Parameters": {
-        "RoutingCriteria": {
-          "Steps": [
-            {
-              "Expression": {
-                "AttributeCondition": {
-                  "Name": "Routing",
-                  "Value": "True",
-                  "ProficiencyLevel": 1,
-                  "ComparisonOperator": "NumberGreaterOrEqualTo"
-                }
-              }
-            }
-          ]
+        "Attributes": {
+          "error": "Omni routing failed."
         }
       },
-      "Identifier": "Holding Queue",
-      "Type": "UpdateContactRoutingCriteria",
+      "Identifier": "4a1a4ace-47f6-41cf-986c-2f8d1cf7af6d",
+      "Type": "UpdateContactAttributes",
       "Transitions": {
-        "NextAction": "82813f62-e8ee-43f5-8d98-e50a41aa5a15",
+        "NextAction": "9bccf0c0-dc57-4edb-b262-9f289be201fc",
         "Errors": [
           {
-            "NextAction": "4a1a4ace-47f6-41cf-986c-2f8d1cf7af6d",
+            "NextAction": "9bccf0c0-dc57-4edb-b262-9f289be201fc",
             "ErrorType": "NoMatchingError"
           }
         ]
@@ -205,65 +194,6 @@
     },
     {
       "Parameters": {
-        "Attributes": {
-          "error": "Omni routing failed."
-        }
-      },
-      "Identifier": "4a1a4ace-47f6-41cf-986c-2f8d1cf7af6d",
-      "Type": "UpdateContactAttributes",
-      "Transitions": {
-        "NextAction": "9bccf0c0-dc57-4edb-b262-9f289be201fc",
-        "Errors": [
-          {
-            "NextAction": "9bccf0c0-dc57-4edb-b262-9f289be201fc",
-            "ErrorType": "NoMatchingError"
-          }
-        ]
-      }
-    },
-    {
-      "Parameters": {
-        "Text": "Invoke Omni Flow Failed,"
-      },
-      "Identifier": "96ba39a5-f769-4162-bd4b-07fe4978a030",
-      "Type": "MessageParticipant",
-      "Transitions": {
-        "NextAction": "4a1a4ace-47f6-41cf-986c-2f8d1cf7af6d",
-        "Errors": [
-          {
-            "NextAction": "4a1a4ace-47f6-41cf-986c-2f8d1cf7af6d",
-            "ErrorType": "NoMatchingError"
-          }
-        ]
-      }
-    },
-    {
-      "Parameters": {
-        "LambdaFunctionARN": "arn:aws:lambda:us-west-2:940482410406:function:shuchunorgfarm-InvokeTelephonyIntegrationApiFunction:active",
-        "InvocationTimeLimitSeconds": "8",
-        "LambdaInvocationAttributes": {
-          "flowInput-recordId": "$.Attributes.voiceCallId",
-          "methodName": "executeOmniFlow",
-          "flowInput-IncomingCallPhoneNumber": "$.CustomerEndpoint.Address"
-        },
-        "ResponseValidation": {
-          "ResponseType": "JSON"
-        }
-      },
-      "Identifier": "82813f62-e8ee-43f5-8d98-e50a41aa5a15",
-      "Type": "InvokeLambdaFunction",
-      "Transitions": {
-        "NextAction": "da2ed7fc-68d1-4b25-a70c-5a0385ff7835",
-        "Errors": [
-          {
-            "NextAction": "96ba39a5-f769-4162-bd4b-07fe4978a030",
-            "ErrorType": "NoMatchingError"
-          }
-        ]
-      }
-    },
-    {
-      "Parameters": {
         "ContactFlowId": "arn:aws:connect:us-west-2:940482410406:instance/855b384b-d159-4646-a56d-a58f6f747760/contact-flow/38b0f5b8-7dfa-4153-a79a-ed396b6e4026"
       },
       "Identifier": "329366cd-ace6-432c-86ce-6ea73757563c",
@@ -298,12 +228,73 @@
     },
     {
       "Parameters": {
+        "QueueId": "$.Attributes.queueArn"
+      },
+      "Identifier": "b14328be-639f-4b5c-8ef2-8c4d77e1d2bd",
+      "Type": "UpdateContactTargetQueue",
+      "Transitions": {
+        "NextAction": "329366cd-ace6-432c-86ce-6ea73757563c",
+        "Errors": [
+          {
+            "NextAction": "1db8e227-572b-4bc7-a830-514ba1c41cd1",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "RoutingCriteria": {
+          "Steps": [
+            {
+              "Expression": {
+                "AttributeCondition": {
+                  "Name": "Routing",
+                  "Value": "True",
+                  "ProficiencyLevel": 1,
+                  "ComparisonOperator": "NumberGreaterOrEqualTo"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "Identifier": "Holding Queue",
+      "Type": "UpdateContactRoutingCriteria",
+      "Transitions": {
+        "NextAction": "82813f62-e8ee-43f5-8d98-e50a41aa5a15",
+        "Errors": [
+          {
+            "NextAction": "4a1a4ace-47f6-41cf-986c-2f8d1cf7af6d",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "Text": "Invoke Omni Flow Failed,"
+      },
+      "Identifier": "96ba39a5-f769-4162-bd4b-07fe4978a030",
+      "Type": "MessageParticipant",
+      "Transitions": {
+        "NextAction": "4a1a4ace-47f6-41cf-986c-2f8d1cf7af6d",
+        "Errors": [
+          {
+            "NextAction": "4a1a4ace-47f6-41cf-986c-2f8d1cf7af6d",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
         "Attributes": {
-          "queueArn": "arn:aws:connect:us-west-2:940482410406:instance/855b384b-d159-4646-a56d-a58f6f747760/queue/5b804fa5-ae24-470f-a788-dc1bb209c743"
+          "queueArn": "arn:aws:connect:us-west-2:940482410406:instance/855b384b-d159-4646-a56d-a58f6f747760/queue/607cbaea-cf74-4086-bb50-0b4ef3c78003"
         },
         "TargetContact": "Current"
       },
-      "Identifier": "da2ed7fc-68d1-4b25-a70c-5a0385ff7835",
+      "Identifier": "d18eea05-2038-4384-8341-6b7b4a98366b",
       "Type": "UpdateContactAttributes",
       "Transitions": {
         "NextAction": "b14328be-639f-4b5c-8ef2-8c4d77e1d2bd",
@@ -317,15 +308,24 @@
     },
     {
       "Parameters": {
-        "QueueId": "$.Attributes.queueArn"
+        "LambdaFunctionARN": "arn:aws:lambda:us-west-2:940482410406:function:shuchunorgfarm-InvokeTelephonyIntegrationApiFunction:active",
+        "InvocationTimeLimitSeconds": "8",
+        "LambdaInvocationAttributes": {
+          "flowInput-recordId": "$.Attributes.voiceCallId",
+          "methodName": "executeOmniFlow",
+          "flowInput-IncomingCallPhoneNumber": "$.CustomerEndpoint.Address"
+        },
+        "ResponseValidation": {
+          "ResponseType": "JSON"
+        }
       },
-      "Identifier": "b14328be-639f-4b5c-8ef2-8c4d77e1d2bd",
-      "Type": "UpdateContactTargetQueue",
+      "Identifier": "82813f62-e8ee-43f5-8d98-e50a41aa5a15",
+      "Type": "InvokeLambdaFunction",
       "Transitions": {
-        "NextAction": "329366cd-ace6-432c-86ce-6ea73757563c",
+        "NextAction": "d18eea05-2038-4384-8341-6b7b4a98366b",
         "Errors": [
           {
-            "NextAction": "1db8e227-572b-4bc7-a830-514ba1c41cd1",
+            "NextAction": "96ba39a5-f769-4162-bd4b-07fe4978a030",
             "ErrorType": "NoMatchingError"
           }
         ]
