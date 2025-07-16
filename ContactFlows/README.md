@@ -66,9 +66,19 @@ Since the Sample SCV Outbound Flow With Transcription Using Contact Lens offers 
 
 * [Sample SCV Omni-Channel Subflow - Omni Routing for Skills](Sample SCV Omni-Channel Subflow - Omni Routing for Skills): Creates a case for each inbound voice call, routes the call to agent with Skill using Omni Routing Engine, and opens a screen-pop for the new case record when an agent accepts the call.
 
+* [Sample SCV Omni-Channel Subflow - Omni Routing for Direct To Agent](Sample SCV Omni-Channel Subflow - Omni Routing for Direct To Agent): Creates a case for each inbound voice call, routes the call using Omni Routing Engine to a dedicated agent, and opens a screen-pop for the new case record when an agent accepts the call.
+
 * [Sample SCV Transfer Flow For Omni Routing Transfers](Sample SCV Transfer Flow For Omni Routing Transfers): Creates a voice call record and transfers the call from an agent to a specified agent or queue using Omni Routing Engine.
 
 * [Sample SCV Voicemail Subflow for Omni Routing] (Sample SCV Voicemail Subflow for Omni Routing): Enables voicemail recordings for calls routed with Omni Routing Engine.
+
+## Direct to Rep Flows
+
+* [Sample SCV Direct to Rep Subflow](Sample SCV Direct to Rep Subflow): Routes the call to the agent associated with the dialed number via omni direct to agent routing.
+
+* [Sample SCV Inbound Flow for Direct to Rep](Sample SCV Inbound Flow for Direct to Rep): Creates a voice call record in Salesforce for the inbound call and transfers the call to the SCV Direct Agent Routing Subflow.
+
+* [Sample SCV Outbound Flow From Rep With Caller ID Override](Sample SCV Outbound Flow From Rep With Caller ID Override): Sample SCV flow to override caller id for outgoing calls based on the org settings.
 
 ## Salesforce REST API Flows
 
