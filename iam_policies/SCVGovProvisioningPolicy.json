@@ -83,7 +83,8 @@
                 "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*SCVAccessBYOACConfigurationFunction*",
                 "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*TDGConfigurationFunction*",
                 "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*ContactDataSyncFunction*",
-                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:event-source-mapping*"
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:event-source-mapping*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*SCVSecretConfigurator*"
             ]
         },
         {
