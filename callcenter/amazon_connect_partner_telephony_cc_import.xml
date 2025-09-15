@@ -30,5 +30,10 @@
         <item sortOrder="15" name="reqUpdateCredentialRole" label="Update Credential Role for Telephony Integration Certificate">arn:aws:iam::890742609842:role/SCVUpdateCredentialRole</item>
         <item sortOrder="16" name="reqInstanceRecordingRole" label="Instance Recording Role">arn:aws:iam::XXXXXXXXXXXX:role/multiorgscc1-ConnectCallRole</item>
         <item sortOrder="17" name="reqSCVS3Role" label="S3 bucket access Role">arn:aws:iam::XXXXXXXXXXXX:role/multiorgscc1-SCVS3Role</item>
+        <item sortOrder="18" name="reqPresenceStatusSyncAccess" label="Presence Status Sync Access">true</item>
+        <item sortOrder="19" name="reqShowVendorStatusInfoAccess" label="Show Provider Status">true</item>
+        <item sortOrder="20" name="reqEnhancedAgentStabilityAccess" label="Amazon Connect sfdc_pending Status">true</item>
+        <item sortOrder="21" name="reqAlwaysShowVoiceExtension" label="Always Show Voice Extension">true</item>
+
     </section>
 </callCenter>
