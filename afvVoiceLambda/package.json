@@ -1,0 +1,28 @@
+{
+  "name": "invoke-afv-global-pstn-routing",
+  "version": "1.0.0",
+  "description": "Lambda function for AFV Global PSTN Dynamic Routing - reserves routable numbers and correlation IDs via scrt2-telephony",
+  "main": "handler.js",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "aws-sdk": "2.1354.0",
+    "winston": "3.2.1",
+    "axios": "1.13.6",
+    "axios-logger": "2.5.0",
+    "jsonwebtoken": "9.0.3",
+    "uuid": "3.4.0"
+  },
+  "devDependencies": {
+    "dotenv": "8.2.0",
+    "jest": "30.3.0",
+    "rewire": "9.0.1",
+    "selfsigned": "2.4.1"
+  },
+  "scripts": {
+    "test": "jest --collect-coverage",
+    "package": "bash scripts/compile.bash"
+  },
+  "jest": {
+    "clearMocks": true
+  }
+}
