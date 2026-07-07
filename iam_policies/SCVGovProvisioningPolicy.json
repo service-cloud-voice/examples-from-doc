@@ -158,6 +158,7 @@
                 "arn:aws-us-gov:iam::<AWS_ACCOUNT_ID>:role/*SCVCustomAccessRole",
                 "arn:aws-us-gov:iam::<AWS_ACCOUNT_ID>:saml-provider/SalesforceServiceVoiceIdp",
                 "arn:aws-us-gov:iam::<AWS_ACCOUNT_ID>:role/aws-service-role/*",
+                "arn:aws-us-gov:iam::<AWS_ACCOUNT_ID>:role/*-SCVTenantBucketWriteAccessRole",
                 "arn:aws-us-gov:iam::<AWS_ACCOUNT_ID>:role/*-SCVHealthCheckLambdaExecutionRole",
                 "arn:aws-us-gov:iam::<AWS_ACCOUNT_ID>:role/*-SCVHealthCheckRole"
             ]
@@ -223,6 +224,7 @@
                 "connect:UpdateContactAttributes",
                 "connect:UpdateRoutingProfileQueues",
                 "connect:UpdateRoutingProfileName",
+                "connect:UpdateContactRoutingData",
                 "connect:UpdateRoutingProfileDefaultOutboundQueue",
                 "connect:PutUserStatus",
                 "connect:CreatePredefinedAttribute",
