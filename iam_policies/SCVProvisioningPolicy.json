@@ -27,7 +27,10 @@
                 "events:PutEvents",
                 "events:PutRule",
                 "events:PutTargets",
-                "events:RemoveTargets"
+                "events:RemoveTargets",
+                "events:TagResource",
+                "events:UntagResource",
+                "events:ListTagsForResource"
             ],
             "Resource": [
                 "arn:aws:events:*:<AWS_ACCOUNT_ID>:rule/*VoiceMail*",
