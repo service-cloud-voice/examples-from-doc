@@ -70,7 +70,6 @@
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*AuthKeysSSMUtilFunction*",
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*CustomSSMFunction*",
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*InvokeTelephonyIntegrationApiFunction*",
-                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*InvokeVfsIntegrationApiFunction*",
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*CTRDataSyncFunction*",
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*RealtimeAlert*",
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*MailAudioProcessingFunction*",
