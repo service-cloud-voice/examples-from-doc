@@ -72,6 +72,7 @@
                 "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*CustomSSMFunction*",
                 "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*InvokeTelephonyIntegrationApiFunction*",
                 "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*JwtTokenRotatorFunction*",
+                "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*InvokeVfsIntegrationApiFunction*",
                 "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*CTRDataSyncFunction*",
                 "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*RealtimeAlert*",
                 "arn:aws-us-gov:lambda:*:<AWS_ACCOUNT_ID>:*MailAudioProcessingFunction*",
