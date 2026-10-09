@@ -235,7 +235,7 @@
         },
         "parameters": {
           "LambdaFunctionARN": {
-            "displayName": "newcc-InvokeVfsIntegrationApiFunction"
+            "displayName": "newcc-InvokeTelephonyIntegrationApiFunction"
           }
         },
         "dynamicMetadata": {
@@ -685,7 +685,7 @@
     },
     {
       "Parameters": {
-        "LambdaFunctionARN": "arn:aws:lambda:us-west-2:160244693883:function:vfsSdb272OregCC1-InvokeVfsIntegrationApiFunction:active",
+        "LambdaFunctionARN": "arn:aws:lambda:us-west-2:160244693883:function:vfsSdb272OregCC1-InvokeTelephonyIntegrationApiFunction:active",
         "InvocationTimeLimitSeconds": "8",
         "InvocationType": "SYNCHRONOUS",
         "LambdaInvocationAttributes": {

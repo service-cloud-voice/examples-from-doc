@@ -109,7 +109,7 @@
         },
         "parameters": {
           "LambdaFunctionARN": {
-            "displayName": "sdb38resellcc1-InvokeVfsIntegrationApiFunction:active"
+            "displayName": "sdb38resellcc1-InvokeTelephonyIntegrationApiFunction:active"
           }
         },
         "dynamicMetadata": {
@@ -278,7 +278,7 @@
     },
     {
       "Parameters": {
-        "LambdaFunctionARN": "arn:aws:lambda:us-west-2:504888428012:function:sdb38resellcc1-InvokeVfsIntegrationApiFunction:active",
+        "LambdaFunctionARN": "arn:aws:lambda:us-west-2:504888428012:function:sdb38resellcc1-InvokeTelephonyIntegrationApiFunction:active",
         "InvocationTimeLimitSeconds": "8",
         "InvocationType": "SYNCHRONOUS",
         "LambdaInvocationAttributes": {

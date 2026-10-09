@@ -98,7 +98,7 @@
         },
         "parameters": {
           "LambdaFunctionARN": {
-            "displayName": "cc4-InvokeVfsIntegrationApiFunction:active"
+            "displayName": "cc4-InvokeTelephonyIntegrationApiFunction:active"
           },
           "LambdaInvocationAttributes": {
             "agentARN": {
@@ -243,7 +243,7 @@
     },
     {
       "Parameters": {
-        "LambdaFunctionARN": "arn:aws:lambda:us-west-2:241706222685:function:cc5-InvokeVfsIntegrationApiFunction:active",
+        "LambdaFunctionARN": "arn:aws:lambda:us-west-2:241706222685:function:cc5-InvokeTelephonyIntegrationApiFunction:active",
         "InvocationTimeLimitSeconds": "8",
         "InvocationType": "SYNCHRONOUS",
         "LambdaInvocationAttributes": {
