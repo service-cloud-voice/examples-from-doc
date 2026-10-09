@@ -35,7 +35,8 @@
             "Resource": [
                 "arn:aws:events:*:<AWS_ACCOUNT_ID>:rule/*VoiceMail*",
                 "arn:aws:events:*:<AWS_ACCOUNT_ID>:rule/*-ScheduledRule",
-                "arn:aws:events:*:<AWS_ACCOUNT_ID>:rule/*-ContactEventsRule"
+                "arn:aws:events:*:<AWS_ACCOUNT_ID>:rule/*-ContactEventsRule",
+                "arn:aws:events:*:<AWS_ACCOUNT_ID>:rule/*-JwtTokenRotatorScheduledRule"
             ]
         },
         {
@@ -70,6 +71,8 @@
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*AuthKeysSSMUtilFunction*",
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*CustomSSMFunction*",
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*InvokeTelephonyIntegrationApiFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*JwtTokenRotatorFunction*",
+                "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*InvokeVfsIntegrationApiFunction*",
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*CTRDataSyncFunction*",
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*RealtimeAlert*",
                 "arn:aws:lambda:*:<AWS_ACCOUNT_ID>:*MailAudioProcessingFunction*",
@@ -130,6 +133,7 @@
                 "arn:aws:kms:*:<AWS_ACCOUNT_ID>:key/*",
                 "arn:aws:kms:*:<AWS_ACCOUNT_ID>:alias/*LMKvsKey",
                 "arn:aws:kms:*:<AWS_ACCOUNT_ID>:alias/*KvsKey",
+                "arn:aws:kms:*:<AWS_ACCOUNT_ID>:alias/*SalesforceJwtKey",
                 "arn:aws:sns:*:<AWS_ACCOUNT_ID>:*-RealtimeAlertTopic",
                 "arn:aws:cloudwatch::<AWS_ACCOUNT_ID>:dashboard/*-ServiceCloudVoice*",
                 "arn:aws:cloudwatch:*:<AWS_ACCOUNT_ID>:alarm:SCV*",
@@ -139,6 +143,16 @@
                 "arn:aws:kinesis:*:<AWS_ACCOUNT_ID>:stream/<BYOAC_CUSTOM_CLS_STREAM>",
                 "arn:aws:cloudtrail:*:<AWS_ACCOUNT_ID>:trail/scvBYOACloudTrail"
             ]
+        },
+        {
+            "Sid": "SalesforceJwtSecretResourcePolicyAccess",
+            "Effect": "Allow",
+            "Action": [
+                "secretsmanager:PutResourcePolicy",
+                "secretsmanager:GetResourcePolicy",
+                "secretsmanager:DeleteResourcePolicy"
+            ],
+            "Resource": "arn:aws:secretsmanager:*:<AWS_ACCOUNT_ID>:secret:*-salesforce-jwt-secret-*"
         },
         {
             "Sid": "IAMAccess",
